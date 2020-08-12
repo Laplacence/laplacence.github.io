@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Fedora 30下无线网卡抓包 | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在干网络相关的活，突然想看一下无线网络802.1X的接入过程，于是就有了这篇博客。 无线网络的特性可能让人联想到古老的集线器（Hub）网络，在集线器网络中，所有通过集线器的数据都会被转发给该集线器所有的接口，也就是说，只要连接在该集线器上的机器，就可以监听该网络上的所有机器的网络通信。默认情况下，网卡只会接受发给自己的数据报文，将其他的报文统统丢弃。当然也可以让网卡接受所有的报文，这就是所谓的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fedora 30下无线网卡抓包">
+<meta property="og:url" content="http://yoursite.com/2019/09/03/Wireless_network_sniffing_in_Fedora/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="最近在干网络相关的活，突然想看一下无线网络802.1X的接入过程，于是就有了这篇博客。 无线网络的特性可能让人联想到古老的集线器（Hub）网络，在集线器网络中，所有通过集线器的数据都会被转发给该集线器所有的接口，也就是说，只要连接在该集线器上的机器，就可以监听该网络上的所有机器的网络通信。默认情况下，网卡只会接受发给自己的数据报文，将其他的报文统统丢弃。当然也可以让网卡接受所有的报文，这就是所谓的">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-09-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:11:38.864Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Wireless_network_sniffing_in_Fedora" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/03/Wireless_network_sniffing_in_Fedora/" class="article-date">
+  <time datetime="2019-09-02T16:00:00.000Z" itemprop="datePublished">2019-09-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>►<a class="article-category-link" href="/categories/experience/">experience</a>►<a class="article-category-link" href="/categories/network/">network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Fedora 30下无线网卡抓包
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在干网络相关的活，突然想看一下无线网络802.1X的接入过程，于是就有了这篇博客。</p>
+<p>无线网络的特性可能让人联想到古老的集线器（Hub）网络，在集线器网络中，所有通过集线器的数据都会被转发给该集线器所有的接口，也就是说，只要连接在该集线器上的机器，就可以监听该网络上的所有机器的网络通信。默认情况下，网卡只会接受发给自己的数据报文，将其他的报文统统丢弃。当然也可以让网卡接受所有的报文，这就是所谓的混杂模式（promiscuous mode）。</p>
+<a id="more"></a>
+<p>无线网卡跟这个很类似，默认情况下无线网卡和无线接入点（Wireless Access Point，WAP）建立连接后，就处于托管模式（Managed mode），在这个模式下，无线网卡只专注于接受从 WAP 发给自己的数据报文。如果想让无线网卡监听空气中所有的无线通信，则可以将无线网卡设置成监听模式（Monitor mode，也叫 RFMON 模式），然后再使用诸如 Wireshark 之类的软件捕获数据报文进行分析。</p>
+<p>无线网卡除了 Managed mode 和 Monitor mode 这两个模式之外，其实还支持好几种其他的模式，譬如：Ad hoc（也叫 IBSS 模式） 和 Master mode。</p>
+<p>当然我们主要看到监听模式，现在笔记本自带的网卡大部分都支持监听模式，博主找到了一份比较旧的Linux wireless device清单，但上面并没有我的设备，虽然我成功打开了监听模式（。</p>
+<p>在 Linux 环境下，有一个命令估计大家都用过：ifconfig（虽然逐渐被ip代替），它用来显示或配置网络设备，譬如最常见的查看网卡 IP 地址，或者启用禁用某个网卡，修改网卡的 MAC 地址等等。如果要管理无线网卡，另一个命令是 iwconfig，可以用来查看无线网卡的状态，或修改无线网卡的模式。最简单的用法是不带任何参数，如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@Unknown laplacence]<span class="comment"># iwconfig</span></span><br><span class="line">wlp5s0    IEEE 802.11  ESSID:off/any  </span><br><span class="line">          Mode:Managed  Access Point: Not-Associated   Tx-Power=off   </span><br><span class="line">          Retry short <span class="built_in">limit</span>:7   RTS thr:off   Fragment thr:off</span><br><span class="line">          Encryption key:off</span><br><span class="line">          Power Management:on</span><br><span class="line"></span><br><span class="line">virbr0    no wireless extensions.</span><br><span class="line"></span><br><span class="line">virbr0-nic  no wireless extensions.</span><br><span class="line"></span><br><span class="line">lo        no wireless extensions.</span><br><span class="line"></span><br><span class="line">enp3s0    no wireless extensions.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以列出系统中当前正在使用的无线网卡，以及无线网卡的模式，支持的无线协议，ESSID（无线扩展服务设置 ID，Extended Service Set ID），信号强度等。从上面的例子中可以看出，wlp5s0 为无线网卡，当前网卡的运行模式为托管模式（Managed）。</p>
+<p>iw 是 Linux 系统上的另一款无线配置工具，它的出现是为了解决 iwconfig 的很多不足，或者说它完全是为了取代 iwconfig 而开发的。</p>
+<p>之所以要新开发一套无线配置工具，还要从无线扩展（Wireless-Extensions）说起。Wireless-Extensions（简称 WE，或者 Wext） 是由 Jean Tourrilhes 1997 年开发并添加到 Linux 内核的，它通过 Linux 的系统调用 ioctl() 来实现用户层和内核层之间的通信。由于设计的比较粗糙，使用 WE 开发的程序很难管理，并且由于它年代久远，WE 除了一些基本的 bugfix 之外也无人维护了，所以亟需一种新的无线驱动框架来指导无线程序的开发。于是便出现了 cfg80211 和 nl80211 。需要特别指出的是 cfg80211 不再使用 ioctl 系统调用，而是使用 Netlink （基于 socket 通信）。iw 就是完全基于 cfg80211 框架重新设计并开发的。</p>
+<p>使用 iw 不仅可以实现和 iwconfig 完全一样的功能，而且它的用法要更丰富（当然也更复杂），可以先使用 iw help 查看它的使用帮助。下面的几个命令可能是你想尝试的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw list</span></span><br></pre></td></tr></table></figure>
+<p>列出所有的无线设备，以及每个无线设备的详细信息，详细到频率和信号强度，能想到的信息它都有列出来。<br>简单一点可以用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw dev wlp5s0 info</span></span><br></pre></td></tr></table></figure>
+<p>就显示出无线接口名称，网卡模式，频道等等。<br>那么主要是说如何设置监听模式，iw设置监听模式是通过新建一个虚拟网卡接口，然后将该虚拟网卡设置为监听模式，这样就不会导致无线网卡无法上网只能抓包的情况，而且单独用iwconfig设置monitor mode，可能会因为系统自带的网络管理服务强行切回Managed mode。（亲身体验）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw dev wlp5s0 interface add mon0 type monitor</span></span><br><span class="line"><span class="comment"># ip link set mon0 up</span></span><br></pre></td></tr></table></figure>
+<p>设置完后通过wireshark或者tcpdump就能抓到802.11的详细数据包了。</p>
+<p>如果需要删除mon0这个接口，只需要通过iw再一次删除就可以了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw dev mon0 del</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2019/09/03/Wireless_network_sniffing_in_Fedora/" data-id="ckdrg5ysb003twk351gwtcvpr" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/09/08/Python_AES_CBC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Python3下实现AES-CBC
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/30/RSRP_RSCP_RSSI_RSRQ_RSSNR/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">RSRP/RSCP/RSSI/RSRQ/RSSNR 参考值和详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/selenium_about_chromedriver/">selenium关于chromedriver的配置</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/06/seed_fill_4/">4连通种子填充算法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/default_function_variable_problem/">Python3中的默认函数可变问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2020 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

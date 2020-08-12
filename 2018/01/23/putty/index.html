@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>putty配置和使用 | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="配色轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="putty配置和使用">
+<meta property="og:url" content="http://yoursite.com/2018/01/23/putty/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="配色轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ0OTIxNDc0?x-oss-process=image/format,png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ1MjA1Njc5?x-oss-process=image/format,png">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ1NTMyNDg5?x-oss-process=image/format,png">
+<meta property="article:published_time" content="2018-01-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:09:25.401Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ0OTIxNDc0?x-oss-process=image/format,png">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-putty" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/23/putty/" class="article-date">
+  <time datetime="2018-01-22T16:00:00.000Z" itemprop="datePublished">2018-01-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/experience/">experience</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      putty配置和使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="配色"><a href="#配色" class="headerlink" title="配色"></a>配色</h2><p>轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。</p>
+<a id="more"></a>
+<p><code>[HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\colour]</code><br>这里可以放入新的配色方案。</p>
+<h2 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h2><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ0OTIxNDc0?x-oss-process=image/format,png" alt="基本配置"><br>Host Name不必多说，IP地址输入后和端口，接着选择方法。最后的最后配置好后一定要save，不然下次重启又是一片空白。（因为博主试过好几次了。</p>
+<h2 id="密钥配置"><a href="#密钥配置" class="headerlink" title="密钥配置"></a>密钥配置</h2><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ1MjA1Njc5?x-oss-process=image/format,png" alt="密钥设置"><br>在Connection-SSH-Auth里面配置使用的private key，要用.ppk，也就是说需要用到puttykeygen。<br><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ1NTMyNDg5?x-oss-process=image/format,png" alt="生成器"><br>putty有自带rsa生成器，当然你用server的sshdkeygen也可以，生成后传输到需要用的电脑上，然后保存，在puttykeygen里面load，如果是生成的话就generate，下面有密钥类型和长度选项，会提示你移动鼠标来生成密钥。最后save private key，另存为ppk文件就可以放入使用了。</p>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2018/01/23/putty/" data-id="ckdrg5yrm002ewk35gvd59ila" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/26/Python_simple_http_server/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用Python3在局域网传输文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/04/Cannot_connect_to_local_MySQL_server_through_socket/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CentOS通过yum安装Mariadb(MySQL)无法启动服务或者找不到mysql.sock(2)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/selenium_about_chromedriver/">selenium关于chromedriver的配置</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/06/seed_fill_4/">4连通种子填充算法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/default_function_variable_problem/">Python3中的默认函数可变问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2020 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

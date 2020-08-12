@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++11 &lt;thread&gt; 详解 | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在C++11中 &lt;thread&gt;有一个thread类和this_thread的命名空间，std::thread 在 &lt;thread&gt; 头文件中声明，因此使用 std::thread::thread时需要包含 &lt;thread&gt; 头文件。 成员有两种类型，一种是id，即该线程的id，另一种是native_handle_type，native的句柄类型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++11 &lt;thread&gt; 详解">
+<meta property="og:url" content="http://yoursite.com/2017/03/14/C++_thread_2/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="在C++11中 &lt;thread&gt;有一个thread类和this_thread的命名空间，std::thread 在 &lt;thread&gt; 头文件中声明，因此使用 std::thread::thread时需要包含 &lt;thread&gt; 头文件。 成员有两种类型，一种是id，即该线程的id，另一种是native_handle_type，native的句柄类型。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-03-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:07:02.436Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C++_thread_2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/14/C++_thread_2/" class="article-date">
+  <time datetime="2017-03-13T16:00:00.000Z" itemprop="datePublished">2017-03-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>►<a class="article-category-link" href="/categories/experience/">experience</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++11 &lt;thread&gt; 详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在C++11中 <code>&lt;thread&gt;</code>有一个thread类和this_thread的命名空间，std::thread 在 <code>&lt;thread&gt; </code>头文件中声明，因此使用 std::thread::thread时需要包含 <code>&lt;thread&gt; </code>头文件。</p>
+<p>成员有两种类型，一种是id，即该线程的id，另一种是native_handle_type，native的句柄类型。</p>
+<a id="more"></a>
+<table>
+<thead>
+<tr>
+<th>std::thread::thread成员函数</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>(constructor)thread</td>
+<td>构造空的thread</td>
+</tr>
+<tr>
+<td>(destructor)~thread</td>
+<td>结束线程。</td>
+</tr>
+<tr>
+<td>operator=</td>
+<td>Move-assign线程。</td>
+</tr>
+<tr>
+<td>get_id</td>
+<td>获取线程id。</td>
+</tr>
+<tr>
+<td>joinable</td>
+<td>检查线程是否可被join。</td>
+</tr>
+<tr>
+<td>join</td>
+<td>join线程。</td>
+</tr>
+<tr>
+<td>detach</td>
+<td>detach线程。</td>
+</tr>
+<tr>
+<td>swap</td>
+<td>swap线程。</td>
+</tr>
+<tr>
+<td>native_handle</td>
+<td>返回native handle。</td>
+</tr>
+<tr>
+<td>hardware_concurrency [static]</td>
+<td>检测硬件并发特性。</td>
+</tr>
+</tbody></table>
+<p>以及一个非成员过载函数 swap (thread)，<br><code>void swap (thread&amp; x, thread&amp; y) noexcept;</code><br>交换 x 和 y thread对象的状态。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>std::thread构造</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>default (1)</td>
+<td>默认构造函数，创建一个空的thread执行对象。</td>
+</tr>
+<tr>
+<td>initialization (2)</td>
+<td>初始化构造函数，创建一个thread对象，该thread对象可被joinable，新产生的线程会调用fn函数，该函数的参数由args给出。</td>
+</tr>
+<tr>
+<td>copy [deleted] (3)</td>
+<td>拷贝构造函数(被禁用)，意味着thread不可被拷贝构造。</td>
+</tr>
+<tr>
+<td>move (4)</td>
+<td>move构造函数，move构造函数，调用成功之后x不代表任何thread执行对象。</td>
+</tr>
+</tbody></table>
+<p>注意：可被 joinable 的 thread 对象必须在他们销毁之前被主线程 join 或者将其设置为 detached.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>move 赋值操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>move (1)</td>
+<td>move赋值操作，如果当前对象不可joinable，需要传递一个右值引用(rhs)给move赋值操作；如果当前对象可被joinable，则terminate() 报错。</td>
+</tr>
+<tr>
+<td>copy [deleted] (2)</td>
+<td>拷贝赋值操作被禁用，thread对象不可被拷贝。</td>
+</tr>
+<tr>
+<td>例子1</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;       // std::cout</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;atomic&gt;         // std::atomic</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;         // std::thread</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;         // std::vector</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">std</span>::atomic&lt;<span class="keyword">int</span>&gt; <span class="title">global_counter</span> <span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">increase_global</span> <span class="params">(<span class="keyword">int</span> n)</span> </span>&#123; <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) ++global_counter; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">increase_reference</span> <span class="params">(<span class="built_in">std</span>::atomic&lt;<span class="keyword">int</span>&gt;&amp; variable, <span class="keyword">int</span> n)</span> </span>&#123; <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) ++variable; &#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">C</span> :</span> <span class="built_in">std</span>::atomic&lt;<span class="keyword">int</span>&gt; &#123;</span><br><span class="line">  C() : <span class="built_in">std</span>::atomic&lt;<span class="keyword">int</span>&gt;(<span class="number">0</span>) &#123;&#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">increase_member</span> <span class="params">(<span class="keyword">int</span> n)</span> </span>&#123; <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; ++i) fetch_add(<span class="number">1</span>); &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::thread&gt; threads;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;increase global counter with 10 threads...\n&quot;</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=<span class="number">10</span>; ++i)</span><br><span class="line">    threads.push_back(<span class="built_in">std</span>::thread(increase_global,<span class="number">1000</span>));</span><br><span class="line"></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;increase counter (foo) with 10 threads using reference...\n&quot;</span>;</span><br><span class="line">  <span class="function"><span class="built_in">std</span>::atomic&lt;<span class="keyword">int</span>&gt; <span class="title">foo</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=<span class="number">10</span>; ++i)</span><br><span class="line">    threads.push_back(<span class="built_in">std</span>::thread(increase_reference,<span class="built_in">std</span>::ref(foo),<span class="number">1000</span>));</span><br><span class="line"></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;increase counter (bar) with 10 threads using member...\n&quot;</span>;</span><br><span class="line">  C bar;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;=<span class="number">10</span>; ++i)</span><br><span class="line">    threads.push_back(<span class="built_in">std</span>::thread(&amp;C::increase_member,<span class="built_in">std</span>::ref(bar),<span class="number">1000</span>));</span><br><span class="line"></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;synchronizing all threads...\n&quot;</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; th : threads) th.join();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;global_counter: &quot;</span> &lt;&lt; global_counter &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;foo: &quot;</span> &lt;&lt; foo &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;bar: &quot;</span> &lt;&lt; bar &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例子2</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;atomic&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Thread &quot;</span> &lt;&lt; n &lt;&lt; <span class="string">&quot; executing\n&quot;</span>;</span><br><span class="line">        <span class="built_in">std</span>::this_thread::sleep_for(<span class="built_in">std</span>::chrono::milliseconds(<span class="number">10</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span>&amp; n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i) &#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Thread 2 executing\n&quot;</span>;</span><br><span class="line">        ++n;</span><br><span class="line">        <span class="built_in">std</span>::this_thread::sleep_for(<span class="built_in">std</span>::chrono::milliseconds(<span class="number">10</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">std</span>::thread t1; <span class="comment">// t1 is not a thread</span></span><br><span class="line">    <span class="function"><span class="built_in">std</span>::thread <span class="title">t2</span><span class="params">(f1, n + <span class="number">1</span>)</span></span>; <span class="comment">// pass by value</span></span><br><span class="line">    <span class="function"><span class="built_in">std</span>::thread <span class="title">t3</span><span class="params">(f2, <span class="built_in">std</span>::ref(n))</span></span>; <span class="comment">// pass by reference</span></span><br><span class="line">    <span class="function"><span class="built_in">std</span>::thread <span class="title">t4</span><span class="params">(<span class="built_in">std</span>::move(t3))</span></span>; <span class="comment">// t4 is now running f2(). t3 is no longer a thread</span></span><br><span class="line">    t2.join();</span><br><span class="line">    t4.join();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Final value of n is &quot;</span> &lt;&lt; n &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2017/03/14/C++_thread_2/" data-id="ckdrg5yp5000pwk350p6bc4wt" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/14/C++_async/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C++中的异步操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/10/URI_URL/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">URI/URL区别</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/selenium_about_chromedriver/">selenium关于chromedriver的配置</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/06/seed_fill_4/">4连通种子填充算法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/default_function_variable_problem/">Python3中的默认函数可变问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2020 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

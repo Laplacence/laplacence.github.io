@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>wifite使用方法 | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近几天都在玩老东西，顺便看看这个全自动WLAN探测器+破解，用这个的前提你得安装了aircrack-ng，不然没用。地址是# wget https:&#x2F;&#x2F;raw.github.com&#x2F;derv82&#x2F;wifite&#x2F;master&#x2F;wifite.py下载完后自然是加权限和挪位置# chmod +x wifite.py">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wifite使用方法">
+<meta property="og:url" content="http://yoursite.com/2017/07/18/wifite/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="最近几天都在玩老东西，顺便看看这个全自动WLAN探测器+破解，用这个的前提你得安装了aircrack-ng，不然没用。地址是# wget https:&#x2F;&#x2F;raw.github.com&#x2F;derv82&#x2F;wifite&#x2F;master&#x2F;wifite.py下载完后自然是加权限和挪位置# chmod +x wifite.py">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-07-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:11:25.040Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-wifite" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/18/wifite/" class="article-date">
+  <time datetime="2017-07-17T16:00:00.000Z" itemprop="datePublished">2017-07-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>►<a class="article-category-link" href="/categories/experience/">experience</a>►<a class="article-category-link" href="/categories/network/">network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      wifite使用方法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近几天都在玩老东西，顺便看看这个全自动WLAN探测器+破解，用这个的前提你得安装了aircrack-ng，不然没用。地址是<br><code># wget https://raw.github.com/derv82/wifite/master/wifite.py</code><br>下载完后自然是加权限和挪位置<br><code># chmod +x wifite.py</code></p>
+<a id="more"></a>
+<p>运行后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[laplacence@localhost tool]$ ./wifite.py</span><br><span class="line"></span><br><span class="line">  .;<span class="string">&#x27;                     `;,    </span></span><br><span class="line"><span class="string"> .;&#x27;</span>  ,;<span class="string">&#x27;             `;,  `;,   WiFite v2 (r87)</span></span><br><span class="line"><span class="string">.;&#x27;</span>  ,;<span class="string">&#x27;  ,;&#x27;</span>     `;,  `;,  `;,  </span><br><span class="line">::   ::   :   ( )   :   ::   ::  automated wireless auditor</span><br><span class="line"><span class="string">&#x27;:.  &#x27;</span>:.  <span class="string">&#x27;:. /_\ ,:&#x27;</span>  ,:<span class="string">&#x27;  ,:&#x27;</span>  </span><br><span class="line"> <span class="string">&#x27;:.  &#x27;</span>:.    /___\    ,:<span class="string">&#x27;  ,:&#x27;</span>   designed <span class="keyword">for</span> Linux</span><br><span class="line">  <span class="string">&#x27;:.       /_____\      ,:&#x27;</span>     </span><br><span class="line">           /       \             </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> [!] ERROR: wifite must be run as root</span><br><span class="line"> [!] login as root (su root) or try sudo ./wifite.py</span><br></pre></td></tr></table></figure>
+<p>logo画的还不错，接着是例行看看-h</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">[laplacence@localhost tool]$ ./wifite.py -h</span><br><span class="line"></span><br><span class="line">  .;<span class="string">&#x27;                     `;,    </span></span><br><span class="line"><span class="string"> .;&#x27;</span>  ,;<span class="string">&#x27;             `;,  `;,   WiFite v2 (r87)</span></span><br><span class="line"><span class="string">.;&#x27;</span>  ,;<span class="string">&#x27;  ,;&#x27;</span>     `;,  `;,  `;,  </span><br><span class="line">::   ::   :   ( )   :   ::   ::  automated wireless auditor</span><br><span class="line"><span class="string">&#x27;:.  &#x27;</span>:.  <span class="string">&#x27;:. /_\ ,:&#x27;</span>  ,:<span class="string">&#x27;  ,:&#x27;</span>  </span><br><span class="line"> <span class="string">&#x27;:.  &#x27;</span>:.    /___\    ,:<span class="string">&#x27;  ,:&#x27;</span>   designed <span class="keyword">for</span> Linux</span><br><span class="line">  <span class="string">&#x27;:.       /_____\      ,:&#x27;</span>     </span><br><span class="line">           /       \             </span><br><span class="line"></span><br><span class="line">usage: wifite.py [-h] [--check CHECK] [--cracked] [--recrack] [--all]</span><br><span class="line">                 [-i INTERFACE] [--mac] [--mon-iface MONITOR_INTERFACE]</span><br><span class="line">                 [-c CHANNEL] [-e ESSID] [-b BSSID] [--showb] [--nodeauth]</span><br><span class="line">                 [--power POWER] [--tx TX] [--quiet] [--update] [--wpa]</span><br><span class="line">                 [--wpat WPAT] [--wpadt WPADT] [--strip] [--crack]</span><br><span class="line">                 [--dict DIC] [--aircrack] [--pyrit] [--tshark] [--cowpatty]</span><br><span class="line">                 [--wep] [--pps PPS] [--wept WEPT] [--chopchop] [--arpreplay]</span><br><span class="line">                 [--fragment] [--caffelatte] [--p0841] [--hirte]</span><br><span class="line">                 [--nofakeauth] [--wepca WEPCA] [--wepsave WEPSAVE] [--wps]</span><br><span class="line">                 [--pixie] [--wpst WPST] [--wpsratio WPSRATIO]</span><br><span class="line">                 [--wpsretry WPSRETRY]</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -h, --<span class="built_in">help</span>            show this <span class="built_in">help</span> message and <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line">COMMAND:</span><br><span class="line">  --check CHECK         Check capfile [file] <span class="keyword">for</span> handshakes.</span><br><span class="line">  --cracked             Display previously cracked access points.</span><br><span class="line">  --recrack             Include already cracked networks <span class="keyword">in</span> targets.</span><br><span class="line"></span><br><span class="line">GLOBAL:</span><br><span class="line">  --all                 Attack all targets.</span><br><span class="line">  -i INTERFACE          Wireless interface <span class="keyword">for</span> capturing.</span><br><span class="line">  --mac                 Anonymize MAC address.</span><br><span class="line">  --mon-iface MONITOR_INTERFACE</span><br><span class="line">                        Interface already <span class="keyword">in</span> monitor mode.</span><br><span class="line">  -c CHANNEL            Channel to scan <span class="keyword">for</span> targets.</span><br><span class="line">  -e ESSID              Target a specific access point by ssid (name).</span><br><span class="line">  -b BSSID              Target a specific access point by bssid (mac).</span><br><span class="line">  --showb               Display target BSSIDs after scan.</span><br><span class="line">  --nodeauth            Do not deauthenticate clients <span class="keyword">while</span> scanning</span><br><span class="line">  --power POWER         Attacks any targets with signal strength &gt; [pow].</span><br><span class="line">  --tx TX               Set adapter TX power level.</span><br><span class="line">  --quiet               Do not <span class="built_in">print</span> list of APs during scan.</span><br><span class="line">  --update              Check and update Wifite.</span><br><span class="line"></span><br><span class="line">WPA:</span><br><span class="line">  --wpa                 Only target WPA networks (works with --wps --wep).</span><br><span class="line">  --wpat WPAT           Time to <span class="built_in">wait</span> <span class="keyword">for</span> WPA attack to complete (seconds).</span><br><span class="line">  --wpadt WPADT         Time to <span class="built_in">wait</span> between sending deauth packets (seconds).</span><br><span class="line">  --strip               Strip handshake using tshark or pyrit.</span><br><span class="line">  --crack               Crack WPA handshakes using [dic] wordlist file.</span><br><span class="line">  --dict DIC            Specificy dictionary to use when cracking WPA.</span><br><span class="line">  --aircrack            Verify handshake using aircrack.</span><br><span class="line">  --pyrit               Verify handshake using pyrit.</span><br><span class="line">  --tshark              Verify handshake using tshark.</span><br><span class="line">  --cowpatty            Verify handshake using cowpatty.</span><br><span class="line"></span><br><span class="line">WEP:</span><br><span class="line">  --wep                 Only target WEP networks.</span><br><span class="line">  --pps PPS             Set the number of packets per second to inject.</span><br><span class="line">  --wept WEPT           Sec to <span class="built_in">wait</span> <span class="keyword">for</span> each attack, 0 implies endless.</span><br><span class="line">  --chopchop            Use chopchop attack.</span><br><span class="line">  --arpreplay           Use arpreplay attack.</span><br><span class="line">  --fragment            Use fragmentation attack.</span><br><span class="line">  --caffelatte          Use caffe-latte attack.</span><br><span class="line">  --p0841               Use P0842 attack.</span><br><span class="line">  --hirte               Use hirte attack.</span><br><span class="line">  --nofakeauth          Stop attack <span class="keyword">if</span> fake authentication fails.</span><br><span class="line">  --wepca WEPCA         Start cracking when number of IVs surpass [n].</span><br><span class="line">  --wepsave WEPSAVE     Save a copy of .<span class="built_in">cap</span> files to this directory.</span><br><span class="line"></span><br><span class="line">WPS:</span><br><span class="line">  --wps                 Only target WPS networks.</span><br><span class="line">  --pixie               Only use the WPS PixieDust attack</span><br><span class="line">  --wpst WPST           Max <span class="built_in">wait</span> <span class="keyword">for</span> new retry before giving up (0: never).</span><br><span class="line">  --wpsratio WPSRATIO   Min ratio of successful PIN attempts/total retries.</span><br><span class="line">  --wpsretry WPSRETRY   Max number of retries <span class="keyword">for</span> same PIN before giving up.</span><br></pre></td></tr></table></figure>
+<p>搜索开放WPS的AP好了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost tool]<span class="comment"># ./wifite.py --wps</span></span><br><span class="line"></span><br><span class="line">  .;<span class="string">&#x27;                     `;,    </span></span><br><span class="line"><span class="string"> .;&#x27;</span>  ,;<span class="string">&#x27;             `;,  `;,   WiFite v2 (r87)</span></span><br><span class="line"><span class="string">.;&#x27;</span>  ,;<span class="string">&#x27;  ,;&#x27;</span>     `;,  `;,  `;,  </span><br><span class="line">::   ::   :   ( )   :   ::   ::  automated wireless auditor</span><br><span class="line"><span class="string">&#x27;:.  &#x27;</span>:.  <span class="string">&#x27;:. /_\ ,:&#x27;</span>  ,:<span class="string">&#x27;  ,:&#x27;</span>  </span><br><span class="line"> <span class="string">&#x27;:.  &#x27;</span>:.    /___\    ,:<span class="string">&#x27;  ,:&#x27;</span>   designed <span class="keyword">for</span> Linux</span><br><span class="line">  <span class="string">&#x27;:.       /_____\      ,:&#x27;</span>     </span><br><span class="line">           /       \             </span><br><span class="line"></span><br><span class="line"> [+] targeting WPS-enabled networks.</span><br><span class="line"></span><br><span class="line"> [!] the program reaver is required <span class="keyword">for</span> WPS attacks</span><br><span class="line">       available at http://code.google.com/p/reaver-wps</span><br><span class="line"> [!] the program tshark is not required, but is recommended</span><br><span class="line"> [!] the program pyrit is not required, but is recommended</span><br><span class="line"> [!] the program cowpatty is not required, but is recommended</span><br><span class="line"></span><br><span class="line"> [+] scanning <span class="keyword">for</span> wireless devices...</span><br><span class="line"> [+] enabling monitor mode on wlp5s0... <span class="keyword">done</span></span><br><span class="line"> [+] initializing scan (wlp5s0mon), updates at 1 sec intervals, CTRL+C when ready.</span><br><span class="line"> [0:00:01] scanning wireless networks. 0 targets and 0 clients found   </span><br></pre></td></tr></table></figure>
+<p>扫了半天没有，这年头AP也没那么容易突破了，退出后提示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[0:00:37] scanning wireless networks. 0 targets and 7 clients found   </span><br><span class="line"></span><br><span class="line">[!] no targets found!</span><br><span class="line">[!] you may need to <span class="built_in">wait</span> <span class="keyword">for</span> targets to show up.</span><br><span class="line"></span><br><span class="line">[+] disabling monitor mode on wlp5s0mon... <span class="keyword">done</span></span><br><span class="line">[+] quitting</span><br></pre></td></tr></table></figure>
+<p>成功后貌似会有PIN和KEY出现，等以后找个垃圾试试看吧。</p>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2017/07/18/wifite/" data-id="ckdrg5yse003zwk35bteoaftn" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/21/hosts_change/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          一键更换hosts
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/17/yersinia/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">yersinia 的安装与使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/selenium_about_chromedriver/">selenium关于chromedriver的配置</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/06/seed_fill_4/">4连通种子填充算法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/default_function_variable_problem/">Python3中的默认函数可变问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2020 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

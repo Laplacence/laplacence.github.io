@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++ STL | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="STL简介STL(Standard Template Library，标准模板库)是惠普实验室开发的一系列软件的统称。它是由Alexander Stepanov、Meng Lee和David R Musser在惠普实验室工作时所开发出来的。现在虽说它主要出现在C++中，但在被引入C++之前该技术就已经存在了很长的一段时间。STL的代码从广义上讲分为三类：algorithm(算法)、containe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ STL">
+<meta property="og:url" content="http://yoursite.com/2017/03/06/C++_STL/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="STL简介STL(Standard Template Library，标准模板库)是惠普实验室开发的一系列软件的统称。它是由Alexander Stepanov、Meng Lee和David R Musser在惠普实验室工作时所开发出来的。现在虽说它主要出现在C++中，但在被引入C++之前该技术就已经存在了很长的一段时间。STL的代码从广义上讲分为三类：algorithm(算法)、containe">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-03-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:06:55.756Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C++_STL" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/06/C++_STL/" class="article-date">
+  <time datetime="2017-03-05T16:00:00.000Z" itemprop="datePublished">2017-03-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++ STL
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="STL简介"><a href="#STL简介" class="headerlink" title="STL简介"></a>STL简介</h2><p>STL(Standard Template Library，标准模板库)是惠普实验室开发的一系列软件的统称。它是由Alexander Stepanov、Meng Lee和David R Musser在惠普实验室工作时所开发出来的。现在虽说它主要出现在C++中，但在被引入C++之前该技术就已经存在了很长的一段时间。<br>STL的代码从广义上讲分为三类：algorithm(算法)、container(容器)和iterator(迭代器)，几乎所有的代码都采用了模板类和模版函数的方式，这相比于传统的由函数和类组成的库来说提供了更好的代码重用机会。在C++标准中，STL被组织为下面的13个头文件：<br><strong>algorithm、deque、functional、iterator、vector、list、map、memory、numeric、queue、set、stack和utility</strong></p>
+<a id="more"></a>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>大家都能取得的一个共识是函数库对数据类型的选择对其可重用性起着至关重要的作用。举例来说，一个求方根的函数，在使用浮点数作为其参数类型的情况下的可重用性肯定比使用整型作为它的参数类性要高。而C++通过模板的机制允许推迟对某些类型的选择，直到真正想使用模板或者说对模板进行特化的时候，STL就利用了这一点提供了相当多的有用算法。它是在一个有效的框架中完成这些算法的——你可以将所有的类型划分为少数的几类，然后就可以在模版的参数中使用一种类型替换掉同一种类中的其他类型。<br>STL提供了大约100个实现算法的模版函数，比如算法for_each将为指定序列中的每一个元素调用指定的函数，stable_sort以你所指定的规则对序列进行稳定性排序等等。这样一来，只要我们熟悉了STL之后，许多代码可以被大大的化简，只需要通过调用一两个算法模板，就可以完成所需要的功能并大大地提升效率。<br>算法部分主要由头文件algorithm，numeric和functional组成。</p>
+<p>algorithm是所有STL头文件中最大的一个(尽管它很好理解)，它是由一大堆模版函数组成的，可以认为每个函数在很大程度上都是独立的，其中常用到的功能范围涉及到比较、交换、查找、遍历操作、复制、修改、移除、反转、排序、合并等等。<br>numeric体积很小，只包括几个在序列上面进行简单数学运算的模板函数，包括加法和乘法在序列上的一些操作。<br>functional中则定义了一些模板类，用以声明函数对象。</p>
+<h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>在实际的开发过程中，数据结构本身的重要性不会逊于操作于数据结构的算法的重要性，当程序中存在着对时间要求很高的部分时，数据结构的选择就显得更加重要。<br>经典的数据结构数量有限，但是我们常常重复着一些为了实现向量、链表等结构而编写的代码，这些代码都十分相似，只是为了适应不同数据的变化而在细节上有所出入。STL容器就为我们提供了这样的方便，它允许我们重复利用已有的实现构造自己的特定类型下的数据结构，通过设置一些模版类，STL容器对最常用的数据结构提供了支持，这些模板的参数允许我们指定容器中元素的数据类型，可以将我们许多重复而乏味的工作简化。<br>容器部分主要由头文件vector,list,deque,set,map,stack和queue组成。对于常用的一些容器和容器适配器(可以看作由其它容器实现的容器)，可以通过下表总结一下它们和相应头文件的对应关系。</p>
+<p>向量(vector) <strong>连续存储的元素</strong> vector<br>列表(list)       <strong>由节点组成的双向链表，每个结点包含着一个元素</strong> list<br>双队列(deque) <strong>连续存储的指向不同元素的指针所组成的数组</strong> deque<br>集合(set) <strong>由节点组成的红黑树，每个节点都包含着一个元素，节点之间以某种作用于元素对的谓词排列，没有两个不同的元素能够拥有相同的次序</strong> set<br>多重集合(multiset) <strong>允许存在两个次序相等的元素的集合</strong> set<br>栈(stack) <strong>后进先出的值的排列</strong> stack<br>队列(queue) <strong>先进先出的执的排列</strong> queue<br>优先队列(priority_queue) <strong>元素的次序是由作用于所存储的值对上的某种谓词决定的的一种队列</strong> queue<br>映射(map) <strong>由{键，值}对组成的集合，以某种作用于键对上的谓词排列</strong> map<br>多重映射(multimap) <strong>允许键对有相等的次序的映射</strong> map</p>
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>下面要说的迭代器从作用上来说是最基本的部分，可是理解起来比前两者都要费力一些(至少笔者是这样)。软件设计有一个基本原则，所有的问题都可以通过引进一个间接层来简化，这种简化在STL中就是用迭代器来完成的。<br>概括来说，迭代器在STL中用来将算法和容器联系起来，起着一种黏和剂的作用。几乎STL提供的所有算法都是通过迭代器存取元素序列进行工作的，每一个容器都定义了其本身所专有的迭代器，用以存取容器中的元素。<br>迭代器部分主要由头文件utility,iterator和memory组成。<br>utility是一个很小的头文件，它包括了贯穿使用在STL中的几个模板的声明，<br>iterator中提供了迭代器使用的许多方法，而对于memory的描述则十分的困难，它以不同寻常的方式为容器中的元素分配存储空间，同时也为某些算法执行期间产生的临时对象提供机制,memory中的主要部分是模板类allocator，它负责产生所有容器中的默认分配器。</p>
+<p>对于之前不太了解STL的读者来说，上面的文字只是十分概括地描述了一下STL的框架，对您理解STL的机制乃至使用STL所起到的帮助微乎甚微，这不光是因为深入STL需要对C++的高级应用有比较全面的了解，更因为STL的三个部分算法、容器和迭代器三部分是互相牵制或者说是紧密结合的。从概念上讲最基础的部分是迭代器，可是直接学习迭代器会遇到许多抽象枯燥和繁琐的细节，然而不真正理解迭代器又是无法直接进入另两部分的学习的(至少对剖析源码来说是这样)。可以说，适应STL处理问题的方法是需要花费一定的时间的，但是以此为代价，STL取得了一种十分可贵的独立性，它通过迭代器能在尽可能少地知道某种数据结构的情况下完成对这一结构的运算，所以下决心钻研STL的朋友们千万不要被一时的困难击倒。其实STL运用的模式相对统一，只要适应了它，从一个STL工具到另一个工具，都不会有什么大的变化。<br>对于STL的使用，也普遍存在着两种观点。第一种认为STL的最大作用在于充当经典的数据结构和算法教材，因为它的源代码涉及了许多具体实现方面的问题。第二种则认为STL的初衷乃是为了简化设计，避免重复劳动，提高编程效率，因此应该是“应用至上”的，对于源代码则不必深究。笔者则认为分析源代码和应用并不矛盾，通过分析源代码也能提高我们对其应用的理解，当然根据具体的目的也可以有不同的侧重。</p>
+<p>一些题外话，大概50句，每天看看自勉。<br>1.把C++当成一门新的语言学习；<br>2.看《Thinking In C++》，不要看《C++变成思想》；<br>3.看《The C++ Programming Language》和《Inside The C++ Object Model》,不要因为他们很难而我们自己是初学者所以就不看；<br>4.不要被VC、BCB、BC、MC、TC等词汇所迷惑——他们都是集成开发环境，而我们要学的是一门语言；<br>5.不要放过任何一个看上去很简单的小编程问题——他们往往并不那么简单，或者可以引伸出很多知识点；<br>6.会用Visual C++，并不说明你会C++；<br>7.学class并不难，template、STL、generic programming也不过如此——难的是长期坚持实践和不遗余力的博览群书；<br>8.如果不是天才的话，想学编程就不要想玩游戏——你以为你做到了，其实你的C++水平并没有和你通关的能力一起变高——其实可以时刻记住：学C++是为了编游戏的；<br>9.看Visual C++的书，是学不了C++语言的；<br>16.把时髦的技术挂在嘴边，还不如把过时的技术记在心里；<br>18.学习编程最好的方法之一就是阅读源代码；<br>19.在任何时刻都不要认为自己手中的书已经足够了；<br>20.请阅读《The Standard C++ Bible》(中文版：标准C++宝典)，掌握C++标准；<br>21.看得懂的书，请仔细看；看不懂的书，请硬着头皮看；<br>22.别指望看第一遍书就能记住和掌握什么——请看第二遍、第三遍；<br>23.请看《Effective C++》和《More Effective C++》以及《Exceptional C++》；<br>24.不要停留在集成开发环境的摇篮上，要学会控制集成开发环境，还要学会用命令行方式处理程序；<br>25.和别人一起讨论有意义的C++知识点，而不是争吵XX行不行或者YY与ZZ哪个好；<br>26.请看《程序设计实践》，并严格的按照其要求去做；<br>27.不要因为C和C++中有一些语法和关键字看上去相同，就认为它们的意义和作用完全一样；<br>28.C++绝不是所谓的C的“扩充”——如果C++一开始就起名叫Z语言，你一定不会把C和Z语言联系得那么紧密；<br>29.请不要认为学过XX语言再改学C++会有什么问题——你只不过又在学一门全新的语言而已；<br>30.读完了《Inside The C++ Object Model》以后再来认定自己是不是已经学会了C++；<br>31.学习编程的秘诀是：编程，编程，再编程；<br>32.请留意下列书籍：《C++面向对象高效编程(C++ Effective Object-Oriented Software Construction)》《面向对象软件构造(Object-Oriented Software Construction)》《设计模式(Design Patterns)》《The Art of Computer Programming》；<br>34.请把书上的程序例子亲手输入到电脑上实践，即使配套光盘中有源代码；<br>35.把在书中看到的有意义的例子扩充；<br>36.请重视C++中的异常处理技术，并将其切实的运用到自己的程序中；<br>37.经常回顾自己以前写过的程序，并尝试重写，把自己学到的新知识运用进去；<br>38.不要漏掉书中任何一个练习题——请全部做完并记录下解题思路；<br>39.C++语言和C++的集成开发环境要同时学习和掌握；<br>40.既然决定了学C++,就请坚持学下去，因为学习程序设计语言的目的是掌握程序设计技术，而程序设计技术是跨语言的；<br>41.就让C++语言的各种平台和开发环境去激烈的竞争吧，我们要以学习C++语言本身为主；<br>42.当你写C++程序写到一半却发现自己用的方法很拙劣时，请不要马上停手；请尽快将余下的部分粗略的完成以保证这个设计的完整性，然后分析自己的错误并重新设计和编写(参见43)；<br>43.别心急，设计C++的class确实不容易；自己程序中的class和自己的class设计水平是在不断的编程实践中完善和发展的；<br>44.决不要因为程序“很小”就不遵循某些你不熟练的规则——好习惯是培养出来的，而不是一次记住的；<br>45.每学到一个C++难点的时候，尝试着对别人讲解这个知识点并让他理解——你能讲清楚才说明你真的理解了；<br>46.记录下在和别人交流时发现的自己忽视或不理解的知识点；<br>47.请不断的对自己写的程序提出更高的要求,哪怕你的程序版本号会变成Version 100.XX；<br>48.保存好你写过的所有的程序——那是你最好的积累之一；<br>49.请不要做浮躁的人；<br>50.请热爱C++!</p>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2017/03/06/C++_STL/" data-id="ckdrg5yok000mwk35diruei1y" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/08/C++_thread_1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C++11 thread 学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/01/C++_standard_iostream/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C++格式化输出流</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/selenium_about_chromedriver/">selenium关于chromedriver的配置</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/06/seed_fill_4/">4连通种子填充算法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/default_function_variable_problem/">Python3中的默认函数可变问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2020 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

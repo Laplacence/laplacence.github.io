@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>DDA画线法（考虑所有情况） | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="使用了第三方图形库EGEv19.01，C++编写。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDA画线法（考虑所有情况）">
+<meta property="og:url" content="http://yoursite.com/2020/03/18/DDA_Line/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="使用了第三方图形库EGEv19.01，C++编写。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:07:18.870Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-DDA_Line" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/03/18/DDA_Line/" class="article-date">
+  <time datetime="2020-03-17T16:00:00.000Z" itemprop="datePublished">2020-03-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>►<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      DDA画线法（考虑所有情况）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用了第三方图形库EGEv19.01，C++编写。</p>
+<a id="more"></a>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;graphics.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DDA_Line</span><span class="params">(<span class="keyword">int</span> x0, <span class="keyword">int</span> y0, <span class="keyword">int</span> x1, <span class="keyword">int</span> y1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> dx, dy, k, x, y;</span><br><span class="line">    dx = x1 - x0;</span><br><span class="line">    dy = y1 - y0;</span><br><span class="line">    k = dy / dx;</span><br><span class="line">    <span class="keyword">if</span> (dx == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">//因为C++除法操作除数为零时候可能会出现undefined的结果</span></span><br><span class="line">        <span class="comment">//简化后续if判断</span></span><br><span class="line">        k = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    x = x0;</span><br><span class="line">    y = y0;</span><br><span class="line">    <span class="keyword">if</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dx &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//k&gt;0且dx&gt;0</span></span><br><span class="line">            <span class="keyword">if</span> (dy &lt; dx) &#123;</span><br><span class="line">                <span class="comment">//0&lt;k&lt;1，步进方向为x，y增量为k</span></span><br><span class="line">                <span class="keyword">for</span> (; x &lt;= x1; ++x) &#123;</span><br><span class="line">                    putpixel(x, <span class="keyword">int</span>(y + <span class="number">0.5</span>), BLACK);</span><br><span class="line">                    y += k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//k&gt;=1，步进方向为y，x增量为1/k</span></span><br><span class="line">                <span class="keyword">for</span> (; y &lt;= y1; ++y) &#123;</span><br><span class="line">                    putpixel(<span class="keyword">int</span>(x + <span class="number">0.5</span>), y, BLACK);</span><br><span class="line">                    x += <span class="number">1</span> / k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//k&gt;0且dx&lt;0，dy&lt;0，此处判断反向画线</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">abs</span>(dy) &lt; <span class="built_in">abs</span>(dx)) &#123;</span><br><span class="line">                <span class="comment">//0&lt;k&lt;1，步进方向为x，y增量为-k</span></span><br><span class="line">                <span class="keyword">for</span> (; x &gt;= x1; --x) &#123;</span><br><span class="line">                    putpixel(x, <span class="keyword">int</span>(y + <span class="number">0.5</span>), BLACK);</span><br><span class="line">                    y -= k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//k&gt;=1，步进方向为y，x增量为-1/k</span></span><br><span class="line">                <span class="keyword">for</span> (; y &gt;= y1; --y) &#123;</span><br><span class="line">                    putpixel(<span class="keyword">int</span>(x + <span class="number">0.5</span>), y, BLACK);</span><br><span class="line">                    x -= <span class="number">1</span> / k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (dx &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//k&lt;0且dx&gt;0，dy&lt;0</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">abs</span>(dy) &lt; <span class="built_in">abs</span>(dx)) &#123;</span><br><span class="line">                <span class="comment">//-1&lt;k&lt;0，步进方向为x，y增量为k</span></span><br><span class="line">                <span class="keyword">for</span> (; x &lt;= x1; ++x) &#123;</span><br><span class="line">                    putpixel(x, <span class="keyword">int</span>(y + <span class="number">0.5</span>), BLACK);</span><br><span class="line">                    y += k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//k&lt;=-1，步进方向为y，x增量为1/k</span></span><br><span class="line">                <span class="keyword">for</span> (; y &gt;= y1; --y) &#123;</span><br><span class="line">                    putpixel(<span class="keyword">int</span>(x + <span class="number">0.5</span>), y, BLACK);</span><br><span class="line">                    x -= <span class="number">1</span> / k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//k&lt;0且dx&lt;0，dy&gt;0，此处判断反向画线</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">abs</span>(dy) &lt; <span class="built_in">abs</span>(dx)) &#123;</span><br><span class="line">                <span class="comment">//-1&lt;k&lt;0，步进方向为x，y增量为-k</span></span><br><span class="line">                <span class="keyword">for</span> (; x &gt;= x1; --x) &#123;</span><br><span class="line">                    putpixel(x, <span class="keyword">int</span>(y + <span class="number">0.5</span>), BLACK);</span><br><span class="line">                    y -= k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//k&gt;=-1，步进方向为y，x增量为-1/k</span></span><br><span class="line">                <span class="keyword">for</span> (; y &lt;= y1; ++y) &#123;</span><br><span class="line">                    putpixel(<span class="keyword">int</span>(x + <span class="number">0.5</span>), y, BLACK);</span><br><span class="line">                    x += <span class="number">1</span> / k;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    initgraph(<span class="number">640</span>, <span class="number">480</span>);</span><br><span class="line"></span><br><span class="line">    setbkcolor(WHITE);</span><br><span class="line">    DDA_Line(<span class="number">30</span>, <span class="number">50</span>, <span class="number">10</span>, <span class="number">60</span>); <span class="comment">//-1&lt;k&lt;0</span></span><br><span class="line">    DDA_Line(<span class="number">10</span>, <span class="number">60</span>, <span class="number">30</span>, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">    DDA_Line(<span class="number">30</span>, <span class="number">50</span>, <span class="number">10</span>, <span class="number">90</span>); <span class="comment">//k&lt;-1</span></span><br><span class="line">    DDA_Line(<span class="number">10</span>, <span class="number">90</span>, <span class="number">30</span>, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">    DDA_Line(<span class="number">30</span>, <span class="number">50</span>, <span class="number">10</span>, <span class="number">40</span>); <span class="comment">//0&lt;k&lt;1</span></span><br><span class="line">    DDA_Line(<span class="number">10</span>, <span class="number">40</span>, <span class="number">30</span>, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">    DDA_Line(<span class="number">30</span>, <span class="number">50</span>, <span class="number">10</span>, <span class="number">10</span>); <span class="comment">//k&gt;1</span></span><br><span class="line">    DDA_Line(<span class="number">10</span>, <span class="number">10</span>, <span class="number">30</span>, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">    DDA_Line(<span class="number">10</span>, <span class="number">90</span>, <span class="number">10</span>, <span class="number">10</span>); <span class="comment">//k==0,x==10</span></span><br><span class="line">    DDA_Line(<span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">90</span>);</span><br><span class="line"></span><br><span class="line">    DDA_Line(<span class="number">30</span>, <span class="number">50</span>, <span class="number">10</span>, <span class="number">50</span>); <span class="comment">//k==0,y==50</span></span><br><span class="line">    DDA_Line(<span class="number">10</span>, <span class="number">50</span>, <span class="number">30</span>, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">    getch();</span><br><span class="line"></span><br><span class="line">    closegraph();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2020/03/18/DDA_Line/" data-id="ckdrg5ypj000vwk35gbv0hpom" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/26/Technique_of_Python/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Python3的书写技巧和应用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/18/Midpoint/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">中点画线法（考虑所有情况）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/21/selenium_about_chromedriver/">selenium关于chromedriver的配置</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/06/seed_fill_4/">4连通种子填充算法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/26/default_function_variable_problem/">Python3中的默认函数可变问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2020 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
