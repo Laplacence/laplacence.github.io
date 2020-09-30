@@ -15,7 +15,7 @@
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMDE3MjA1NjUyOTA4?x-oss-process=image/format,png">
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMDE3MjA1OTQ3NzU0?x-oss-process=image/format,png">
 <meta property="article:published_time" content="2017-10-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-11T07:06:16.064Z">
+<meta property="article:modified_time" content="2020-09-30T12:54:09.024Z">
 <meta property="article:author" content="Laplacence">
 <meta property="article:tag" content="Python C++ Fedora tech">
 <meta name="twitter:card" content="summary">
@@ -95,6 +95,7 @@
       
         <p>博主之前刷Z3的时候也碰到过，忘了当时怎么解决的了（。今天刷Z5又碰到同样问题，大概是明白了。<br>Fastboot要基于Google Winusb Android和ADB等几个驱动才能实现交互，然而这个文件十分老旧，即使从它官网下也是2014年或者更老的版本。<br>ADB发行版本的android_winusb.inf，文件内容校验值与cat文件里的记录不相同，<br>因此Windows安装提示了HASH校验相关的错误。（甚至不会提示，直接输出安装失败的结果）<br>Windows的32位系统下没有强制要求驱动签名，安装时只会弹出提示<br>Windows无法验证此驱动程序的发布者，但可选择安装此驱动。（红色的警告框）<br>但是64位系统是会强制要求驱动签名的，所以安装失败。</p>
 <a id="more"></a>
+
 <h2 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h2><p>以博主15063版本为例，打开设置的Update，接着找到Recovery<br><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMDE3MjA1NjUyOTA4?x-oss-process=image/format,png" alt="这里写图片描述"><br>点击restart后，进入troubleshoot，然后进入Advanced options，Startup Settings，最后重启。<br>重启后会遇到这里，点击F7 Disable driver signature enforcement<br><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMDE3MjA1OTQ3NzU0?x-oss-process=image/format,png" alt="这里写图片描述"><br>最后再进行安装，会弹出红色警告窗口，继续安装即可解决</p>
 
       
@@ -168,7 +169,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -181,6 +182,14 @@
       <ul>
         
           <li>
+            <a href="/2020/10/01/using_ss_instead_of_netstat/">用ss来代替netstat</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/30/curl_simple_manual/">curl，强大的调试开发工具。</a>
+          </li>
+        
+          <li>
             <a href="/2020/09/25/WSL2_usage/">WSL2的配置流程</a>
           </li>
         
@@ -190,14 +199,6 @@
         
           <li>
             <a href="/2020/08/12/Python_GC/">Python3的垃圾回收机制</a>
-          </li>
-        
-          <li>
-            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
-          </li>
-        
-          <li>
-            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
           </li>
         
       </ul>

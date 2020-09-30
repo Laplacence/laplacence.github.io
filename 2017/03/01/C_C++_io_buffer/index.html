@@ -13,7 +13,7 @@
 <meta property="og:description" content="C++中cin、cout，cerr和C的stdin、stdout、stderr都是同步的，即iostream 对象和 and cstdio流是同步的，同步关系如下：         C stream     iostream object           stdin     cin           win           stdout     cout           wout">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2017-02-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-11T07:06:42.284Z">
+<meta property="article:modified_time" content="2020-09-30T12:57:09.923Z">
 <meta property="article:author" content="Laplacence">
 <meta property="article:tag" content="Python C++ Fedora tech">
 <meta name="twitter:card" content="summary">
@@ -127,13 +127,21 @@
 <a id="more"></a>
 
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::ios_base::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;2 &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 <p>windows下输出是：2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1<br>linux下是：1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2<br>正是因为这种同步，所以cin、cout比scanf、printf速度要慢，如果我们在使用cin、cout输入输出前加一句’’’std::ios_base::sync_with_stdio(false)’’’，其实速度和scanf、printf差不多。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">//在windows下立即输出10个1</span></span><br><span class="line">    <span class="comment">//linux下不输出</span></span><br><span class="line">    <span class="comment">//说明windows下默认cout是无缓冲的，linux下是有缓冲的，cout换成printf也是一样。</span></span><br></pre></td></tr></table></figure>
 
 <p>只有缓冲区被刷新的时候缓冲区中的内容才会写入真实的文件或输出设备上。这五种情况下会刷新输出缓冲区：<br>1.程序正常结束。作为main返回工作的一部分，将清空所有的输出缓冲区。<br>2.在一些不确定的时候，缓冲区可能已经满了，在这种情况下，缓冲区将会在写下一个值之前刷新。<br>3.用操纵符显示地刷新缓冲区，如用endl。<br>4.在每次输出操作执行完毕后，用unitbuf操纵符设置流的内部状态，从而清空缓冲区。<br>5.可将输出流与输入流关联起来，在读输入流时将刷新其关联的输出缓冲区。</p>
 <p>我们可以通过函数 setbuf 和 setvbuf 自己设置输入输出流的缓冲区，需要注意的是不管程序中申请的的缓冲区实际大小为多少，setbuf都将缓冲区设置的大小为BUFSIZ，本人也在某本书上看到一个sample。<br><code>args = emalloc(BUFSIZ);</code><br>这是stdio.h 中的一个宏定义，内容如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Default buffer size. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> BUFSIZ</span></span><br><span class="line">    define BUFSIZ _IO_BUFSIZ</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<p>BUFSIZ有一个_IO_BUFSIZ大小，这个_IO_BUFSIZ又是多大呢？<br><code>#define _IO_BUFSIZ _G_BUFSIZ</code><br>来自libio.h头文件，那么接着……<br><code>#define _G_BUFSIZ 8192</code><br>来自_G_config.h，最终确认BUFSIZ大小是8192，还有更快的方法就是cout这个BUFSIZ，直接出现大小。（以上三段代码在fedora25环境下测试）</p>
+
+<p>BUFSIZ有一个_IO_BUFSIZ大小，这个_IO_BUFSIZ又是多大呢？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_BUFSIZ _G_BUFSIZ</span></span><br></pre></td></tr></table></figure>
+
+<p>来自libio.h头文件，那么接着……</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _G_BUFSIZ 8192</span></span><br></pre></td></tr></table></figure>
+
+<p>来自_G_config.h，最终确认BUFSIZ大小是8192，还有更快的方法就是cout这个BUFSIZ，直接出现大小。（以上三段代码在fedora25环境下测试）</p>
 <p>setvbuf则可以设置缓冲区大小以及缓冲区的模式（行缓冲、全缓冲、无缓冲），<strong>需要注意的是这两个函数设置的是c的输入输出缓冲区，因为C++和C的缓冲区是同步的，所有该函数会对C++有影响</strong>  。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> buf[<span class="number">1024</span>];</span><br><span class="line">setbuf(<span class="built_in">stdout</span>, buf);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>);<span class="comment">//此时windows下输出了10个1，linux下没有任何输出。</span></span><br><span class="line"><span class="comment">//因为windows是通过cmd窗口设定缓冲区</span></span><br><span class="line"><span class="comment">//更改对应注册表键值或者设置即可</span></span><br></pre></td></tr></table></figure>
 
@@ -142,8 +150,9 @@
 
 <p>加上cin.tie(0)后，以下的代码没有输出1，因为cin已经和cout解绑定了，cin刷新不了cout的缓冲区。（可以cin.tie(&amp;cout)来绑定，注意cout没有tie方法）</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> buf[<span class="number">1024</span>];</span><br><span class="line">setbuf(<span class="built_in">stdout</span>, buf);</span><br><span class="line"><span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">       <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">int</span> a; <span class="built_in">cin</span>&gt;&gt;a;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>);<span class="comment">//windows和linux下均没有输出。</span></span><br></pre></td></tr></table></figure>
+
 <p>有点奇怪的是以下代码还是会输出1，即默认缓冲区的情形下，解除绑定没有产生效果。<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/14052627/why-do-we-need-to-tie-cin-and-cout">SOF上有人这么解释。</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">int</span> a; <span class="built_in">cin</span>&gt;&gt;a;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">int</span> a; <span class="built_in">cin</span>&gt;&gt;a;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -216,7 +225,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -229,6 +238,14 @@
       <ul>
         
           <li>
+            <a href="/2020/10/01/using_ss_instead_of_netstat/">用ss来代替netstat</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/30/curl_simple_manual/">curl，强大的调试开发工具。</a>
+          </li>
+        
+          <li>
             <a href="/2020/09/25/WSL2_usage/">WSL2的配置流程</a>
           </li>
         
@@ -238,14 +255,6 @@
         
           <li>
             <a href="/2020/08/12/Python_GC/">Python3的垃圾回收机制</a>
-          </li>
-        
-          <li>
-            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
-          </li>
-        
-          <li>
-            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
           </li>
         
       </ul>

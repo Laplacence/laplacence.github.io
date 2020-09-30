@@ -13,7 +13,7 @@
 <meta property="og:description" content="这个大概是经常说的机制。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-12T15:42:33.057Z">
+<meta property="article:modified_time" content="2020-09-30T13:09:08.356Z">
 <meta property="article:author" content="Laplacence">
 <meta property="article:tag" content="Python C++ Fedora tech">
 <meta name="twitter:card" content="summary">
@@ -92,32 +92,33 @@
       
         <p>这个大概是经常说的机制。</p>
 <a id="more"></a>
-<h1 id="引用计数机制"><a href="#引用计数机制" class="headerlink" title="引用计数机制"></a>引用计数机制</h1><p>Python默认采用的垃圾收集机制是『引用计数法 Reference Counting』，该算法最早由George E. Collins在1960的时候首次提出，直到今天，该算法依然被很多编程语言使用。<br>『引用计数法』的原理是：每个对象维护一个ob_ref字段，用来记录该对象当前被引用的次数，每当新的引用指向该对象时，它的引用计数ob_ref加1，每当该对象的引用失效时计数ob_ref减1，一旦对象的引用计数为0，该对象立即被回收，对象占用的内存空间将被释放。<br>它的缺点是需要额外的空间维护引用计数，这个问题是其次的，不过最主要的问题是它不能解决对象的“循环引用”，因此，也有很多语言比如Java并没有采用该算法做来垃圾的收集机制。<br>接下来我们看个例子。</p>
+
+<h2 id="引用计数机制"><a href="#引用计数机制" class="headerlink" title="引用计数机制"></a>引用计数机制</h2><p>Python默认采用的垃圾收集机制是『引用计数法 Reference Counting』，该算法最早由George E. Collins在1960的时候首次提出，直到今天，该算法依然被很多编程语言使用。<br>『引用计数法』的原理是：每个对象维护一个ob_ref字段，用来记录该对象当前被引用的次数，每当新的引用指向该对象时，它的引用计数ob_ref加1，每当该对象的引用失效时计数ob_ref减1，一旦对象的引用计数为0，该对象立即被回收，对象占用的内存空间将被释放。<br>它的缺点是需要额外的空间维护引用计数，这个问题是其次的，不过最主要的问题是它不能解决对象的“循环引用”，因此，也有很多语言比如Java并没有采用该算法做来垃圾的收集机制。<br>接下来我们看个例子。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>():</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># init</span></span><br><span class="line">        print(<span class="string">&#x27;object id:%s&#x27;</span> % str(hex(id(self))))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f1</span>():</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        c1 = A()</span><br><span class="line">        <span class="keyword">del</span> c1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">c</span>):</span></span><br><span class="line">    print(<span class="string">&#x27;obejct refcount is:&#x27;</span>, sys.getrefcount(c))  <span class="comment"># getrefcount()方法用于返回对象的引用计数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># create object</span></span><br><span class="line">    a = A()</span><br><span class="line">    func(a)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># add reference b</span></span><br><span class="line">    b = a</span><br><span class="line">    func(a)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># destruct b</span></span><br><span class="line">    <span class="keyword">del</span> b</span><br><span class="line">    func(a)</span><br></pre></td></tr></table></figure>
+
 <p>结果如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">object id:<span class="number">0x15a685eaf40</span></span><br><span class="line">obejct refcount <span class="keyword">is</span>: <span class="number">4</span></span><br><span class="line">obejct refcount <span class="keyword">is</span>: <span class="number">5</span></span><br><span class="line">obejct refcount <span class="keyword">is</span>: <span class="number">4</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>导致引用计数+1的情况</strong></p>
-<ul>
+<h3 id="导致引用计数-1的情况"><a href="#导致引用计数-1的情况" class="headerlink" title="导致引用计数+1的情况"></a>导致引用计数+1的情况</h3><ul>
 <li>对象被创建，例如a=23</li>
 <li>对象被引用，例如b=a</li>
 <li>对象被作为参数，传入到一个函数中，例如func(a)</li>
 <li>对象作为一个元素，存储在容器中，例如list1=[a,a]</li>
 </ul>
-<p><strong>导致引用计数-1的情况</strong></p>
-<ul>
+<h3 id="导致引用计数-1的情况-1"><a href="#导致引用计数-1的情况-1" class="headerlink" title="导致引用计数-1的情况"></a>导致引用计数-1的情况</h3><ul>
 <li>对象的别名被显式销毁，例如del a</li>
 <li>对象的别名被赋予新的对象，例如a=24</li>
 <li>一个对象离开它的作用域，例如f函数执行完毕时，func函数中的局部变量（全局变量不会）</li>
 <li>对象所在的容器被销毁，或从容器中删除对象</li>
 </ul>
-<p><strong>内存泄漏样例</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f2</span>():</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        c1 = A()</span><br><span class="line">        c2 = A()</span><br><span class="line">        c1.t = c2</span><br><span class="line">        c2.t = c1</span><br><span class="line">        <span class="keyword">del</span> c1</span><br><span class="line">        <span class="keyword">del</span> c2</span><br></pre></td></tr></table></figure>
+<h3 id="内存泄漏样例"><a href="#内存泄漏样例" class="headerlink" title="内存泄漏样例"></a>内存泄漏样例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f2</span>():</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        c1 = A()</span><br><span class="line">        c2 = A()</span><br><span class="line">        c1.t = c2</span><br><span class="line">        c2.t = c1</span><br><span class="line">        <span class="keyword">del</span> c1</span><br><span class="line">        <span class="keyword">del</span> c2</span><br></pre></td></tr></table></figure>
+
 <p>结果如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">object id:<span class="number">0x15ad4ca7610</span></span><br><span class="line">object id:<span class="number">0x15ad4ca65b0</span></span><br><span class="line">object id:<span class="number">0x15ad4ca6550</span></span><br><span class="line">object id:<span class="number">0x15ad4ca6370</span></span><br><span class="line">object id:<span class="number">0x15ad4ca6490</span></span><br><span class="line">object id:<span class="number">0x15ad4ca6430</span></span><br><span class="line">object id:<span class="number">0x15ad4ca66a0</span></span><br><span class="line">object id:<span class="number">0x15ad4ca6940</span></span><br><span class="line">object id:<span class="number">0x15ad4ca6eb0</span></span><br><span class="line">object id:<span class="number">0x15ad4ca6b50</span></span><br><span class="line">object id:<span class="number">0x15ad4ca6610</span></span><br><span class="line">object id:<span class="number">0x15ad4ca6220</span></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
 <p>创建c1、c2后，计数均为1，执行引用后都变成2，del执行后计数器都降为1，不为0的情况则导致c1、c2不会被销毁。加上while循环，结果就导致无限创建新的对象，新的对象又产生引用，统统无法收回的结果就是内存泄漏。</p>
-<h1 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h1><p>分代回收是一种以空间换时间的操作方式，Python将内存根据对象的存活时间划分为不同的集合，每个集合称为一个代，Python将内存分为了3“代”，分别为0、1、2代，他们对应的是3个链表，它们的垃圾收集频率与对象的存活时间的增大而减小。<br>新创建的对象都会分配在0代，0代链表的总数达到上限时，Python垃圾收集机制就会被触发，把那些可以被回收的对象回收掉，而那些不会回收的对象就会被移到1代去，依此类推，2代中的对象是存活时间最久的对象，甚至是存活于整个系统的生命周期内。<br>同时，分代回收是建立在标记清除技术基础之上。分代回收同样作为Python的辅助垃圾收集技术处理那些容器对象。</p>
-<h1 id="gc模块垃圾回收"><a href="#gc模块垃圾回收" class="headerlink" title="gc模块垃圾回收"></a>gc模块垃圾回收</h1><p>有三种情况会触发gc模块垃圾回收：</p>
+<h2 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h2><p>分代回收是一种以空间换时间的操作方式，Python将内存根据对象的存活时间划分为不同的集合，每个集合称为一个代，Python将内存分为了3“代”，分别为0、1、2代，他们对应的是3个链表，它们的垃圾收集频率与对象的存活时间的增大而减小。<br>新创建的对象都会分配在0代，0代链表的总数达到上限时，Python垃圾收集机制就会被触发，把那些可以被回收的对象回收掉，而那些不会回收的对象就会被移到1代去，依此类推，2代中的对象是存活时间最久的对象，甚至是存活于整个系统的生命周期内。<br>同时，分代回收是建立在标记清除技术基础之上。分代回收同样作为Python的辅助垃圾收集技术处理那些容器对象。</p>
+<h2 id="gc模块垃圾回收"><a href="#gc模块垃圾回收" class="headerlink" title="gc模块垃圾回收"></a>gc模块垃圾回收</h2><p>有三种情况会触发gc模块垃圾回收：</p>
 <ul>
 <li>调用gc.collect()。</li>
 <li>当gc模块的计数器达到阀值的时候。</li>
@@ -162,20 +163,24 @@
 </tbody></table>
 <p>其他函数可以在官方文档内查看，接下来我们使用看看。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f3</span>():</span></span><br><span class="line">    gc.enable()</span><br><span class="line">    gc.set_debug(gc.DEBUG_LEAK)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        c1 = A()</span><br><span class="line">        c2 = A()</span><br><span class="line">        c1.t = c2</span><br><span class="line">        c2.t = c1</span><br><span class="line">        <span class="keyword">del</span> c1</span><br><span class="line">        <span class="keyword">del</span> c2</span><br><span class="line">        <span class="comment"># import gc</span></span><br><span class="line">        print(gc.garbage)</span><br><span class="line">        print(gc.collect())</span><br><span class="line">        print(gc.garbage)</span><br><span class="line">        time.sleep(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
 <p>结果如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gc: collectable &lt;A <span class="number">0x00000222A733AF40</span>&gt;</span><br><span class="line">gc: collectable &lt;A <span class="number">0x00000222A733AB50</span>&gt;</span><br><span class="line">gc: collectable &lt;dict <span class="number">0x00000222A72FFC00</span>&gt;</span><br><span class="line">gc: collectable &lt;dict <span class="number">0x00000222A730F340</span>&gt;</span><br><span class="line">object id:<span class="number">0x222a733af40</span></span><br><span class="line">object id:<span class="number">0x222a733ab50</span></span><br><span class="line">[]</span><br><span class="line"><span class="number">4</span></span><br><span class="line">[&lt;__main__.A object at <span class="number">0x00000222A733AF40</span>&gt;, &lt;__main__.A object at <span class="number">0x00000222A733AB50</span>&gt;, &#123;<span class="string">&#x27;t&#x27;</span>: &lt;__main__.A object at <span class="number">0x00000222A733AB50</span>&gt;&#125;, &#123;<span class="string">&#x27;t&#x27;</span>: &lt;__main__.A object at <span class="number">0x00000222A733AF40</span>&gt;&#125;]</span><br></pre></td></tr></table></figure>
+
 <p>可以看到gc很快就捕捉到两个A和c1、c2，并判定为可回收的，执行回收之后，garbage列表内多了4个对象。<br>gc本身采用了分代收集的方法，把对象分为3代，一开始，对象在创建的时候，放在0代中，如果在一次0代的垃圾检查中，该对象存活下来，就会被放到1代中，同理在一次1代的垃圾检查中，该对象存活下来，就会被放到2代中。</p>
 <p>用例如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f4</span>():</span></span><br><span class="line">    print(gc.get_count())</span><br><span class="line">    a = A()</span><br><span class="line">    print(gc.get_count())</span><br><span class="line">    <span class="keyword">del</span> a</span><br><span class="line">    print(gc.get_count())</span><br></pre></td></tr></table></figure>
+
 <p>结果如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">427</span>, <span class="number">9</span>, <span class="number">0</span>)</span><br><span class="line">object id:<span class="number">0x13fba46af40</span></span><br><span class="line">(<span class="number">428</span>, <span class="number">9</span>, <span class="number">0</span>)</span><br><span class="line">(<span class="number">427</span>, <span class="number">9</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
 <p>427指距离上一次0代垃圾检查，Python分配内存的数目减去释放内存的数目。<br>9指距离上一次0、1代垃圾检查的次数。<br>0是指距离上一次0、1、2代垃圾检查的次数。<br>配合阈值来看，一般默认阈值为(700, 10, 10)，如果当其中任何一个数字达到阈值，则会对应代的执行垃圾回收，即gc.collect([generation])，并将计数器清零。</p>
 <ul>
 <li>当计数器从(699, 3, 0)增加到(700, 3, 0)，gc模块就会执行gc.collect(0),并重置计数器为(0, 4, 0)</li>
 <li>当计数器从(699, 9, 0)增加到(700, 9, 0)，gc模块就会执行gc.collect(1),并重置计数器为(0, 0, 1)</li>
 <li>当计数器从(699, 9 ,9)增加到(700, 9, 9)，gc模块就会执行gc.collect(2),并重置计数器为(0, 0, 0)</li>
 </ul>
-<h1 id="标记-清除回收"><a href="#标记-清除回收" class="headerlink" title="标记-清除回收"></a>标记-清除回收</h1><p>所谓标记-清除，就是先标记，再清除。标记的是活动对象，清除的是非活动对象。<br>首先，为了追踪容器对象的引用情况，每个容器对象需要维护两个额外的指针，指针分别指向前后两个容器对象，所有容器对象便组成了一个双向链表，或者，我们也可以将其视为一个有向图。其中，容器对象是有向图的节点，而引用关系是有向图的边。从根对象(root objects)出发，沿着有向边遍历对象，可达的(reachable)对象标记为活动对象，不可达的对象(unreachable objects)就是要被清除的非活动对象。<br>标记-清除作为Python的辅助垃圾收集技术主要处理的是一些容器对象，比如list、dict、tuple，instance等，因为对于字符串、数值对象是不可能造成循环引用问题。Python使用一个双向链表将这些容器对象组织起来。不过，这种简单粗暴的标记清除算法也有明显的缺点：清除非活动的对象前它必须顺序扫描整个堆内存，哪怕只剩下小部分活动对象也要扫描所有对象。</p>
+<h2 id="标记-清除回收"><a href="#标记-清除回收" class="headerlink" title="标记-清除回收"></a>标记-清除回收</h2><p>所谓标记-清除，就是先标记，再清除。标记的是活动对象，清除的是非活动对象。<br>首先，为了追踪容器对象的引用情况，每个容器对象需要维护两个额外的指针，指针分别指向前后两个容器对象，所有容器对象便组成了一个双向链表，或者，我们也可以将其视为一个有向图。其中，容器对象是有向图的节点，而引用关系是有向图的边。从根对象(root objects)出发，沿着有向边遍历对象，可达的(reachable)对象标记为活动对象，不可达的对象(unreachable objects)就是要被清除的非活动对象。<br>标记-清除作为Python的辅助垃圾收集技术主要处理的是一些容器对象，比如list、dict、tuple，instance等，因为对于字符串、数值对象是不可能造成循环引用问题。Python使用一个双向链表将这些容器对象组织起来。不过，这种简单粗暴的标记清除算法也有明显的缺点：清除非活动的对象前它必须顺序扫描整个堆内存，哪怕只剩下小部分活动对象也要扫描所有对象。</p>
 
       
     </div>
@@ -248,7 +253,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -261,6 +266,14 @@
       <ul>
         
           <li>
+            <a href="/2020/10/01/using_ss_instead_of_netstat/">用ss来代替netstat</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/30/curl_simple_manual/">curl，强大的调试开发工具。</a>
+          </li>
+        
+          <li>
             <a href="/2020/09/25/WSL2_usage/">WSL2的配置流程</a>
           </li>
         
@@ -270,14 +283,6 @@
         
           <li>
             <a href="/2020/08/12/Python_GC/">Python3的垃圾回收机制</a>
-          </li>
-        
-          <li>
-            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
-          </li>
-        
-          <li>
-            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
           </li>
         
       </ul>

@@ -13,7 +13,7 @@
 <meta property="og:description" content="虽然大部分发行版都有GUI，点点点就可以解决，但是在ssh情况下如果不会操作shell的话就会十分麻烦。博主的发行版是Fedora 26，可能会跟其他发行版的配置有出入，请谅解。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2018-09-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-11T07:09:02.986Z">
+<meta property="article:modified_time" content="2020-09-30T13:06:40.234Z">
 <meta property="article:author" content="Laplacence">
 <meta property="article:tag" content="Python C++ Fedora tech">
 <meta name="twitter:card" content="summary">
@@ -94,8 +94,10 @@
 <a id="more"></a>
 <p>先su进入root，然后操作<strong>ifconfig</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@Laplacence network-scripts]<span class="comment"># ifconfig</span></span><br><span class="line">enp3s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 192.168.199.100  netmask 255.255.255.0  broadcast 192.168.199.255</span><br><span class="line">        ether 44:8a:5b:f0:ac:e3  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 787819  bytes 966771592 (921.9 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 461662  bytes 63148096 (60.2 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line">        device interrupt 19  </span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 38  bytes 2492 (2.4 KiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 38  bytes 2492 (2.4 KiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+
 <p>enp3s0是当前运行的有线网卡，记住一下MAC和网卡名字后<br>接着操作<strong>vi /etc/sysconfig/network-scripts/ifcfg-enp3s0</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">HWADDR=44:8A:5B:F0:AC:E3 //刚刚知道的MAC 和下面的MACADDR 只需设置其中一个 同时设置时不能相互冲突</span><br><span class="line">TYPE=Ethernet  /*配置文件接口类型 在/etc/sysconfig/network-scripts/目录有多种网络配置文件</span><br><span class="line">有Ethernet 、IPsec等类型，网络接口类型为Ethernet*/</span><br><span class="line">BOOTPROTO=dhcp  //系统启动地址协议 有none bootp dhcp static 这四个键值</span><br><span class="line">DEFROUTE=yes //设定当前网卡为默认路径</span><br><span class="line">IPV4_FAILURE_FATAL=yes //如果ipv4无法获得地址 是否自动使用ipv6搜寻</span><br><span class="line">IPV6INIT=yes //是否支持ipv6</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=yes</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=enp3s0  //网卡名字</span><br><span class="line">UUID=12909798-9afc-3447-9a65-a182f6c97b8e //识别码 最好不要更改</span><br><span class="line">ONBOOT=yes  //开机是否启动</span><br><span class="line">AUTOCONNECT_PRIORITY=-999</span><br><span class="line">MACADDR=44:8A:5B:F0:AC:E3  //依旧是MAC 只需设置其中一个 同时设置时不能相互冲突</span><br><span class="line">PEERDNS=yes  //当PEERDNS为yes时 DNS地址会被写入/etc/resolv.conf中</span><br><span class="line">PEERROUTES=yes //是否从DHCP服务器获取定义接口默认网关的路由表项的信息</span><br><span class="line">IPV6_PEERDNS=yes</span><br><span class="line">IPV6_PEERROUTES=yes</span><br></pre></td></tr></table></figure>
+
 <p>修改完毕后执行<code># systemctl restart network</code>命令，重启网络服务。</p>
 
       
@@ -169,7 +171,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -182,6 +184,14 @@
       <ul>
         
           <li>
+            <a href="/2020/10/01/using_ss_instead_of_netstat/">用ss来代替netstat</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/30/curl_simple_manual/">curl，强大的调试开发工具。</a>
+          </li>
+        
+          <li>
             <a href="/2020/09/25/WSL2_usage/">WSL2的配置流程</a>
           </li>
         
@@ -191,14 +201,6 @@
         
           <li>
             <a href="/2020/08/12/Python_GC/">Python3的垃圾回收机制</a>
-          </li>
-        
-          <li>
-            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
-          </li>
-        
-          <li>
-            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
           </li>
         
       </ul>

@@ -13,7 +13,7 @@
 <meta property="og:description" content="最近在干网络相关的活，突然想看一下无线网络802.1X的接入过程，于是就有了这篇博客。 无线网络的特性可能让人联想到古老的集线器（Hub）网络，在集线器网络中，所有通过集线器的数据都会被转发给该集线器所有的接口，也就是说，只要连接在该集线器上的机器，就可以监听该网络上的所有机器的网络通信。默认情况下，网卡只会接受发给自己的数据报文，将其他的报文统统丢弃。当然也可以让网卡接受所有的报文，这就是所谓的">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-09-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-04-11T07:11:38.864Z">
+<meta property="article:modified_time" content="2020-09-30T13:13:09.852Z">
 <meta property="article:author" content="Laplacence">
 <meta property="article:tag" content="Python C++ Fedora tech">
 <meta name="twitter:card" content="summary">
@@ -97,16 +97,20 @@
 <p>无线网卡除了 Managed mode 和 Monitor mode 这两个模式之外，其实还支持好几种其他的模式，譬如：Ad hoc（也叫 IBSS 模式） 和 Master mode。</p>
 <p>当然我们主要看到监听模式，现在笔记本自带的网卡大部分都支持监听模式，博主找到了一份比较旧的Linux wireless device清单，但上面并没有我的设备，虽然我成功打开了监听模式（。</p>
 <p>在 Linux 环境下，有一个命令估计大家都用过：ifconfig（虽然逐渐被ip代替），它用来显示或配置网络设备，譬如最常见的查看网卡 IP 地址，或者启用禁用某个网卡，修改网卡的 MAC 地址等等。如果要管理无线网卡，另一个命令是 iwconfig，可以用来查看无线网卡的状态，或修改无线网卡的模式。最简单的用法是不带任何参数，如下所示：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@Unknown laplacence]<span class="comment"># iwconfig</span></span><br><span class="line">wlp5s0    IEEE 802.11  ESSID:off/any  </span><br><span class="line">          Mode:Managed  Access Point: Not-Associated   Tx-Power=off   </span><br><span class="line">          Retry short <span class="built_in">limit</span>:7   RTS thr:off   Fragment thr:off</span><br><span class="line">          Encryption key:off</span><br><span class="line">          Power Management:on</span><br><span class="line"></span><br><span class="line">virbr0    no wireless extensions.</span><br><span class="line"></span><br><span class="line">virbr0-nic  no wireless extensions.</span><br><span class="line"></span><br><span class="line">lo        no wireless extensions.</span><br><span class="line"></span><br><span class="line">enp3s0    no wireless extensions.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@Unknown laplacence]<span class="comment"># iwconfig</span></span><br><span class="line">wlp5s0    IEEE 802.11  ESSID:off/any  </span><br><span class="line">          Mode:Managed  Access Point: Not-Associated   Tx-Power=off</span><br><span class="line">          Retry short <span class="built_in">limit</span>:7   RTS thr:off   Fragment thr:off</span><br><span class="line">          Encryption key:off</span><br><span class="line">          Power Management:on</span><br><span class="line"></span><br><span class="line">virbr0    no wireless extensions.</span><br><span class="line"></span><br><span class="line">virbr0-nic  no wireless extensions.</span><br><span class="line"></span><br><span class="line">lo        no wireless extensions.</span><br><span class="line"></span><br><span class="line">enp3s0    no wireless extensions.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>可以列出系统中当前正在使用的无线网卡，以及无线网卡的模式，支持的无线协议，ESSID（无线扩展服务设置 ID，Extended Service Set ID），信号强度等。从上面的例子中可以看出，wlp5s0 为无线网卡，当前网卡的运行模式为托管模式（Managed）。</p>
 <p>iw 是 Linux 系统上的另一款无线配置工具，它的出现是为了解决 iwconfig 的很多不足，或者说它完全是为了取代 iwconfig 而开发的。</p>
 <p>之所以要新开发一套无线配置工具，还要从无线扩展（Wireless-Extensions）说起。Wireless-Extensions（简称 WE，或者 Wext） 是由 Jean Tourrilhes 1997 年开发并添加到 Linux 内核的，它通过 Linux 的系统调用 ioctl() 来实现用户层和内核层之间的通信。由于设计的比较粗糙，使用 WE 开发的程序很难管理，并且由于它年代久远，WE 除了一些基本的 bugfix 之外也无人维护了，所以亟需一种新的无线驱动框架来指导无线程序的开发。于是便出现了 cfg80211 和 nl80211 。需要特别指出的是 cfg80211 不再使用 ioctl 系统调用，而是使用 Netlink （基于 socket 通信）。iw 就是完全基于 cfg80211 框架重新设计并开发的。</p>
 <p>使用 iw 不仅可以实现和 iwconfig 完全一样的功能，而且它的用法要更丰富（当然也更复杂），可以先使用 iw help 查看它的使用帮助。下面的几个命令可能是你想尝试的：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw list</span></span><br></pre></td></tr></table></figure>
+
 <p>列出所有的无线设备，以及每个无线设备的详细信息，详细到频率和信号强度，能想到的信息它都有列出来。<br>简单一点可以用：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw dev wlp5s0 info</span></span><br></pre></td></tr></table></figure>
+
 <p>就显示出无线接口名称，网卡模式，频道等等。<br>那么主要是说如何设置监听模式，iw设置监听模式是通过新建一个虚拟网卡接口，然后将该虚拟网卡设置为监听模式，这样就不会导致无线网卡无法上网只能抓包的情况，而且单独用iwconfig设置monitor mode，可能会因为系统自带的网络管理服务强行切回Managed mode。（亲身体验）</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw dev wlp5s0 interface add mon0 type monitor</span></span><br><span class="line"><span class="comment"># ip link set mon0 up</span></span><br></pre></td></tr></table></figure>
+
 <p>设置完后通过wireshark或者tcpdump就能抓到802.11的详细数据包了。</p>
 <p>如果需要删除mon0这个接口，只需要通过iw再一次删除就可以了。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw dev mon0 del</span></span><br></pre></td></tr></table></figure>
@@ -182,7 +186,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -195,6 +199,14 @@
       <ul>
         
           <li>
+            <a href="/2020/10/01/using_ss_instead_of_netstat/">用ss来代替netstat</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/30/curl_simple_manual/">curl，强大的调试开发工具。</a>
+          </li>
+        
+          <li>
             <a href="/2020/09/25/WSL2_usage/">WSL2的配置流程</a>
           </li>
         
@@ -204,14 +216,6 @@
         
           <li>
             <a href="/2020/08/12/Python_GC/">Python3的垃圾回收机制</a>
-          </li>
-        
-          <li>
-            <a href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
-          </li>
-        
-          <li>
-            <a href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
           </li>
         
       </ul>
