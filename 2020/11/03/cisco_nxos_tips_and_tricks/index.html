@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>cisco NXOS 终端技巧 | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="下面展示了一些可以增强NX-OS故障排查经验的技巧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cisco NXOS 终端技巧">
+<meta property="og:url" content="http://yoursite.com/2020/11/03/cisco_nxos_tips_and_tricks/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="下面展示了一些可以增强NX-OS故障排查经验的技巧。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-05T07:37:36.000Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-cisco_nxos_tips_and_tricks" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/03/cisco_nxos_tips_and_tricks/" class="article-date">
+  <time datetime="2020-11-02T16:00:00.000Z" itemprop="datePublished">2020-11-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/experience/">experience</a>►<a class="article-category-link" href="/categories/network/">network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      cisco NXOS 终端技巧
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>下面展示了一些可以增强NX-OS故障排查经验的技巧。</p>
+<a id="more"></a>
+<h2 id="十六进制-十进制转换"><a href="#十六进制-十进制转换" class="headerlink" title="十六进制/十进制转换"></a>十六进制/十进制转换</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> hex 100</span></span><br><span class="line">0x64</span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> dec 0x64</span></span><br><span class="line">100</span><br></pre></td></tr></table></figure>
+
+<p>注：hex 和 dec 均为隐藏命令。</p>
+<h2 id="一次执行多个命令"><a href="#一次执行多个命令" class="headerlink" title="一次执行多个命令"></a>一次执行多个命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> show clock ; show switchname ; show ip int brie</span></span><br><span class="line">09:00:00.642 CST Wed Nov 01 2020</span><br><span class="line">Nexus</span><br><span class="line">IP Interface Status for VRF &quot;default&quot;(1)</span><br><span class="line">Interface           IP Address     Interface Status</span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+<p>注：命令可简写/后续命令无法Tab或?</p>
+<h2 id="配置命令"><a href="#配置命令" class="headerlink" title="配置命令"></a>配置命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> conf t ; hostname NXOSSW ; end</span></span><br><span class="line">Enter configuration commands, one per line. End with CNTL/Z.</span><br><span class="line"><span class="meta">NXOSSW#</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="查看命令执行时间"><a href="#查看命令执行时间" class="headerlink" title="查看命令执行时间"></a>查看命令执行时间</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> show clock ; show run | ex .* ; show clock</span></span><br><span class="line">11:15:24.510 CST Wed Nov 01 2020</span><br><span class="line">11:15:24.576 CST Wed Nov 01 2020</span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="tech-support文件输出"><a href="#tech-support文件输出" class="headerlink" title="tech-support文件输出"></a>tech-support文件输出</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> tac-pac</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> dir volatile:</span></span><br><span class="line">        0   Jan 01 08:02:16 2001 nginx_logflag</span><br><span class="line">    926120   Nov 01 16:49:56 2020 show_tech_out.gz</span><br><span class="line">​</span><br><span class="line">Usage for volatile://sup-local</span><br><span class="line">    937984 bytes used</span><br><span class="line">103919616 bytes free</span><br><span class="line">104857600 bytes total</span><br><span class="line"><span class="meta">Nexus#</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> tac-pac bootflash:</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> dir bootflash: | i show_tech_out</span></span><br><span class="line">  926120   Nov 01 17:36:36 2020 show_tech_out.gz</span><br><span class="line"><span class="meta">Nexus#</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> tac-pac bootflash:20191106-show-tech.gz</span></span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+<p>注：使用传统 show tech-support 方式获取该文件有时会非常大而且需要非常长的时间去生成，并且会弹到终端内刷新页面。<br>nexus设备可以使用tac-pac命令替代，输入命令回车后等待一段时间后，自动生成show_tech_out.gz文件，默认保存在volatile:中。<br>推荐使用tac-pac bootflash:，保存在bootflash:里，之后可以通过FTP等方式导出。</p>
+<h2 id="使用CLI变量"><a href="#使用CLI变量" class="headerlink" title="使用CLI变量"></a>使用CLI变量</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> show cli variables</span></span><br><span class="line">VSH Variable List (* = session vars)</span><br><span class="line">-----------------</span><br><span class="line">SWITCHNAME=&quot;Nexus&quot;</span><br><span class="line">TIMESTAMP=&quot;2020-11-01-15.09.50&quot;</span><br><span class="line"><span class="meta">Nexus#</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> tac-pac bootflash:$(SWITCHNAME)-$(TIMESTAMP)-show-tech-out.gz</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> dir bootflash: | i show-tech-out</span></span><br><span class="line">  926120   Nov 02 08:56:36 2020 Nexus-2020-11-01-15.14.15-show-tech-out.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用cli-alias"><a href="#使用cli-alias" class="headerlink" title="使用cli alias"></a>使用cli alias</h2><h3 id="默认配置"><a href="#默认配置" class="headerlink" title="默认配置"></a>默认配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> <span class="built_in">alias</span></span></span><br><span class="line">CLI alias commands</span><br><span class="line">==================</span><br><span class="line">alias           :show cli alias</span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> show cli <span class="built_in">alias</span></span></span><br><span class="line">CLI alias commands</span><br><span class="line">==================</span><br><span class="line">alias           :show cli alias</span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus(config)#</span><span class="bash"> cli <span class="built_in">alias</span> name shiib show ip int brief</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> shiib</span></span><br><span class="line">IP Interface Status for VRF &quot;default&quot;(1)</span><br><span class="line">Interface           IP Address     Interface Status</span><br><span class="line">Vlan100             1.1.1.1        protocol-up/link-up/admin-up</span><br><span class="line"><span class="meta">Nexus#</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> show cli <span class="built_in">alias</span></span></span><br><span class="line">CLI alias commands</span><br><span class="line">==================</span><br><span class="line">alias           :show cli alias</span><br><span class="line">shiib           :show ip int brief</span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="基于终端会话临时配置"><a href="#基于终端会话临时配置" class="headerlink" title="基于终端会话临时配置"></a>基于终端会话临时配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> terminal <span class="built_in">alias</span> shiib show ip int brief</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> shiib</span></span><br><span class="line">IP Interface Status for VRF &quot;default&quot;(1)</span><br><span class="line">Interface           IP Address     Interface Status</span><br><span class="line">Vlan100             1.1.1.1        protocol-up/link-up/admin-up</span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用cli-alias-amp-一次性执行多个命令"><a href="#使用cli-alias-amp-一次性执行多个命令" class="headerlink" title="使用cli alias &amp; 一次性执行多个命令"></a>使用cli alias &amp; 一次性执行多个命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> terminal <span class="built_in">alias</span> shall show clock ; show switchname ; show ip int brief</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> shall</span></span><br><span class="line">15:25:33.097 UTC Thu Nov 05 2020</span><br><span class="line">Time source is NTP</span><br><span class="line">Nexus</span><br><span class="line"></span><br><span class="line">IP Interface Status for VRF &quot;default&quot;(1)</span><br><span class="line">Interface            IP Address      Interface Status</span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+<p>注：全局或会话alias，show 或 config命令都可以组合尝试。</p>
+<h2 id="定制终端设置"><a href="#定制终端设置" class="headerlink" title="定制终端设置"></a>定制终端设置</h2><h3 id="终端会话超时"><a href="#终端会话超时" class="headerlink" title="终端会话超时"></a>终端会话超时</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> show terminal | <span class="keyword">in</span> Timeout</span></span><br><span class="line">Session Timeout: 30 minutes</span><br><span class="line"><span class="meta">Nexus#</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> terminal session-timeout ?</span></span><br><span class="line">&lt;0-525600&gt; Enter timeout in minutes, 0 to disable</span><br><span class="line">​</span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> terminal session-timeout 0</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> show terminal | <span class="keyword">in</span> Timeout</span></span><br><span class="line">Session Timeout: 0 minutes</span><br></pre></td></tr></table></figure>
+
+<h3 id="显示终端的宽度长度"><a href="#显示终端的宽度长度" class="headerlink" title="显示终端的宽度长度"></a>显示终端的宽度长度</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> show terminal | <span class="keyword">in</span> Length</span></span><br><span class="line">Length: 43 lines, Width: 152 columns</span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> terminal length 35</span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> show terminal | <span class="keyword">in</span> Length</span></span><br><span class="line">Length: 35 lines, Width: 152 columns</span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="延迟命令执行"><a href="#延迟命令执行" class="headerlink" title="延迟命令执行"></a>延迟命令执行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> show clock ; sleep 2 ; show clock</span></span><br><span class="line">15:30:36.009 UTC Thu Nov 05 2020</span><br><span class="line">Time source is NTP</span><br><span class="line">15:30:38.022 UTC Thu Nov 05 2020</span><br><span class="line">Time source is NTP</span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="查看其他vrf的路由"><a href="#查看其他vrf的路由" class="headerlink" title="查看其他vrf的路由"></a>查看其他vrf的路由</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">Nexus#</span><span class="bash"> routing-context vrf management</span></span><br><span class="line"><span class="meta">Nexus%</span><span class="bash">management<span class="comment"># sh ip route</span></span></span><br><span class="line">IP Route Table for VRF &quot;management&quot;</span><br><span class="line">&#x27;*&#x27; denotes best ucast next-hop</span><br><span class="line">&#x27;**&#x27; denotes best mcast next-hop</span><br><span class="line">&#x27;[x/y]&#x27; denotes [preference/metric]</span><br><span class="line">&#x27;%&lt;string&gt;&#x27; in via output denotes VRF &lt;string&gt;</span><br><span class="line">​</span><br><span class="line">0.0.0.0/0, ubest/mbest: 1/0</span><br><span class="line">  *via 11.1.1.1, [1/0], 6w5d, static</span><br><span class="line">11.1.1.0/24, ubest/mbest: 1/0, attached</span><br><span class="line">  *via 11.1.1.2, mgmt0, [0/0], 6w6d, direct</span><br><span class="line">11.1.1.2/32, ubest/mbest: 1/0, attached</span><br><span class="line">  *via 11.1.1.2, mgmt0, [0/0], 6w6d, local</span><br><span class="line"><span class="meta">Nexus%</span><span class="bash">management<span class="comment"># routing-context vrf default</span></span></span><br><span class="line"><span class="meta">Nexus#</span><span class="bash"> sh ip route</span></span><br><span class="line">IP Route Table for VRF &quot;default&quot;</span><br><span class="line">&#x27;*&#x27; denotes best ucast next-hop</span><br><span class="line">&#x27;**&#x27; denotes best mcast next-hop</span><br><span class="line">&#x27;[x/y]&#x27; denotes [preference/metric]</span><br><span class="line">&#x27;%&lt;string&gt;&#x27; in via output denotes VRF &lt;string&gt;</span><br><span class="line">​</span><br><span class="line">0.0.0.0/0, ubest/mbest: 1/0</span><br><span class="line">  *via 10.1.1.1, [1/0], 6w5d, static</span><br><span class="line">10.1.1.0/24, ubest/mbest: 1/0, attached</span><br><span class="line">  *via 10.1.1.2, Vlan1, [0/0], 6w5d, direct</span><br><span class="line">10.1.1.2/32, ubest/mbest: 1/0, attached</span><br><span class="line">  *via 10.1.1.2, Vlan1, [0/0], 6w5d, local</span><br><span class="line"><span class="meta">Nexus#</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2020/11/03/cisco_nxos_tips_and_tricks/" data-id="ckh7pa4na00004o356t5g5gqj" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/20/cisco_nxos_update_error/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">cisco NXOS 大版本升级导致的故障</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/11/03/cisco_nxos_tips_and_tricks/">cisco NXOS 终端技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/20/cisco_nxos_update_error/">cisco NXOS 大版本升级导致的故障</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/01/using_ss_instead_of_netstat/">用ss来代替netstat</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/30/curl_simple_manual/">curl，强大的调试开发工具。</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/25/WSL2_usage/">WSL2的配置流程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2020 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
