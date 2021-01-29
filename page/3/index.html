@@ -64,6 +64,104 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-RSRP_RSCP_RSSI_RSRQ_RSSNR" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/30/RSRP_RSCP_RSSI_RSRQ_RSSNR/" class="article-date">
+  <time datetime="2019-03-29T16:00:00.000Z" itemprop="datePublished">2019-03-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/network/">network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/30/RSRP_RSCP_RSSI_RSRQ_RSSNR/">RSRP/RSCP/RSSI/RSRQ/RSSNR 参考值和详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>RSRP(Reference Signal Received Power参考信号接收功率)</strong>:小区下行公共导频在测量带宽内功率的线性值（每个RE上的功率），当存在多根接收天线时，需要对多根天线上的测量结果进行比较，上报值不低于任何一个分支对应的RSRP值，max(RSRP00,RSRP01)。即为信号功率S。反映当前信道的路径损耗强度，用于小区覆盖的测量和小区选择/重选和切换。</p>
+<p>取值范围：-44~-140dBm</p>
+<p><strong>RSCP(Receive Signal Channel Power)</strong>:通常特指导频信道，可以理解为手机接收到的导频信道信号强度。</p>
+        
+          <p class="article-more-link">
+            <a href="/2019/03/30/RSRP_RSCP_RSSI_RSRQ_RSSNR/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2019/03/30/RSRP_RSCP_RSSI_RSRQ_RSSNR/" data-id="ckdrg5yrw0031wk35admr07fu" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
+    <article id="post-Grub2_options" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/26/Grub2_options/" class="article-date">
+  <time datetime="2019-03-25T16:00:00.000Z" itemprop="datePublished">2019-03-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Fedora/">Fedora</a>►<a class="article-category-link" href="/categories/experience/">experience</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/26/Grub2_options/">Fedora 25 关于Grub2的操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Fedora25现在已经用上了Grub2，虽在名称上是Grub的升级版，但其代码实际上被完全重写了。对于最终用户来讲，Grub2带来了若干改进，如：</p>
+<ul>
+<li>自动搜索可用的内核和硬盘中的可用系统。</li>
+<li>可支持NTFS等更多分区格式。</li>
+<li>可启动Windows、Mac OS X等多种系统。</li>
+<li>更人性化的设计，如键入命令时TAB补全很强大，输出很长时会分页显示等。</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2019/03/26/Grub2_options/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2019/03/26/Grub2_options/" data-id="ckdrg5yr3001zwk35f3lj3v37" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
     <article id="post-Walkman_cover_solution" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/02/19/Walkman_cover_solution/" class="article-date">
@@ -427,96 +525,6 @@
 </article>
 
   
-    <article id="post-PyCharm_cannot_call_module" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/03/PyCharm_cannot_call_module/" class="article-date">
-  <time datetime="2018-04-02T16:00:00.000Z" itemprop="datePublished">2018-04-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Python/">Python</a>►<a class="article-category-link" href="/categories/experience/">experience</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/03/PyCharm_cannot_call_module/">PyCharm中无法调用numpy</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>PyCharm报错:ModuleNotFoundError: No module named ‘numpy’。<br>因为有用到py，所以自己装了个py36，结果后来装了个PyCharm方便学习，发现写相对复杂程序的时候import不了一些库，例如标题的numpy。其实是PyCharm里面自带了一个python和pip，只要在PyCharm里面更改一下路径就ok了。</p>
-        
-          <p class="article-more-link">
-            <a href="/2018/04/03/PyCharm_cannot_call_module/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-     <footer class="article-footer">
-      <a data-url="/2018/04/03/PyCharm_cannot_call_module/" data-id="ckdrg5yro002fwk350tek58l8" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-  
-    <article id="post-Android_SDK_install_error" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/12/Android_SDK_install_error/" class="article-date">
-  <time datetime="2018-03-11T16:00:00.000Z" itemprop="datePublished">2018-03-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/experience/">experience</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/12/Android_SDK_install_error/">Android Studio SDK报错解决方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Android Studio的SDK是从dl.google.com上面下载的，所以有些地区会无法访问。解决方法是挂梯子，先确保能连通。<br>一开始安装会提示你要不要安装SDK和AVD，这两个都是从上述网站下载解压的，如果一开始没有下载到，会在之后启动AS提示你“无法连通网站 请设置代理”。这时候你设置SDK文件夹会提示你installed（其实并没有安装），找到一个空的文件夹，确认能正常连接到dl.google.com的话，就可以正常下载解压安装了。</p>
-        
-          <p class="article-more-link">
-            <a href="/2018/03/12/Android_SDK_install_error/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-     <footer class="article-footer">
-      <a data-url="/2018/03/12/Android_SDK_install_error/" data-id="ckdrg5yna0001wk35dw9a2c04" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-  
 
 
   <nav id="page-nav">
@@ -562,7 +570,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -575,6 +583,14 @@
       <ul>
         
           <li>
+            <a href="/2021/01/26/cacti_bug/">cacti的绘图bug</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/25/tutorial_of_top/">详解top应该怎么看</a>
+          </li>
+        
+          <li>
             <a href="/2020/11/03/cisco_nxos_tips_and_tricks/">cisco NXOS 终端技巧</a>
           </li>
         
@@ -584,14 +600,6 @@
         
           <li>
             <a href="/2020/10/01/using_ss_instead_of_netstat/">用ss来代替netstat</a>
-          </li>
-        
-          <li>
-            <a href="/2020/09/30/curl_simple_manual/">curl，强大的调试开发工具。</a>
-          </li>
-        
-          <li>
-            <a href="/2020/09/25/WSL2_usage/">WSL2的配置流程</a>
           </li>
         
       </ul>
@@ -636,7 +644,7 @@
   
   <div class="outer">
       <div id="footer-info" class="inner">
-      &copy; 2020 Laplacence<br>
+      &copy; 2021 Laplacence<br>
       CC BY-NC-ND 4.0 Powered by
       <a href="http://hexo.io/" target="_blank">Hexo</a>
       <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
