@@ -3,15 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2020 | Trash Can</title>
+  <title>CentOS7更换内核 | Trash Can</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="就是博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Trash Can">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="如题，虽然可能很多地方都有类似介绍。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7更换内核">
+<meta property="og:url" content="http://yoursite.com/2021/04/22/upgrade_centos_kernel/index.html">
 <meta property="og:site_name" content="Trash Can">
-<meta property="og:description" content="就是博客">
+<meta property="og:description" content="如题，虽然可能很多地方都有类似介绍。">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-22T14:25:56.767Z">
 <meta property="article:author" content="Laplacence">
 <meta property="article:tag" content="Python C++ Fedora tech">
 <meta name="twitter:card" content="summary">
@@ -62,326 +64,82 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/11/03/cisco_nxos_tips_and_tricks/" class="archive-article-date">
-  <time datetime="2020-11-02T16:00:00.000Z" itemprop="datePublished">Nov 3</time>
+        <section id="main"><article id="post-upgrade_centos_kernel" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/22/upgrade_centos_kernel/" class="article-date">
+  <time datetime="2021-04-21T16:00:00.000Z" itemprop="datePublished">2021-04-22</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>►<a class="article-category-link" href="/categories/experience/">experience</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/03/cisco_nxos_tips_and_tricks/">cisco NXOS 终端技巧</a>
+    <h1 class="article-title" itemprop="name">
+      CentOS7更换内核
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/10/20/cisco_nxos_update_error/" class="archive-article-date">
-  <time datetime="2020-10-19T16:00:00.000Z" itemprop="datePublished">Oct 20</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/20/cisco_nxos_update_error/">cisco NXOS 大版本升级导致的故障</a>
-    </h1>
-  
+        <p>如题，虽然可能很多地方都有类似介绍。</p>
+<a id="more"></a>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/10/01/using_ss_instead_of_netstat/" class="archive-article-date">
-  <time datetime="2020-09-30T16:00:00.000Z" itemprop="datePublished">Oct 1</time>
-</a>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先到 <a target="_blank" rel="noopener" href="http://elrepo.org/tiki/HomePage">http://elrepo.org/tiki/HomePage</a> ，按照步骤导入公钥和7的yum源。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span><br><span class="line">dnf install -y https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>换一波tuna源。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/elrepo.repo</span><br><span class="line">:%s/mirrorlist=/#mirrorlist=/g</span><br><span class="line">:%s/elrepo.org\/linux/mirrors.tuna.tsinghua.edu.cn\/elrepo/g</span><br></pre></td></tr></table></figure>
+
+<p>其次，确认自己需要mainline还是longtime的内核。前者更新快，后者支持时间更久更稳定。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf --enablerepo=elrepo-kernel install -y --allowerasing kernel-lt kernel-lt-headers kernel-lt-tools kernel-lt-devel</span><br></pre></td></tr></table></figure>
+
+<h2 id="更换"><a href="#更换" class="headerlink" title="更换"></a>更换</h2><p>然后查看自己的grub2启动表。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> awk -F\<span class="string">&#x27; &#x27;</span><span class="variable">$1</span>==<span class="string">&quot;menuentry &quot;</span> &#123;<span class="built_in">print</span> i++ <span class="string">&quot; : &quot;</span> <span class="variable">$2</span>&#125;<span class="string">&#x27; /etc/grub2.cfg</span></span></span><br><span class="line">0 : CentOS Linux (5.11.16-1.el7.elrepo.x86_64) 7 (Core)</span><br><span class="line">1 : CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br><span class="line">2 : CentOS Linux (3.10.0-1127.13.1.el7.x86_64) 7 (Core)</span><br><span class="line">3 : CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)</span><br><span class="line">4 : CentOS Linux (0-rescue-2af5b98ee1d740ee9ef8e747f5da2b49) 7 (Core)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>接着查看当前启动项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> grub2-editenv list</span></span><br><span class="line">saved_entry=CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br></pre></td></tr></table></figure>
+
+<p>更改为第一个,再看一下当前启动项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> grub2-set-default 0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> grub2-editenv list</span></span><br><span class="line">saved_entry=0</span><br></pre></td></tr></table></figure>
+
+<p>更改成功后reboot，uname看一下内核。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> uname -r</span></span><br><span class="line">5.11.16-1.el7.elrepo.x86_64</span><br></pre></td></tr></table></figure>
+
+
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/01/using_ss_instead_of_netstat/">用ss来代替netstat</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/09/30/curl_simple_manual/" class="archive-article-date">
-  <time datetime="2020-09-29T16:00:00.000Z" itemprop="datePublished">Sep 30</time>
-</a>
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2021/04/22/upgrade_centos_kernel/" data-id="cknszafoc0000v835espsfsch" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/30/curl_simple_manual/">curl，强大的调试开发工具。</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/09/25/WSL2_usage/" class="archive-article-date">
-  <time datetime="2020-09-24T16:00:00.000Z" itemprop="datePublished">Sep 25</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/25/WSL2_usage/">WSL2的配置流程</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/08/31/dig_simple_manual/" class="archive-article-date">
-  <time datetime="2020-08-30T16:00:00.000Z" itemprop="datePublished">Aug 31</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/31/dig_simple_manual/">dig是什么，怎么用？</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/08/12/Python_GC/" class="archive-article-date">
-  <time datetime="2020-08-11T16:00:00.000Z" itemprop="datePublished">Aug 12</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/12/Python_GC/">Python3的垃圾回收机制</a>
-    </h1>
-  
-
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/01/26/cacti_bug/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">cacti的绘图bug</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/06/16/Python_to_exe/" class="archive-article-date">
-  <time datetime="2020-06-15T16:00:00.000Z" itemprop="datePublished">Jun 16</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/06/16/Python_to_exe/">Python3打包成windows的exe可执行程序</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/05/21/Fedora_options/" class="archive-article-date">
-  <time datetime="2020-05-20T16:00:00.000Z" itemprop="datePublished">May 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/21/Fedora_options/">关于Fedora的一些配置（长期更新）</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/05/21/selenium_about_chromedriver/" class="archive-article-date">
-  <time datetime="2020-05-20T16:00:00.000Z" itemprop="datePublished">May 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/21/selenium_about_chromedriver/">selenium关于chromedriver的配置</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/04/06/seed_fill_4/" class="archive-article-date">
-  <time datetime="2020-04-05T16:00:00.000Z" itemprop="datePublished">Apr 6</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/06/seed_fill_4/">4连通种子填充算法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/03/26/default_function_variable_problem/" class="archive-article-date">
-  <time datetime="2020-03-25T16:00:00.000Z" itemprop="datePublished">Mar 26</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/26/default_function_variable_problem/">Python3中的默认函数可变问题</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/03/26/Technique_of_Python/" class="archive-article-date">
-  <time datetime="2020-03-25T16:00:00.000Z" itemprop="datePublished">Mar 26</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/26/Technique_of_Python/">Python3的书写技巧和应用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/03/18/DDA_Line/" class="archive-article-date">
-  <time datetime="2020-03-17T16:00:00.000Z" itemprop="datePublished">Mar 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/18/DDA_Line/">DDA画线法（考虑所有情况）</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/03/18/Midpoint/" class="archive-article-date">
-  <time datetime="2020-03-17T16:00:00.000Z" itemprop="datePublished">Mar 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/18/Midpoint/">中点画线法（考虑所有情况）</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/02/03/VirtualBox_and_Mininet_install/" class="archive-article-date">
-  <time datetime="2020-02-02T16:00:00.000Z" itemprop="datePublished">Feb 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/03/VirtualBox_and_Mininet_install/">Oracle VM VirtuaBox/Mininet安装过程</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
 </section>
         
           <aside id="sidebar">

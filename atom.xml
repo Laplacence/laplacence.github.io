@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-01-26T07:16:32.000Z</updated>
+  <updated>2021-04-22T14:25:56.767Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CentOS7更换内核</title>
+    <link href="http://yoursite.com/2021/04/22/upgrade_centos_kernel/"/>
+    <id>http://yoursite.com/2021/04/22/upgrade_centos_kernel/</id>
+    <published>2021-04-21T16:00:00.000Z</published>
+    <updated>2021-04-22T14:25:56.767Z</updated>
+    
+    <content type="html"><![CDATA[<p>如题，虽然可能很多地方都有类似介绍。</p><a id="more"></a><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先到 <a href="http://elrepo.org/tiki/HomePage">http://elrepo.org/tiki/HomePage</a> ，按照步骤导入公钥和7的yum源。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span><br><span class="line">dnf install -y https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm</span><br></pre></td></tr></table></figure><p>换一波tuna源。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/elrepo.repo</span><br><span class="line">:%s/mirrorlist=/#mirrorlist=/g</span><br><span class="line">:%s/elrepo.org\/linux/mirrors.tuna.tsinghua.edu.cn\/elrepo/g</span><br></pre></td></tr></table></figure><p>其次，确认自己需要mainline还是longtime的内核。前者更新快，后者支持时间更久更稳定。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf --enablerepo=elrepo-kernel install -y --allowerasing kernel-lt kernel-lt-headers kernel-lt-tools kernel-lt-devel</span><br></pre></td></tr></table></figure><h2 id="更换"><a href="#更换" class="headerlink" title="更换"></a>更换</h2><p>然后查看自己的grub2启动表。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> awk -F\<span class="string">&#x27; &#x27;</span><span class="variable">$1</span>==<span class="string">&quot;menuentry &quot;</span> &#123;<span class="built_in">print</span> i++ <span class="string">&quot; : &quot;</span> <span class="variable">$2</span>&#125;<span class="string">&#x27; /etc/grub2.cfg</span></span></span><br><span class="line">0 : CentOS Linux (5.11.16-1.el7.elrepo.x86_64) 7 (Core)</span><br><span class="line">1 : CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br><span class="line">2 : CentOS Linux (3.10.0-1127.13.1.el7.x86_64) 7 (Core)</span><br><span class="line">3 : CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)</span><br><span class="line">4 : CentOS Linux (0-rescue-2af5b98ee1d740ee9ef8e747f5da2b49) 7 (Core)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>接着查看当前启动项。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> grub2-editenv list</span></span><br><span class="line">saved_entry=CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br></pre></td></tr></table></figure><p>更改为第一个,再看一下当前启动项。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> grub2-set-default 0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> grub2-editenv list</span></span><br><span class="line">saved_entry=0</span><br></pre></td></tr></table></figure><p>更改成功后reboot，uname看一下内核。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> uname -r</span></span><br><span class="line">5.11.16-1.el7.elrepo.x86_64</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;如题，虽然可能很多地方都有类似介绍。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="experience" scheme="http://yoursite.com/categories/experience/"/>
+    
+    <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>cacti的绘图bug</title>
@@ -415,30 +436,6 @@
     <category term="experience" scheme="http://yoursite.com/categories/experience/"/>
     
     <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Fedora 30下无线网卡抓包</title>
-    <link href="http://yoursite.com/2019/09/03/Wireless_network_sniffing_in_Fedora/"/>
-    <id>http://yoursite.com/2019/09/03/Wireless_network_sniffing_in_Fedora/</id>
-    <published>2019-09-02T16:00:00.000Z</published>
-    <updated>2020-09-30T13:13:09.852Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近在干网络相关的活，突然想看一下无线网络802.1X的接入过程，于是就有了这篇博客。</p><p>无线网络的特性可能让人联想到古老的集线器（Hub）网络，在集线器网络中，所有通过集线器的数据都会被转发给该集线器所有的接口，也就是说，只要连接在该集线器上的机器，就可以监听该网络上的所有机器的网络通信。默认情况下，网卡只会接受发给自己的数据报文，将其他的报文统统丢弃。当然也可以让网卡接受所有的报文，这就是所谓的混杂模式（promiscuous mode）。</p><a id="more"></a><p>无线网卡跟这个很类似，默认情况下无线网卡和无线接入点（Wireless Access Point，WAP）建立连接后，就处于托管模式（Managed mode），在这个模式下，无线网卡只专注于接受从 WAP 发给自己的数据报文。如果想让无线网卡监听空气中所有的无线通信，则可以将无线网卡设置成监听模式（Monitor mode，也叫 RFMON 模式），然后再使用诸如 Wireshark 之类的软件捕获数据报文进行分析。</p><p>无线网卡除了 Managed mode 和 Monitor mode 这两个模式之外，其实还支持好几种其他的模式，譬如：Ad hoc（也叫 IBSS 模式） 和 Master mode。</p><p>当然我们主要看到监听模式，现在笔记本自带的网卡大部分都支持监听模式，博主找到了一份比较旧的Linux wireless device清单，但上面并没有我的设备，虽然我成功打开了监听模式（。</p><p>在 Linux 环境下，有一个命令估计大家都用过：ifconfig（虽然逐渐被ip代替），它用来显示或配置网络设备，譬如最常见的查看网卡 IP 地址，或者启用禁用某个网卡，修改网卡的 MAC 地址等等。如果要管理无线网卡，另一个命令是 iwconfig，可以用来查看无线网卡的状态，或修改无线网卡的模式。最简单的用法是不带任何参数，如下所示：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@Unknown laplacence]<span class="comment"># iwconfig</span></span><br><span class="line">wlp5s0    IEEE 802.11  ESSID:off/any  </span><br><span class="line">          Mode:Managed  Access Point: Not-Associated   Tx-Power=off</span><br><span class="line">          Retry short <span class="built_in">limit</span>:7   RTS thr:off   Fragment thr:off</span><br><span class="line">          Encryption key:off</span><br><span class="line">          Power Management:on</span><br><span class="line"></span><br><span class="line">virbr0    no wireless extensions.</span><br><span class="line"></span><br><span class="line">virbr0-nic  no wireless extensions.</span><br><span class="line"></span><br><span class="line">lo        no wireless extensions.</span><br><span class="line"></span><br><span class="line">enp3s0    no wireless extensions.</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>可以列出系统中当前正在使用的无线网卡，以及无线网卡的模式，支持的无线协议，ESSID（无线扩展服务设置 ID，Extended Service Set ID），信号强度等。从上面的例子中可以看出，wlp5s0 为无线网卡，当前网卡的运行模式为托管模式（Managed）。</p><p>iw 是 Linux 系统上的另一款无线配置工具，它的出现是为了解决 iwconfig 的很多不足，或者说它完全是为了取代 iwconfig 而开发的。</p><p>之所以要新开发一套无线配置工具，还要从无线扩展（Wireless-Extensions）说起。Wireless-Extensions（简称 WE，或者 Wext） 是由 Jean Tourrilhes 1997 年开发并添加到 Linux 内核的，它通过 Linux 的系统调用 ioctl() 来实现用户层和内核层之间的通信。由于设计的比较粗糙，使用 WE 开发的程序很难管理，并且由于它年代久远，WE 除了一些基本的 bugfix 之外也无人维护了，所以亟需一种新的无线驱动框架来指导无线程序的开发。于是便出现了 cfg80211 和 nl80211 。需要特别指出的是 cfg80211 不再使用 ioctl 系统调用，而是使用 Netlink （基于 socket 通信）。iw 就是完全基于 cfg80211 框架重新设计并开发的。</p><p>使用 iw 不仅可以实现和 iwconfig 完全一样的功能，而且它的用法要更丰富（当然也更复杂），可以先使用 iw help 查看它的使用帮助。下面的几个命令可能是你想尝试的：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw list</span></span><br></pre></td></tr></table></figure><p>列出所有的无线设备，以及每个无线设备的详细信息，详细到频率和信号强度，能想到的信息它都有列出来。<br>简单一点可以用：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw dev wlp5s0 info</span></span><br></pre></td></tr></table></figure><p>就显示出无线接口名称，网卡模式，频道等等。<br>那么主要是说如何设置监听模式，iw设置监听模式是通过新建一个虚拟网卡接口，然后将该虚拟网卡设置为监听模式，这样就不会导致无线网卡无法上网只能抓包的情况，而且单独用iwconfig设置monitor mode，可能会因为系统自带的网络管理服务强行切回Managed mode。（亲身体验）</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw dev wlp5s0 interface add mon0 type monitor</span></span><br><span class="line"><span class="comment"># ip link set mon0 up</span></span><br></pre></td></tr></table></figure><p>设置完后通过wireshark或者tcpdump就能抓到802.11的详细数据包了。</p><p>如果需要删除mon0这个接口，只需要通过iw再一次删除就可以了。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iw dev mon0 del</span></span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;最近在干网络相关的活，突然想看一下无线网络802.1X的接入过程，于是就有了这篇博客。&lt;/p&gt;
-&lt;p&gt;无线网络的特性可能让人联想到古老的集线器（Hub）网络，在集线器网络中，所有通过集线器的数据都会被转发给该集线器所有的接口，也就是说，只要连接在该集线器上的机器，就可以监听该网络上的所有机器的网络通信。默认情况下，网卡只会接受发给自己的数据报文，将其他的报文统统丢弃。当然也可以让网卡接受所有的报文，这就是所谓的混杂模式（promiscuous mode）。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="experience" scheme="http://yoursite.com/categories/experience/"/>
-    
-    <category term="network" scheme="http://yoursite.com/categories/network/"/>
-    
-    <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
     
     
   </entry>
