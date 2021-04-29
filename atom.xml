@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-04-22T14:25:56.767Z</updated>
+  <updated>2021-04-29T09:43:15.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>如何使用strace来解决问题？</title>
+    <link href="http://yoursite.com/2021/04/29/how_to_use_strace/"/>
+    <id>http://yoursite.com/2021/04/29/how_to_use_strace/</id>
+    <published>2021-04-28T16:00:00.000Z</published>
+    <updated>2021-04-29T09:43:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>如题，虽然可能很多地方都有类似介绍。</p><a id="more"></a><h2 id="程序的配置文件在哪？"><a href="#程序的配置文件在哪？" class="headerlink" title="程序的配置文件在哪？"></a>程序的配置文件在哪？</h2><p>老生长叹，毕竟你不知道这个程序的配置文件是在用户根目录，还是systemd内。</p><p>因为一个程序有一百万种方法来记录它的配置文件在哪里（在手册页、网站上、–help等），但只有一种方法可以让它真正打开它（用系统调用！）。</p><p>比如我现在找一下apt的配置文件。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> strace -tf apt 2&gt;&amp;1|grep <span class="built_in">stat</span></span></span><br><span class="line">.....</span><br><span class="line">17:07:05 stat(&quot;/etc/apt/apt.conf.d/&quot;, &#123;st_mode=S_IFDIR|0755, st_size=4096, ...&#125;) = 0</span><br><span class="line">17:07:05 stat(&quot;/etc/apt/apt.conf.d/&quot;, &#123;st_mode=S_IFDIR|0755, st_size=4096, ...&#125;) = 0</span><br><span class="line">17:07:05 fstat(4, &#123;st_mode=S_IFDIR|0755, st_size=4096, ...&#125;) = 0</span><br><span class="line">17:07:05 stat(&quot;/etc/apt/apt.conf&quot;, 0x7ffe7ec576b0) = -1 ENOENT (No such file or directory)</span><br><span class="line">17:07:05 stat(&quot;/var/lib/dpkg/status&quot;, &#123;st_mode=S_IFREG|0644, st_size=576398, ...&#125;) = 0</span><br><span class="line">17:07:05 stat(&quot;/usr/bin/dpkg&quot;, &#123;st_mode=S_IFREG|0755, st_size=313888, ...&#125;) = 0</span><br><span class="line">17:07:05 stat(&quot;/etc/debian_version&quot;, &#123;st_mode=S_IFREG|0644, st_size=13, ...&#125;) = 0</span><br><span class="line">17:07:05 stat(&quot;/usr/share/dpkg/tupletable&quot;, &#123;st_mode=S_IFREG|0644, st_size=2249, ...&#125;) = 0</span><br><span class="line">17:07:05 fstat(1, &#123;st_mode=S_IFIFO|0600, st_size=0, ...&#125;) = 0</span><br></pre></td></tr></table></figure><p>很明显可以看到<code>apt.conf.d</code>被加入了加载列表，以及<code>apt.conf</code>。</p><h2 id="为什么会挂掉？"><a href="#为什么会挂掉？" class="headerlink" title="为什么会挂掉？"></a>为什么会挂掉？</h2><p>执行程序，却什么输出都没有，这是怎么回事？</p><p>很多时候你只需要运行<code>strace -p PID</code>，看看当前运行的是什么系统调用。你甚至不需要看几百行的输出。</p><p>如果这个程序闪没了咋办？</p><p>试试这个！<code>strace &lt;command&gt;</code></p><h2 id="为什么很慢？"><a href="#为什么很慢？" class="headerlink" title="为什么很慢？"></a>为什么很慢？</h2><p>使用 strace 作为一种粗略的剖析工具<code>strace -t &lt;command&gt;</code></p><p>会显示每次系统调用的时间戳，这样你就可以寻找大的漏洞，找到罪魁祸首。</p><p>或者用统计工具 <code>strace -c &lt;command&gt;</code></p><h2 id="为什么这个网络连接失败？"><a href="#为什么这个网络连接失败？" class="headerlink" title="为什么这个网络连接失败？"></a>为什么这个网络连接失败？</h2><p>你可以通过DNS请求来查找域名，或者通过<code>connect</code>系统调用来查找IP。</p><p>一般来说，当<code>tcpdump</code>因为某些原因不能使用或者只是因为比较熟悉<code>strace</code>时，就经常会使用<code>strace</code>调试网络问题。</p><p>比如服务器<code>curl ifconfig.me</code>一直不出结果。<br>这时候<code>strace curl ifconfig.me</code>检查了一下。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sendto(3, &quot;GET HTTP://ifconfig.me/ HTTP/1.1&quot;..., 172, MSG_NOSIGNAL, NULL, 0) = 172</span><br><span class="line">poll([&#123;fd=3, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND&#125;], 1, 0) = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN&#125;], 1, 1000)  = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND&#125;], 1, 0) = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN&#125;], 1, 1000)  = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND&#125;], 1, 0) = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN&#125;], 1, 1000)  = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND&#125;], 1, 0) = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN&#125;], 1, 1000)  = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND&#125;], 1, 0) = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN&#125;], 1, 1000)  = 0 (Timeout)</span><br><span class="line">poll([&#123;fd=3, events=POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND&#125;], 1, 0) = 0 (Timeout)</span><br></pre></td></tr></table></figure><p>发现一直超时，这样头绪会清晰一些，至少不是机器有问题。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;如题，虽然可能很多地方都有类似介绍。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="experience" scheme="http://yoursite.com/categories/experience/"/>
+    
+    <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>CentOS7更换内核</title>
     <link href="http://yoursite.com/2021/04/22/upgrade_centos_kernel/"/>
     <id>http://yoursite.com/2021/04/22/upgrade_centos_kernel/</id>
     <published>2021-04-21T16:00:00.000Z</published>
-    <updated>2021-04-22T14:25:56.767Z</updated>
+    <updated>2021-04-29T13:02:45.996Z</updated>
     
     <content type="html"><![CDATA[<p>如题，虽然可能很多地方都有类似介绍。</p><a id="more"></a><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先到 <a href="http://elrepo.org/tiki/HomePage">http://elrepo.org/tiki/HomePage</a> ，按照步骤导入公钥和7的yum源。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span><br><span class="line">dnf install -y https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm</span><br></pre></td></tr></table></figure><p>换一波tuna源。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/elrepo.repo</span><br><span class="line">:%s/mirrorlist=/#mirrorlist=/g</span><br><span class="line">:%s/elrepo.org\/linux/mirrors.tuna.tsinghua.edu.cn\/elrepo/g</span><br></pre></td></tr></table></figure><p>其次，确认自己需要mainline还是longtime的内核。前者更新快，后者支持时间更久更稳定。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf --enablerepo=elrepo-kernel install -y --allowerasing kernel-lt kernel-lt-headers kernel-lt-tools kernel-lt-devel</span><br></pre></td></tr></table></figure><h2 id="更换"><a href="#更换" class="headerlink" title="更换"></a>更换</h2><p>然后查看自己的grub2启动表。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> awk -F\<span class="string">&#x27; &#x27;</span><span class="variable">$1</span>==<span class="string">&quot;menuentry &quot;</span> &#123;<span class="built_in">print</span> i++ <span class="string">&quot; : &quot;</span> <span class="variable">$2</span>&#125;<span class="string">&#x27; /etc/grub2.cfg</span></span></span><br><span class="line">0 : CentOS Linux (5.11.16-1.el7.elrepo.x86_64) 7 (Core)</span><br><span class="line">1 : CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br><span class="line">2 : CentOS Linux (3.10.0-1127.13.1.el7.x86_64) 7 (Core)</span><br><span class="line">3 : CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)</span><br><span class="line">4 : CentOS Linux (0-rescue-2af5b98ee1d740ee9ef8e747f5da2b49) 7 (Core)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>接着查看当前启动项。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> grub2-editenv list</span></span><br><span class="line">saved_entry=CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br></pre></td></tr></table></figure><p>更改为第一个,再看一下当前启动项。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> grub2-set-default 0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> grub2-editenv list</span></span><br><span class="line">saved_entry=0</span><br></pre></td></tr></table></figure><p>更改成功后reboot，uname看一下内核。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> uname -r</span></span><br><span class="line">5.11.16-1.el7.elrepo.x86_64</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -415,27 +436,6 @@
     <category term="experience" scheme="http://yoursite.com/categories/experience/"/>
     
     <category term="Linux" scheme="http://yoursite.com/categories/Linux/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Python3下实现AES-CBC</title>
-    <link href="http://yoursite.com/2019/09/08/Python_AES_CBC/"/>
-    <id>http://yoursite.com/2019/09/08/Python_AES_CBC/</id>
-    <published>2019-09-07T16:00:00.000Z</published>
-    <updated>2020-04-11T07:09:36.357Z</updated>
-    
-    <content type="html"><![CDATA[<p>博主使用的是Python3.6，所以首先需要pip安装pycryptodomex，<br>之后导入Cryptodome就可以使用了。</p><a id="more"></a><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">from</span> Cryptodome.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AES_CBC</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 可以自定义key和iv</span></span><br><span class="line">        self.__key = bytes.fromhex(<span class="string">&#x27;43657CB361667F45454E537973576562&#x27;</span>)</span><br><span class="line">        self.__iv = bytes.fromhex(<span class="string">&#x27;1934577290ABCDEF1264147890234545&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pad</span>(<span class="params">self, data</span>):</span></span><br><span class="line">        length = <span class="number">16</span> - (len(data) % <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">return</span> data.encode() + (chr(length) * length).encode()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">encrypt</span>(<span class="params">self, data</span>):</span></span><br><span class="line">        cipher = AES.new(self.__key, AES.MODE_CBC, self.__iv)</span><br><span class="line">        encryptdata = base64.b64encode(cipher.encrypt(self.pad(data)))</span><br><span class="line">        <span class="keyword">return</span> encryptdata</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;博主使用的是Python3.6，所以首先需要pip安装pycryptodomex，&lt;br&gt;之后导入Cryptodome就可以使用了。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="experience" scheme="http://yoursite.com/categories/experience/"/>
-    
-    <category term="Python" scheme="http://yoursite.com/categories/Python/"/>
     
     
   </entry>
