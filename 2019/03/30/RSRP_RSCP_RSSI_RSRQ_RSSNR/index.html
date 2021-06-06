@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RSRP/RSCP/RSSI/RSRQ/RSSNR 参考值和详解 | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="RSRP(Reference Signal Received Power参考信号接收功率):小区下行公共导频在测量带宽内功率的线性值（每个RE上的功率），当存在多根接收天线时，需要对多根天线上的测量结果进行比较，上报值不低于任何一个分支对应的RSRP值，max(RSRP00,RSRP01)。即为信号功率S。反映当前信道的路径损耗强度，用于小区覆盖的测量和小区选择&#x2F;重选和切换。 取值范围：-44~-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RSRP&#x2F;RSCP&#x2F;RSSI&#x2F;RSRQ&#x2F;RSSNR 参考值和详解">
+<meta property="og:url" content="https://laplacence.github.io/2019/03/30/RSRP_RSCP_RSSI_RSRQ_RSSNR/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="RSRP(Reference Signal Received Power参考信号接收功率):小区下行公共导频在测量带宽内功率的线性值（每个RE上的功率），当存在多根接收天线时，需要对多根天线上的测量结果进行比较，上报值不低于任何一个分支对应的RSRP值，max(RSRP00,RSRP01)。即为信号功率S。反映当前信道的路径损耗强度，用于小区覆盖的测量和小区选择&#x2F;重选和切换。 取值范围：-44~-">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-11T07:10:39.928Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://laplacence.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-RSRP_RSCP_RSSI_RSRQ_RSSNR" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/30/RSRP_RSCP_RSSI_RSRQ_RSSNR/" class="article-date">
+  <time datetime="2019-03-29T16:00:00.000Z" itemprop="datePublished">2019-03-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/network/">network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RSRP/RSCP/RSSI/RSRQ/RSSNR 参考值和详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>RSRP(Reference Signal Received Power参考信号接收功率)</strong>:小区下行公共导频在测量带宽内功率的线性值（每个RE上的功率），当存在多根接收天线时，需要对多根天线上的测量结果进行比较，上报值不低于任何一个分支对应的RSRP值，max(RSRP00,RSRP01)。即为信号功率S。反映当前信道的路径损耗强度，用于小区覆盖的测量和小区选择/重选和切换。</p>
+<p>取值范围：-44~-140dBm</p>
+<p><strong>RSCP(Receive Signal Channel Power)</strong>:通常特指导频信道，可以理解为手机接收到的导频信道信号强度。</p>
+<span id="more"></span>
+<p><strong>RSSI(Received Signal Strength Indicator接收信号强度指示)</strong>:UE探测带宽内一个OFDM符号所有RE上的总接收功率（若是20M的系统带宽，当没有下行数据时，则为200个导频RE上接收功率总和，当有下行数据时，则为1200个RE上接收功率总和），包括服务小区和非服务小区信号、相邻信道干扰，系统内部热噪声等。即为总功率S+I+N，其中I为干扰功率，N为噪声功率。反映当前信道的接收信号强度和干扰程度。</p>
+<p>取值范围：-20~-110dbm</p>
+<p><strong>RSRQ(Reference Signal Received Quality参考信号接收质量)</strong>:M*RSRP/RSSI，其中M为RSSI测量带宽内的RB数，即为系统带宽内的RB总数。反映和指示当前信道质量的信噪比和干扰水平。为了使测量得到的RSRQ为负值，与RSRP保持一致，因此RSRP定义的是单个RE上的信号功率，RSSI定义的是一个OFDM符号上所有RE的总接收功率。</p>
+<p>取值范围：-3~-19.5dB</p>
+<p><strong>RSSINR/RSSNR(Signal to Interference Noise Ratio信干噪比)</strong>:UE探测带宽内的参考信号功率与干扰噪声功率的比值，即为S/(I+N)，其中信号功率为CRS的接收功率，I+N为参考信号上非服务小区、相邻信道干扰和系统内部热噪声功率总和。反映当前信道的链路质量，是衡量UE性能参数的一个重要指标。</p>
+<p>取值范围：0~30</p>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2019/03/30/RSRP_RSCP_RSSI_RSRQ_RSSNR/" data-id="ckpkwzazi001sk435bv6f938x" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/09/03/Wireless_network_sniffing_in_Fedora/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Fedora 30下无线网卡抓包
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/26/Grub2_options/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Fedora 25 关于Grub2的操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/22/upgrade_centos_kernel/">CentOS7更换内核</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/26/cacti_bug/">cacti的绘图bug</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/25/tutorial_of_top/">详解top应该怎么看</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/cisco_nxos_tips_and_tricks/">cisco NXOS 终端技巧</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2021 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

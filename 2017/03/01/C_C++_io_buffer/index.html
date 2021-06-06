@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C/C++ 输入输出缓冲区在Windows和Linux下对比 | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="C++中cin、cout，cerr和C的stdin、stdout、stderr都是同步的，即iostream 对象和 and cstdio流是同步的，同步关系如下：         C stream     iostream object           stdin     cin           win           stdout     cout           wout">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C&#x2F;C++ 输入输出缓冲区在Windows和Linux下对比">
+<meta property="og:url" content="https://laplacence.github.io/2017/03/01/C_C++_io_buffer/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="C++中cin、cout，cerr和C的stdin、stdout、stderr都是同步的，即iostream 对象和 and cstdio流是同步的，同步关系如下：         C stream     iostream object           stdin     cin           win           stdout     cout           wout">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-02-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-30T12:57:09.923Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://laplacence.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C_C++_io_buffer" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/01/C_C++_io_buffer/" class="article-date">
+  <time datetime="2017-02-28T16:00:00.000Z" itemprop="datePublished">2017-03-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CPP/">CPP</a>►<a class="article-category-link" href="/categories/Linux/">Linux</a>►<a class="article-category-link" href="/categories/experience/">experience</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C/C++ 输入输出缓冲区在Windows和Linux下对比
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>C++中cin、cout，cerr和C的stdin、stdout、stderr都是同步的，即iostream 对象和 and cstdio流是同步的，同步关系如下：</p>
+<table>
+  <tr>
+    <th>C stream</th>
+    <th>iostream object</th>
+  </tr>
+  <tr>
+    <td rowspan="2">stdin</td>
+    <td>cin</td>
+  </tr>
+  <tr>
+    <td>win</td>
+  </tr>
+  <tr>
+    <td rowspan="2">stdout</td>
+    <td>cout</td>
+  </tr>
+  <tr>
+    <td>wout</td>
+  </tr>
+  <tr>
+    <td rowspan="4">stderr</td>
+    <td>cerr</td>
+  </tr>
+  <tr>
+    <td>wcerr</td>
+  </tr>
+  <tr>
+    <td>clog</td>
+  </tr>
+  <tr>
+    <td>wclog</td>
+  </tr>
+</table>
+<span id="more"></span>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">std::ios_base::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;2 &quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>windows下输出是：2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1<br>linux下是：1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2<br>正是因为这种同步，所以cin、cout比scanf、printf速度要慢，如果我们在使用cin、cout输入输出前加一句’’’std::ios_base::sync_with_stdio(false)’’’，其实速度和scanf、printf差不多。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="comment">//在windows下立即输出10个1</span></span><br><span class="line">    <span class="comment">//linux下不输出</span></span><br><span class="line">    <span class="comment">//说明windows下默认cout是无缓冲的，linux下是有缓冲的，cout换成printf也是一样。</span></span><br></pre></td></tr></table></figure>
+
+<p>只有缓冲区被刷新的时候缓冲区中的内容才会写入真实的文件或输出设备上。这五种情况下会刷新输出缓冲区：<br>1.程序正常结束。作为main返回工作的一部分，将清空所有的输出缓冲区。<br>2.在一些不确定的时候，缓冲区可能已经满了，在这种情况下，缓冲区将会在写下一个值之前刷新。<br>3.用操纵符显示地刷新缓冲区，如用endl。<br>4.在每次输出操作执行完毕后，用unitbuf操纵符设置流的内部状态，从而清空缓冲区。<br>5.可将输出流与输入流关联起来，在读输入流时将刷新其关联的输出缓冲区。</p>
+<p>我们可以通过函数 setbuf 和 setvbuf 自己设置输入输出流的缓冲区，需要注意的是不管程序中申请的的缓冲区实际大小为多少，setbuf都将缓冲区设置的大小为BUFSIZ，本人也在某本书上看到一个sample。<br><code>args = emalloc(BUFSIZ);</code><br>这是stdio.h 中的一个宏定义，内容如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Default buffer size. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> BUFSIZ</span></span><br><span class="line">    define BUFSIZ _IO_BUFSIZ</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>BUFSIZ有一个_IO_BUFSIZ大小，这个_IO_BUFSIZ又是多大呢？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_BUFSIZ _G_BUFSIZ</span></span><br></pre></td></tr></table></figure>
+
+<p>来自libio.h头文件，那么接着……</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _G_BUFSIZ 8192</span></span><br></pre></td></tr></table></figure>
+
+<p>来自_G_config.h，最终确认BUFSIZ大小是8192，还有更快的方法就是cout这个BUFSIZ，直接出现大小。（以上三段代码在fedora25环境下测试）</p>
+<p>setvbuf则可以设置缓冲区大小以及缓冲区的模式（行缓冲、全缓冲、无缓冲），<strong>需要注意的是这两个函数设置的是c的输入输出缓冲区，因为C++和C的缓冲区是同步的，所有该函数会对C++有影响</strong>  。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> buf[<span class="number">1024</span>];</span><br><span class="line"><span class="built_in">setbuf</span>(stdout, buf);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">  &#123;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>);<span class="comment">//此时windows下输出了10个1，linux下没有任何输出。</span></span><br><span class="line"><span class="comment">//因为windows是通过cmd窗口设定缓冲区</span></span><br><span class="line"><span class="comment">//更改对应注册表键值或者设置即可</span></span><br></pre></td></tr></table></figure>
+
+<p>因为默认情况下，cin是和cout绑定的，cin 会刷新cout的缓冲区，可以用函数cin.tie(0)来解绑定。所以在上面代码的基础上，在while(1); 前面加上：int a; cin&gt;&gt;a; 此时所有的1就可以输出了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> buf[<span class="number">1024</span>];</span><br><span class="line"><span class="built_in">setbuf</span>(stdout, buf);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">      cout&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">int</span> a; cin&gt;&gt;a;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>);<span class="comment">//linux windows均输出1</span></span><br></pre></td></tr></table></figure>
+
+<p>加上cin.tie(0)后，以下的代码没有输出1，因为cin已经和cout解绑定了，cin刷新不了cout的缓冲区。（可以cin.tie(&amp;cout)来绑定，注意cout没有tie方法）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> buf[<span class="number">1024</span>];</span><br><span class="line"><span class="built_in">setbuf</span>(stdout, buf);</span><br><span class="line">cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">       cout&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">int</span> a; cin&gt;&gt;a;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>);<span class="comment">//windows和linux下均没有输出。</span></span><br></pre></td></tr></table></figure>
+
+<p>有点奇怪的是以下代码还是会输出1，即默认缓冲区的情形下，解除绑定没有产生效果。<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/14052627/why-do-we-need-to-tie-cin-and-cout">SOF上有人这么解释。</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cin.<span class="built_in">tie</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">  &#123;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;1 &quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">int</span> a; cin&gt;&gt;a;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2017/03/01/C_C++_io_buffer/" data-id="ckpkwzays000ck435fbph4j11" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/01/C++_standard_iostream/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          C++格式化输出流
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/27/DS3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于实现DS3手柄无线连接电脑</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/22/upgrade_centos_kernel/">CentOS7更换内核</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/26/cacti_bug/">cacti的绘图bug</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/25/tutorial_of_top/">详解top应该怎么看</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/cisco_nxos_tips_and_tricks/">cisco NXOS 终端技巧</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2021 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>

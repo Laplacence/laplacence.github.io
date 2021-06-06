@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>详解top应该怎么看 | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Linux中的top命令显示系统上正在运行的进程。它是系统管理员最重要的工具之一。被广泛用于监视服务器的负载和进程。（各个发行版的top可能会有出入，请参照对应系统的–help和man，以下展示均在centos7.4上完成。）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详解top应该怎么看">
+<meta property="og:url" content="https://laplacence.github.io/2021/01/25/tutorial_of_top/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="Linux中的top命令显示系统上正在运行的进程。它是系统管理员最重要的工具之一。被广泛用于监视服务器的负载和进程。（各个发行版的top可能会有出入，请参照对应系统的–help和man，以下展示均在centos7.4上完成。）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-25T08:40:57.000Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://laplacence.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-tutorial_of_top" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/01/25/tutorial_of_top/" class="article-date">
+  <time datetime="2021-01-24T16:00:00.000Z" itemprop="datePublished">2021-01-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>►<a class="article-category-link" href="/categories/experience/">experience</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      详解top应该怎么看
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux中的top命令显示系统上正在运行的进程。它是系统管理员最重要的工具之一。被广泛用于监视服务器的负载和进程。<br>（各个发行版的top可能会有出入，请参照对应系统的–help和man，以下展示均在centos7.4上完成。）</p>
+<span id="more"></span>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>首先，让我们了解一下输出。top会显示系统的很多信息。我们需要理解不同部分输出的意义：默认运行时，top命令会显示如下输出：<br>前几行水平显示了不同系统参数的概括，接下来是进程和它们在列中的属性。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">top - 15:16:42 up 103 days,  2:09,  1 user,  load average: 0.05, 0.09, 0.11</span><br><span class="line">Tasks: 1067 total,   2 running, 1065 sleeping,   0 stopped,   0 zombie</span><br><span class="line"><span class="meta">%</span><span class="bash">Cpu(s):  0.1 us,  0.1 sy,  0.0 ni, 99.9 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span></span><br><span class="line">KiB Mem : 65420768 total, 27637080 free,  4135944 used, 33647744 buff/cache</span><br><span class="line">KiB Swap: 16777212 total, 16777212 free,        0 used. 60326400 avail Mem </span><br><span class="line"></span><br><span class="line">   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND          </span><br><span class="line">165745 root      20   0 3486224  41824  10268 S   1.0  0.1   3635:03 vcs-agent        </span><br><span class="line"> 85707 root      20   0  163096   3320   1584 R   0.7  0.0   0:00.10 top              </span><br><span class="line">   785 root      39  19       0      0      0 R   0.3  0.0   4154:39 kipmi0           </span><br><span class="line">  2048 zabbixs+  20   0 7643260   4740   2212 S   0.3  0.0   1:00.49 zabbix_server    </span><br><span class="line">  2228 zabbixs+  20   0 7646732   7212   4400 S   0.3  0.0   3:17.22 zabbix_server    </span><br><span class="line">  2546 zabbixs+  20   0 7646852   7236   4404 S   0.3  0.0   3:22.93 zabbix_server    </span><br><span class="line"> 48226 root      20   0 2366696  57548  16872 S   0.3  0.1  67:27.70 containerd       </span><br><span class="line"> 62322 root      20   0       0      0      0 S   0.3  0.0   0:00.91 kworker/u448:0   </span><br><span class="line">     1 root      20   0  191164   4068   2464 S   0.0  0.0  16:17.96 systemd          </span><br><span class="line">     2 root      20   0       0      0      0 S   0.0  0.0   0:01.82 kthreadd         </span><br><span class="line">     3 root      20   0       0      0      0 S   0.0  0.0   0:39.27 ksoftirqd/0      </span><br><span class="line">     5 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H     </span><br><span class="line">     8 root      rt   0       0      0      0 S   0.0  0.0   0:01.23 migration/0      </span><br></pre></td></tr></table></figure>
+
+<h3 id="系统运行时间和平均负载"><a href="#系统运行时间和平均负载" class="headerlink" title="系统运行时间和平均负载"></a>系统运行时间和平均负载</h3><p><code>top - 15:16:52 up 103 days,  2:09,  1 user,  load average: 0.06, 0.09, 0.11</code></p>
+<p>top命令的顶部显示与uptime命令相似的输出。</p>
+<p>这些字段意思是：</p>
+<ul>
+<li>当前时间</li>
+<li>系统已运行的时间</li>
+<li>当前登录用户的数量</li>
+<li>相应最近5、10和15分钟内的平均负载。</li>
+<li>可以使用’l’命令切换uptime的显示。</li>
+</ul>
+<p>关于load average，我们可以粗略地按照如下计算方式。</p>
+<p>load average/CPUs=usage percent</p>
+<p>例如上面给出的0.06，这台机器的核心数量可以通过lscpu查看，是32，则利用率为0.1875%，且无进程在等待。</p>
+<p>如果达到了65.00，则此时利用率为203.125%，且有33个进程在等待。</p>
+<h3 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h3><p><code>Tasks: 1067 total,   2 running, 1065 sleeping,   0 stopped,   0 zombie</code><br>这一行说明了进程数量和进程类型。</p>
+<h3 id="CPU状态"><a href="#CPU状态" class="headerlink" title="CPU状态"></a>CPU状态</h3><p><code>%Cpu(s):  0.1 us,  0.1 sy,  0.0 ni, 99.9 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</code><br>CPU状态，显示了不同模式下的百分比，分别为：</p>
+<ul>
+<li>us-user</li>
+<li>sy-system</li>
+<li>ni-niced 优先级</li>
+<li>wa-wait</li>
+<li>hi-hardware_interrupt</li>
+<li>si-software_interrupt</li>
+<li>st-steal 常见于虚拟机，指被虚拟CPU偷走的时间。</li>
+</ul>
+<h3 id="内存使用"><a href="#内存使用" class="headerlink" title="内存使用"></a>内存使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KiB Mem : 65420768 total, 27637080 free,  4135944 used, 33647744 buff/cache</span><br><span class="line">KiB Swap: 16777212 total, 16777212 free,        0 used. 60326400 avail Mem </span><br></pre></td></tr></table></figure>
+
+<p>内存使用率，类似于free，第一行为物理内存，第二行为swap。</p>
+<h3 id="具体信息"><a href="#具体信息" class="headerlink" title="具体信息"></a>具体信息</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND          </span><br><span class="line">165745 root      20   0 3486224  41824  10268 S   1.0  0.1   3635:03 vcs-agent        </span><br><span class="line"> 85707 root      20   0  163096   3320   1584 R   0.7  0.0   0:00.10 top              </span><br><span class="line">   785 root      39  19       0      0      0 R   0.3  0.0   4154:39 kipmi0           </span><br><span class="line">  2048 zabbixs+  20   0 7643260   4740   2212 S   0.3  0.0   1:00.49 zabbix_server    </span><br><span class="line">  2228 zabbixs+  20   0 7646732   7212   4400 S   0.3  0.0   3:17.22 zabbix_server    </span><br><span class="line">  2546 zabbixs+  20   0 7646852   7236   4404 S   0.3  0.0   3:22.93 zabbix_server    </span><br><span class="line"> 48226 root      20   0 2366696  57548  16872 S   0.3  0.1  67:27.70 containerd       </span><br><span class="line"> 62322 root      20   0       0      0      0 S   0.3  0.0   0:00.91 kworker/u448:0   </span><br><span class="line">     1 root      20   0  191164   4068   2464 S   0.0  0.0  16:17.96 systemd          </span><br><span class="line">     2 root      20   0       0      0      0 S   0.0  0.0   0:01.82 kthreadd         </span><br><span class="line">     3 root      20   0       0      0      0 S   0.0  0.0   0:39.27 ksoftirqd/0      </span><br><span class="line">     5 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H     </span><br><span class="line">     8 root      rt   0       0      0      0 S   0.0  0.0   0:01.23 migration/0      </span><br></pre></td></tr></table></figure>
+
+<p>默认的列有如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">列</th>
+<th align="left">意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">PID</td>
+<td align="left">进程ID，唯一标识符。</td>
+</tr>
+<tr>
+<td align="left">USER</td>
+<td align="left">进程所有者的实际用户名。</td>
+</tr>
+<tr>
+<td align="left">PR</td>
+<td align="left">进程的调度优先级。这个字段的一些值是’rt’。这意味这这些进程运行在实时态。</td>
+</tr>
+<tr>
+<td align="left">NI</td>
+<td align="left">进程的nice值（优先级）。越小的值意味着越高的优先级。</td>
+</tr>
+<tr>
+<td align="left">VIRT</td>
+<td align="left">进程使用的虚拟内存。</td>
+</tr>
+<tr>
+<td align="left">RES</td>
+<td align="left">驻留内存大小。驻留内存是任务使用的非交换物理内存大小。</td>
+</tr>
+<tr>
+<td align="left">SHR</td>
+<td align="left">进程使用的共享内存。</td>
+</tr>
+<tr>
+<td align="left">S</td>
+<td align="left">这个是进程的状态。它有D/R/S/T/Z/I</td>
+</tr>
+<tr>
+<td align="left">%CPU</td>
+<td align="left">自从上一次更新时到现在任务所使用的CPU时间百分比。</td>
+</tr>
+<tr>
+<td align="left">%MEM</td>
+<td align="left">进程使用的可用物理内存百分比。</td>
+</tr>
+<tr>
+<td align="left">TIME+</td>
+<td align="left">任务启动后到现在所使用的全部CPU时间，精确到百分之一秒。</td>
+</tr>
+<tr>
+<td align="left">COMMAND</td>
+<td align="left">运行进程所使用的命令。</td>
+</tr>
+</tbody></table>
+<p>关于S，有如下状态：</p>
+<table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">D</td>
+<td align="left">Disk Sleep，不可中断睡眠，一般为进程正在与硬件交互。</td>
+</tr>
+<tr>
+<td align="left">R</td>
+<td align="left">Running，运行中。</td>
+</tr>
+<tr>
+<td align="left">S</td>
+<td align="left">Interruptible Sleep，可中断睡眠，表示进程因为等待某个事件而被系统挂起。当进程等待的事件发生时，它会被唤醒并进入R。</td>
+</tr>
+<tr>
+<td align="left">T</td>
+<td align="left">Traced/Stopped，调试器会触发Traced，发送SIGSTOP信号会触发Stopped。</td>
+</tr>
+<tr>
+<td align="left">Z</td>
+<td align="left">Zombie，僵尸进程，父进程结束但未回收资源。</td>
+</tr>
+<tr>
+<td align="left">I</td>
+<td align="left">Idle，空闲状态，一般不会消耗资源。</td>
+</tr>
+</tbody></table>
+<h2 id="交互命令"><a href="#交互命令" class="headerlink" title="交互命令"></a>交互命令</h2><h3 id="h"><a href="#h" class="headerlink" title="h"></a>h</h3><p>输入h，出现帮助手册。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Help for Interactive Commands - procps-ng version 3.3.10</span><br><span class="line">Window 1:Def: Cumulative mode Off.  System: Delay 3.0 secs; Secure mode Off.</span><br><span class="line"></span><br><span class="line">  Z,B,E,e   Global: &#x27;Z&#x27; colors; &#x27;B&#x27; bold; &#x27;E&#x27;/&#x27;e&#x27; summary/task memory scale</span><br><span class="line">  l,t,m     Toggle Summary: &#x27;l&#x27; load avg; &#x27;t&#x27; task/cpu stats; &#x27;m&#x27; memory info</span><br><span class="line">  0,1,2,3,I Toggle: &#x27;0&#x27; zeros; &#x27;1/2/3&#x27; cpus or numa node views; &#x27;I&#x27; Irix mode</span><br><span class="line">  f,F,X     Fields: &#x27;f&#x27;/&#x27;F&#x27; add/remove/order/sort; &#x27;X&#x27; increase fixed-width</span><br><span class="line"></span><br><span class="line">  L,&amp;,&lt;,&gt; . Locate: &#x27;L&#x27;/&#x27;&amp;&#x27; find/again; Move sort column: &#x27;&lt;&#x27;/&#x27;&gt;&#x27; left/right</span><br><span class="line">  R,H,V,J . Toggle: &#x27;R&#x27; Sort; &#x27;H&#x27; Threads; &#x27;V&#x27; Forest view; &#x27;J&#x27; Num justify</span><br><span class="line">  c,i,S,j . Toggle: &#x27;c&#x27; Cmd name/line; &#x27;i&#x27; Idle; &#x27;S&#x27; Time; &#x27;j&#x27; Str justify</span><br><span class="line">  x,y     . Toggle highlights: &#x27;x&#x27; sort field; &#x27;y&#x27; running tasks</span><br><span class="line">  z,b     . Toggle: &#x27;z&#x27; color/mono; &#x27;b&#x27; bold/reverse (only if &#x27;x&#x27; or &#x27;y&#x27;)</span><br><span class="line">  u,U,o,O . Filter by: &#x27;u&#x27;/&#x27;U&#x27; effective/any user; &#x27;o&#x27;/&#x27;O&#x27; other criteria</span><br><span class="line">  n,#,^O  . Set: &#x27;n&#x27;/&#x27;#&#x27; max tasks displayed; Show: Ctrl+&#x27;O&#x27; other filter(s)</span><br><span class="line">  C,...   . Toggle scroll coordinates msg for: up,down,left,right,home,end</span><br><span class="line"></span><br><span class="line">  k,r       Manipulate tasks: &#x27;k&#x27; kill; &#x27;r&#x27; renice</span><br><span class="line">  d or s    Set update interval</span><br><span class="line">  W,Y       Write configuration file &#x27;W&#x27;; Inspect other output &#x27;Y&#x27;</span><br><span class="line">  q         Quit</span><br><span class="line">          ( commands shown with &#x27;.&#x27; require a visible task display window ) </span><br><span class="line">Press &#x27;h&#x27; or &#x27;?&#x27; for help with Windows,</span><br><span class="line">Type &#x27;q&#x27; or &lt;Esc&gt; to continue </span><br></pre></td></tr></table></figure>
+
+<h3 id="Space-Enter"><a href="#Space-Enter" class="headerlink" title="Space/Enter"></a>Space/Enter</h3><p>手动刷新，That’s all。</p>
+<h3 id="A"><a href="#A" class="headerlink" title="A"></a>A</h3><p>这个命令在全屏和交替模式间切换。在交替模式下会显示4个窗口:</p>
+<ul>
+<li>Def-默认字段</li>
+<li>Job-任务字段组</li>
+<li>Mem-内存字段组</li>
+<li>Usr-用户字段组</li>
+</ul>
+<p>这四组字段共有一个独立的可配置的概括区域和它自己的可配置任务区域。4个窗口中只有一个窗口是当前窗口。当前窗口的名称显示在左上方，交互命令只有在当前窗口有效。</p>
+<p>可以使用a/w进行窗口切换。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">1:Def - 15:55:22 up 103 days,  2:48,  1 user,  load average: 0.27, 0.16, 0.15</span><br><span class="line">Tasks: 1064 total,   1 running, 1063 sleeping,   0 stopped,   0 zombie</span><br><span class="line"><span class="meta">%</span><span class="bash">Cpu(s):  0.2 us,  0.4 sy,  0.0 ni, 99.3 id,  0.1 wa,  0.0 hi,  0.0 si,  0.0 st</span></span><br><span class="line">KiB Mem : 65420768 total, 27620432 free,  4143136 used, 33657200 buff/cache</span><br><span class="line">KiB Swap: 16777212 total, 16777212 free,        0 used. 60318688 avail Mem </span><br><span class="line"></span><br><span class="line">1   PID     USER  PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+          COMMAND</span><br><span class="line"> 165745     root  20   0 3486224  41372  10268 S   3.6  0.1   3636:07        vcs-agent</span><br><span class="line">  85707     root  20   0  163096   3348   1600 R   1.6  0.0   0:10.35              top</span><br><span class="line"> 135975     root  20   0       0      0      0 S   1.0  0.0   0:11.88   kworker/u449:2</span><br><span class="line">     10     root  20   0       0      0      0 S   0.5  0.0 169:29.55        rcu_sched</span><br><span class="line">   2392 zabbixs+  20   0 7646732   7216   4404 S   0.5  0.0   3:34.37    zabbix_server</span><br><span class="line">   2416 zabbixs+  20   0 7646748   7228   4400 S   0.5  0.0   3:25.69    zabbix_server</span><br><span class="line">   2659 zabbixs+  20   0 7538696   2196    772 S   0.5  0.0  74:29.38    zabbix_server</span><br><span class="line">  48226     root  20   0 2366696  57464  16872 S   0.5  0.1  67:36.83       containerd</span><br><span class="line">2   PID   PPID     TIME+  %CPU %MEM  PR  NI S    VIRT    RES   UID COMMAND            </span><br><span class="line"> 222119 221078   3:28.78   0.0  0.0  20   0 S  444940  22272    48 php-fpm            </span><br><span class="line"> 221187      2   0:00.13   0.0  0.0  20   0 S       0      0     0 kworker/12:2       </span><br><span class="line"> 221084 221078   3:33.70   0.0  0.0  20   0 S  442892  20512    48 php-fpm            </span><br><span class="line"> 221083 221078   3:27.54   0.0  0.0  20   0 S  442876  20048    48 php-fpm            </span><br><span class="line"> 221082 221078   3:27.58   0.0  0.0  20   0 S  442632  19916    48 php-fpm            </span><br><span class="line"> 221081 221078   3:28.20   0.0  0.0  20   0 S  446976  24556    48 php-fpm            </span><br><span class="line"> 221080 221078   3:25.92   0.0  0.0  20   0 S  442896  19820    48 php-fpm            </span><br><span class="line"> 221078      1   2:25.13   0.0  0.0  20   0 S  431568  15696     0 php-fpm            </span><br><span class="line"> 217972 221078   3:08.63   0.0  0.0  20   0 S  442096  19300    48 php-fpm            </span><br><span class="line">3   PID %MEM    VIRT    RES   CODE    DATA    SHR nMaj nDRT  %CPU COMMAND             </span><br><span class="line"> 179000  1.1 16.613g 747632  13000 16.547g  10260    0    0   0.0 mysqld              </span><br><span class="line">  54620  0.9 1067624 570548      4  928560   3268    0    0   0.0 python3             </span><br><span class="line">  49479  0.2 2559012 100956  64656 2402868  31908    0    0   0.0 dockerd             </span><br><span class="line">  48226  0.1 2366696  57464  36928 2302580  16872    0    0   0.5 containerd          </span><br><span class="line"> 165746  0.1 2771720  47136  12068 2734376  11968    0    0   0.0 agent-guan          </span><br><span class="line"> 165745  0.1 3486224  41372  17632 3457816  10268    0    0   3.6 vcs-agent           </span><br><span class="line"> 150146  0.1  856720  39908      4  499320   6080    0    0   0.0 salt-minion         </span><br><span class="line"> 165604  0.1 2172220  34436   5420 2125284   6412    0    0   0.0 supervisor          </span><br><span class="line">  10095  0.1 2297068  34136  24828 2260848   9020    0    0   0.0 filebeat632         </span><br><span class="line">4   PID   PPID   UID USER     RUSER    TTY          TIME+  %CPU %MEM S COMMAND        </span><br><span class="line">   2018      1   993 zabbixs+ zabbixs+ ?          0:00.27   0.0  0.0 S zabbix_server  </span><br><span class="line">   2036   2018   993 zabbixs+ zabbixs+ ?         19:00.24   0.0  0.0 S zabbix_server  </span><br><span class="line">   2037   2018   993 zabbixs+ zabbixs+ ?          0:58.12   0.0  0.0 S zabbix_server  </span><br><span class="line">   2038   2018   993 zabbixs+ zabbixs+ ?          1:43.64   0.0  0.0 S zabbix_server  </span><br><span class="line">   2039   2018   993 zabbixs+ zabbixs+ ?          2:31.94   0.0  0.0 S zabbix_server  </span><br><span class="line">   2040   2018   993 zabbixs+ zabbixs+ ?          0:59.83   0.0  0.0 S zabbix_server  </span><br><span class="line">   2041   2018   993 zabbixs+ zabbixs+ ?          1:01.25   0.0  0.0 S zabbix_server  </span><br><span class="line">   2042   2018   993 zabbixs+ zabbixs+ ?          1:02.12   0.0  0.0 S zabbix_server  </span><br><span class="line">   2043   2018   993 zabbixs+ zabbixs+ ?          1:01.96   0.0  0.0 S zabbix_server</span><br></pre></td></tr></table></figure>
+
+<h3 id="B"><a href="#B" class="headerlink" title="B"></a>B</h3><p>Bold，会让top部分关键字加粗。</p>
+<h3 id="c"><a href="#c" class="headerlink" title="c"></a>c</h3><p>切换是否显示进程启动时的完整路径和程序名。</p>
+<h3 id="d-s"><a href="#d-s" class="headerlink" title="d/s"></a>d/s</h3><p>时间间隔，如下，我输入了10，即10秒后刷新输出一次top信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1:Def - 15:58:10 up 103 days,  2:51,  1 user,  load average: 0.16, 0.15, 0.14</span><br><span class="line">Tasks: 1069 total,   1 running, 1068 sleeping,   0 stopped,   0 zombie</span><br><span class="line"><span class="meta">%</span><span class="bash">Cpu(s):  0.1 us,  0.1 sy,  0.0 ni, 99.8 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span></span><br><span class="line">KiB Mem : 65420768 total, 27623968 free,  4139288 used, 33657512 buff/cache</span><br><span class="line">KiB Swap: 16777212 total, 16777212 free,        0 used. 60322876 avail Mem </span><br><span class="line">Change delay from 3.0 to 10</span><br></pre></td></tr></table></figure>
+
+<h3 id="f"><a href="#f" class="headerlink" title="f"></a>f</h3><p>选择字段，*为已选择的字段。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">Fields Management for window 1:Def, whose current sort field is %CPU</span><br><span class="line">   Navigate with Up/Dn, Right selects for move then &lt;Enter&gt; or Left commits,</span><br><span class="line">   &#x27;d&#x27; or &lt;Space&gt; toggles display, &#x27;s&#x27; sets sort.  Use &#x27;q&#x27; or &lt;Esc&gt; to end!</span><br><span class="line"></span><br><span class="line">* PID     = Process Id             vMn     = Minor Faults delta  </span><br><span class="line">* USER    = Effective User Name    USED    = Res+Swap Size (KiB) </span><br><span class="line">* PR      = Priority               nsIPC   = IPC namespace Inode </span><br><span class="line">* NI      = Nice Value             nsMNT   = MNT namespace Inode </span><br><span class="line">* VIRT    = Virtual Image (KiB)    nsNET   = NET namespace Inode </span><br><span class="line">* RES     = Resident Size (KiB)    nsPID   = PID namespace Inode </span><br><span class="line">* SHR     = Shared Memory (KiB)    nsUSER  = USER namespace Inode</span><br><span class="line">* S       = Process Status         nsUTS   = UTS namespace Inode </span><br><span class="line">* %CPU    = CPU Usage           </span><br><span class="line">* %MEM    = Memory Usage (RES)  </span><br><span class="line">* TIME+   = CPU Time, hundredths</span><br><span class="line">* COMMAND = Command Name/Line   </span><br><span class="line">  PPID    = Parent Process pid  </span><br><span class="line">  UID     = Effective User Id   </span><br><span class="line">  RUID    = Real User Id        </span><br><span class="line">  RUSER   = Real User Name      </span><br><span class="line">  SUID    = Saved User Id       </span><br><span class="line">  SUSER   = Saved User Name     </span><br><span class="line">  GID     = Group Id            </span><br><span class="line">  GROUP   = Group Name          </span><br><span class="line">  PGRP    = Process Group Id    </span><br><span class="line">  TTY     = Controlling Tty     </span><br><span class="line">  TPGID   = Tty Process Grp Id  </span><br><span class="line">  SID     = Session Id          </span><br><span class="line">  nTH     = Number of Threads   </span><br><span class="line">  P       = Last Used Cpu (SMP) </span><br><span class="line">  TIME    = CPU Time            </span><br><span class="line">  SWAP    = Swapped Size (KiB)  </span><br><span class="line">  CODE    = Code Size (KiB)     </span><br><span class="line">  DATA    = Data+Stack (KiB)    </span><br><span class="line">  nMaj    = Major Page Faults   </span><br><span class="line">  nMin    = Minor Page Faults   </span><br><span class="line">  nDRT    = Dirty Pages Count   </span><br><span class="line">  WCHAN   = Sleeping in Function</span><br><span class="line">  Flags   = Task Flags &lt;sched.h&gt;</span><br><span class="line">  CGROUPS = Control Groups      </span><br><span class="line">  SUPGIDS = Supp Groups IDs     </span><br><span class="line">  SUPGRPS = Supp Groups Names   </span><br><span class="line">  TGID    = Thread Group Id     </span><br><span class="line">  ENVIRON = Environment vars    </span><br><span class="line">  vMj     = Major Faults delta  </span><br></pre></td></tr></table></figure>
+
+<h3 id="i"><a href="#i" class="headerlink" title="i"></a>i</h3><p>空闲任务列表。</p>
+<h3 id="k"><a href="#k" class="headerlink" title="k"></a>k</h3><p>输入PID，结束任务。</p>
+<h3 id="l-t-m"><a href="#l-t-m" class="headerlink" title="l/t/m"></a>l/t/m</h3><p>l-不显示load average和uptime<br>t-进度条显示cpu信息/不显示cpu信息<br>m-进度条显示内存信息/不显示内存信息</p>
+<h3 id="R"><a href="#R" class="headerlink" title="R"></a>R</h3><p>切换进程的默认排序/PID顺序排序。</p>
+<h3 id="r"><a href="#r" class="headerlink" title="r"></a>r</h3><p>设置任务优先级。</p>
+<h3 id="V"><a href="#V" class="headerlink" title="V"></a>V</h3><p>将进程切换显示到树形图。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                       </span><br><span class="line">     1 root      20   0  191164   4068   2464 S   0.0  0.0  16:18.29 systemd                                                                                                       </span><br><span class="line">   671 root      20   0   39576   9024   8540 S   0.0  0.0   0:21.75  `- systemd-journal                                                                                           </span><br><span class="line">   692 root      20   0  129176   1312    964 S   0.0  0.0   0:00.00  `- lvmetad                                                                                                   </span><br><span class="line">   965 libstor+  20   0    8580    824    676 S   0.0  0.0   0:08.84  `- lsmd                                                                                                      </span><br><span class="line">   968 root      20   0   22076   1708   1004 S   0.0  0.0  40:03.04  `- irqbalance                                                                                                </span><br><span class="line">   971 root      20   0   53452   3168   2296 S   0.0  0.0   0:00.37  `- smartd                                                                                                    </span><br><span class="line">   972 root      20   0    6520    648    532 S   0.0  0.0  13:03.17  `- rngd                                                                                                      </span><br><span class="line">   980 root      20   0  224476   6156   4300 S   0.0  0.0   0:56.00  `- abrtd                                                                                                     </span><br><span class="line">   987 root      20   0  221876   4964   3536 S   0.0  0.0   0:00.10  `- abrt-watch-log                                                                                            </span><br><span class="line">  1001 dbus      20   0   60324   2548   1852 S   0.0  0.0   4:30.10  `- dbus-daemon                                                                                               </span><br><span class="line">  1267 root      20   0  110380   4200   3212 S   0.0  0.0   0:00.26  `- sshd                                                                                                      </span><br><span class="line"> 59370 root      20   0  159168   6240   4868 S   0.0  0.0   0:00.45      `- sshd                                                                                                  </span><br><span class="line"> 59372 root      20   0  116720   3376   1812 S   0.0  0.0   0:00.05          `- bash                                                                                              </span><br><span class="line">110500 root      20   0  163276   3316   1584 R   1.0  0.0   0:00.16              `- top</span><br></pre></td></tr></table></figure>
+
+<h3 id="x-y"><a href="#x-y" class="headerlink" title="x/y"></a>x/y</h3><p>高亮当前任务所在行列，开启彩色输出后会更明显。<br>![高亮后的效果]](/images/Snipaste_2021-01-25_16-12-57.png)</p>
+<h3 id="u"><a href="#u" class="headerlink" title="u"></a>u</h3><p>特定用户进程显示，输入用户名后只显示该用户进程，空白则显示全部用户。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">top - 16:14:37 up 103 days,  3:07,  1 user,  load average: 0.25, 0.21, 0.16</span><br><span class="line">Tasks: 1068 total,   1 running, 1067 sleeping,   0 stopped,   0 zombie</span><br><span class="line"><span class="meta">%</span><span class="bash">Cpu(s):  0.1 us,  0.1 sy,  0.0 ni, 99.8 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span></span><br><span class="line">KiB Mem : 65420768 total, 27627364 free,  4133004 used, 33660400 buff/cache</span><br><span class="line">KiB Swap: 16777212 total, 16777212 free,        0 used. 60329688 avail Mem </span><br><span class="line">Which user (blank for all) root</span><br><span class="line">   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                       </span><br><span class="line">     1 root      20   0  191164   4068   2464 S   0.0  0.0  16:18.36 systemd                                                                                                       </span><br><span class="line">   671 root      20   0   39576   9024   8540 S   0.0  0.0   0:21.76  `- systemd-journal                                                                                           </span><br><span class="line">   692 root      20   0  129176   1312    964 S   0.0  0.0   0:00.00  `- lvmetad                                                                                                   </span><br><span class="line">   968 root      20   0   22076   1708   1004 S   0.0  0.0  40:03.20  `- irqbalance                                                                                                </span><br><span class="line">   971 root      20   0   53452   3168   2296 S   0.0  0.0   0:00.37  `- smartd                                                                                                    </span><br><span class="line">   972 root      20   0    6520    648    532 S   0.0  0.0  13:03.23  `- rngd                                                                                                      </span><br><span class="line">   980 root      20   0  224476   6156   4300 S   0.0  0.0   0:56.00  `- abrtd                                                                                                     </span><br><span class="line">   987 root      20   0  221876   4964   3536 S   0.0  0.0   0:00.10  `- abrt-watch-log                                                                                            </span><br><span class="line">  1267 root      20   0  110380   4200   3212 S   0.0  0.0   0:00.26  `- sshd                                                                                                      </span><br><span class="line"> 59370 root      20   0  159168   6240   4868 S   0.0  0.0   0:00.52      `- sshd                                                                                                  </span><br><span class="line"> 59372 root      20   0  116720   3376   1812 S   0.0  0.0   0:00.05          `- bash                                                                                              </span><br><span class="line">112478 root      20   0  163196   3432   1640 R   0.4  0.0   0:03.13              `- top                                                                                           </span><br><span class="line">  1348 root      20   0   24264   1596   1328 S   0.0  0.0   1:26.09  `- systemd-logind                                                                                            </span><br><span class="line">  1418 root      20   0  126412   1660    984 S   0.0  0.0   0:56.25  `- crond                                                                                                     </span><br><span class="line">  1427 root      20   0   25904    944    744 S   0.0  0.0   0:00.03  `- atd                                                                                                       </span><br><span class="line">  1961 root      20   0  110192    852    720 S   0.0  0.0   0:00.00  `- agetty                                                                                                    </span><br><span class="line">  1964 root      20   0  110192    844    712 S   0.0  0.0   0:00.00  `- agetty                                                                                                    </span><br><span class="line">151369 root      20   0   43944   1860   1348 S   0.0  0.0   0:00.05  `- systemd-udevd                                                                                             </span><br><span class="line">213155 root      20   0  228352  11212   6492 S   0.0  0.0  60:09.78  `- snmpd                                                                                                     </span><br><span class="line"> 54620 root      20   0 1067624 570564   3268 S   0.0  0.9  51:44.38  `- python3                                                                                                   </span><br><span class="line">150137 root      20   0  289656  19268   4748 S   0.0  0.0   0:00.12  `- salt-minion                                                                                               </span><br><span class="line">150146 root      20   0  856720  39908   6080 S   0.1  0.1 112:59.09      `- salt-minion                                                                                           </span><br><span class="line">150150 root      20   0  403088  18752    796 S   0.0  0.0   0:00.00          `- salt-minion</span><br></pre></td></tr></table></figure>
+
+<h3 id="Z"><a href="#Z" class="headerlink" title="Z"></a>Z</h3><p>可为不同的任务区改变配色/粗体等设置。</p>
+<h3 id="z"><a href="#z" class="headerlink" title="z"></a>z</h3><p>切换彩色/单色输出。</p>
+<h3 id="n"><a href="#n" class="headerlink" title="n/#"></a>n/#</h3><p>设置最大显示任务数量。</p>
+<h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><h3 id="b"><a href="#b" class="headerlink" title="-b"></a>-b</h3><p>批处理模式启动top。</p>
+<h3 id="c-1"><a href="#c-1" class="headerlink" title="-c"></a>-c</h3><p>这个选项会以上次记住的程序/命令显示的状态显示（是否显示完整路径）。</p>
+<h3 id="d"><a href="#d" class="headerlink" title="-d"></a>-d</h3><p>时间间隔，后面带整数，以秒计算。</p>
+<h3 id="i-1"><a href="#i-1" class="headerlink" title="-i"></a>-i</h3><p>显示空闲进程。</p>
+<h3 id="n-1"><a href="#n-1" class="headerlink" title="-n"></a>-n</h3><p>刷新次数，带整数，输入10则刷新10次后自动退出。</p>
+<h3 id="p"><a href="#p" class="headerlink" title="-p"></a>-p</h3><p>监控特定PID。</p>
+<h3 id="u-U"><a href="#u-U" class="headerlink" title="-u/-U"></a>-u/-U</h3><p>监控特定用户/UID。</p>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2021/01/25/tutorial_of_top/" data-id="ckpkwzb0m005gk43563d4h95a" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/01/26/cacti_bug/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          cacti的绘图bug
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/03/cisco_nxos_tips_and_tricks/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">cisco NXOS 终端技巧</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/22/upgrade_centos_kernel/">CentOS7更换内核</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/26/cacti_bug/">cacti的绘图bug</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/25/tutorial_of_top/">详解top应该怎么看</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/03/cisco_nxos_tips_and_tricks/">cisco NXOS 终端技巧</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+      <div id="footer-info" class="inner">
+      &copy; 2021 Laplacence<br>
+      CC BY-NC-ND 4.0 Powered by
+      <a href="http://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
