@@ -26,7 +26,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 6.2.0"></head>
 
 <body>
   <div id="container">
@@ -63,6 +63,51 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Apache_ban_ip_access" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/Apache_ban_ip_access/" class="article-date">
+  <time datetime="2018-01-25T16:00:00.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>►<a class="article-category-link" href="/categories/network/">network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/26/Apache_ban_ip_access/">Apache禁止ip访问只允许域名访问</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>为实现用户只能通过域名来访问网站，禁止使用IP访问，可在httpd.conf配置文件里加入以下代码：</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/01/26/Apache_ban_ip_access/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2018/01/26/Apache_ban_ip_access/" data-id="ckpkxetqe000260358bvudhxn" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
   
     <article id="post-Linux_signal" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -272,7 +317,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>博主之前刷Z3的时候也碰到过，忘了当时怎么解决的了（。今天刷Z5又碰到同样问题，大概是明白了。<br>Fastboot要基于Google Winusb Android和ADB等几个驱动才能实现交互，然而这个文件十分老旧，即使从它官网下也是2014年或者更老的版本。<br>ADB发行版本的android_winusb.inf，文件内容校验值与cat文件里的记录不相同，<br>因此Windows安装提示了HASH校验相关的错误。（甚至不会提示，直接输出安装失败的结果）<br>Windows的32位系统下没有强制要求驱动签名，安装时只会弹出提示<br>Windows无法验证此驱动程序的发布者，但可选择安装此驱动。（红色的警告框）<br>但是64位系统是会强制要求驱动签名的，所以安装失败。</p>
+        <p>博主之前刷Sony Z3的时候也碰到过，忘了当时怎么解决的了（。今天刷Sony Z5又碰到同样问题，大概是明白了。<br>Fastboot要基于Google Winusb Android和ADB等几个驱动才能实现交互，然而这个文件十分老旧，即使从它官网下也是2014年或者更老的版本。<br>ADB发行版本的android_winusb.inf，文件内容校验值与cat文件里的记录不相同，<br>因此Windows安装提示了HASH校验相关的错误。（甚至不会提示，直接输出安装失败的结果）<br>Windows的32位系统下没有强制要求驱动签名，安装时只会弹出提示<br>Windows无法验证此驱动程序的发布者，但可选择安装此驱动。（红色的警告框）<br>但是64位系统是会强制要求驱动签名的，所以安装失败。</p>
         
           <p class="article-more-link">
             <a href="/2017/10/17/ADB_install_in_Windows/#more">Read More</a>
@@ -471,51 +516,6 @@
 </article>
 
   
-    <article id="post-Windows_turn_off_share_folder" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/25/Windows_turn_off_share_folder/" class="article-date">
-  <time datetime="2017-08-24T16:00:00.000Z" itemprop="datePublished">2017-08-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/experience/">experience</a>►<a class="article-category-link" href="/categories/network/">network</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/25/Windows_turn_off_share_folder/">Windows下使用批处理关闭共享文件夹</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>为了便于远程调控或者管理共享资源，Windows系统在缺省状态下会将所有的磁盘分区设为隐藏分享，有点小危险（比如著名的$IPC。。）手工关闭后重启依旧会打开，所以博主想了个简单的办法。</p>
-        
-          <p class="article-more-link">
-            <a href="/2017/08/25/Windows_turn_off_share_folder/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-     <footer class="article-footer">
-      <a data-url="/2017/08/25/Windows_turn_off_share_folder/" data-id="ckpkxetrh002860359ispdj7a" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-  
 
 
   <nav id="page-nav">
@@ -561,7 +561,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -572,6 +572,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
+          </li>
         
           <li>
             <a href="/2022/01/06/use_inxi_to_get_system_info/">使用inxi来获取各类系统信息</a>
@@ -587,10 +591,6 @@
         
           <li>
             <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/22/upgrade_centos_kernel/">CentOS7更换内核</a>
           </li>
         
       </ul>

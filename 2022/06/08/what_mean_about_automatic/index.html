@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>什么是自动安装？ | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如果你使用apt命令在终端中安装软件包，你将看到各种输出。当你注意这些输出的时候，会看到一些提示。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是自动安装？">
+<meta property="og:url" content="https://laplacence.github.io/2022/06/08/what_mean_about_automatic/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="如果你使用apt命令在终端中安装软件包，你将看到各种输出。当你注意这些输出的时候，会看到一些提示。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-06-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-07T16:27:55.080Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://laplacence.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-what_mean_about_automatic" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/06/08/what_mean_about_automatic/" class="article-date">
+  <time datetime="2022-06-07T16:00:00.000Z" itemprop="datePublished">2022-06-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>►<a class="article-category-link" href="/categories/experience/">experience</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      什么是自动安装？
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果你使用apt命令在终端中安装软件包，你将看到各种输出。<br>当你注意这些输出的时候，会看到一些提示。</p>
+<span id="more"></span>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package_name set to manually installed</span><br></pre></td></tr></table></figure>
+
+<p>你有没有想过这条消息是什么意思，为什么你没有在所有包上看到它？让我在本篇中分享一些细节。</p>
+<p>那么从最常见的场景开始：复制文件和复制目录。</p>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>当你尝试安装已安装的库或开发包时，你会看到这个输出。此依赖包是与另一个包一起自动安装的。如果删除了主包，则使用 apt autoremove 命令删除依赖包。</p>
+<p>但是由于你试图显式安装依赖包，你的 Debian 系统认为你需要这个包独立于主包。因此，该软件包被标记为手动安装，不会被自动删除。</p>
+<p>不是很清楚，对吧？以 在 Debian 上安装 inxi 为例。</p>
+<p>由于主 inxi 包依赖于许多其他包，因此这些包会自动安装。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt install inxi</span></span><br><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree... Done</span><br><span class="line">Reading state information... Done</span><br><span class="line">The following additional packages will be installed:</span><br><span class="line">  bind9-dnsutils bind9-host bind9-libs dnsutils file hddtemp libdrm-amdgpu1 libdrm-common libdrm-intel1</span><br><span class="line">  libdrm-nouveau2 libdrm-radeon1 libdrm2 libfontenc1 libfstrm0 libgl1 libgl1-mesa-dri libglapi-mesa libglew2.1</span><br><span class="line">  libglu1-mesa libglvnd0 libglx-mesa0 libglx0 libice6 libicu67 libllvm11 liblmdb0 libmagic-mgc libmagic1 libmaxminddb0</span><br><span class="line">  libpci3 libpciaccess0 libprotobuf-c1 libsensors-config libsensors5 libsm6 libusb-1.0-0 libuv1 libvulkan1</span><br><span class="line">  libwayland-client0 libx11-xcb1 libxaw7 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-randr0</span><br><span class="line">  libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libxcomposite1 libxcursor1 libxdamage1 libxfixes3 libxft2</span><br><span class="line">  libxi6 libxinerama1 libxkbfile1 libxml2 libxmu6 libxrandr2 libxrender1 libxshmfence1 libxt6 libxtst6 libxv1</span><br><span class="line">  libxxf86dga1 libxxf86vm1 libz3-4 lm-sensors mesa-utils mesa-vulkan-drivers pci.ids pciutils tree usbutils x11-common</span><br><span class="line">  x11-utils x11-xserver-utils</span><br><span class="line">Suggested packages:</span><br><span class="line">  libcpanel-json-xs-perl | libjson-xs-perl libxml-dumper-perl glew-utils mmdb-bin fancontrol read-edid i2c-tools</span><br><span class="line">  nickle cairo-5c xorg-docs-core</span><br><span class="line">The following NEW packages will be installed:</span><br><span class="line">  bind9-dnsutils bind9-host bind9-libs dnsutils file hddtemp inxi libdrm-amdgpu1 libdrm-common libdrm-intel1</span><br><span class="line">  libdrm-nouveau2 libdrm-radeon1 libdrm2 libfontenc1 libfstrm0 libgl1 libgl1-mesa-dri libglapi-mesa libglew2.1</span><br><span class="line">  libglu1-mesa libglvnd0 libglx-mesa0 libglx0 libice6 libicu67 libllvm11 liblmdb0 libmagic-mgc libmagic1 libmaxminddb0</span><br><span class="line">  libpci3 libpciaccess0 libprotobuf-c1 libsensors-config libsensors5 libsm6 libusb-1.0-0 libuv1 libvulkan1</span><br><span class="line">  libwayland-client0 libx11-xcb1 libxaw7 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-randr0</span><br><span class="line">  libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libxcomposite1 libxcursor1 libxdamage1 libxfixes3 libxft2</span><br><span class="line">  libxi6 libxinerama1 libxkbfile1 libxml2 libxmu6 libxrandr2 libxrender1 libxshmfence1 libxt6 libxtst6 libxv1</span><br><span class="line">  libxxf86dga1 libxxf86vm1 libz3-4 lm-sensors mesa-utils mesa-vulkan-drivers pci.ids pciutils tree usbutils x11-common</span><br><span class="line">  x11-utils x11-xserver-utils</span><br><span class="line">0 upgraded, 80 newly installed, 0 to remove and 0 not upgraded.</span><br><span class="line">Need to get 56.2 MB of archives.</span><br><span class="line">After this operation, 226 MB of additional disk space will be used.</span><br><span class="line">Do you want to continue? [Y/n]</span><br></pre></td></tr></table></figure>
+
+<p>比如我们检查第一个新安装的 bind9-dnsutils，会发现它被标记为“自动”。</p>
+<p>这表明这些软件包是跟着 inxi 自动安装的，当 inxi 被卸载时，它们将使用 apt autoremove 命令自动删除。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">apt list --installed | grep bind9-dnsutils</span></span><br><span class="line"></span><br><span class="line">WARNING: apt does not have a stable CLI interface. Use with caution in scripts.</span><br><span class="line"></span><br><span class="line">bind9-dnsutils/stable,stable-security,now 1:9.16.27-1~deb11u1 amd64 [installed,automatic]</span><br></pre></td></tr></table></figure>
+
+<p>现在假设你出于某种原因考虑安装 bind9-dnsutils，如果你在其上运行 apt install 命令，系统会告诉你该软件包已安装。</p>
+<p>同时，它将标记从自动更改为手动，因为系统认为在尝试手动安装表明你明确需要此 bind9-dnsutils。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt install bind9-dnsutils</span></span><br><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree... Done</span><br><span class="line">Reading state information... Done</span><br><span class="line">bind9-dnsutils is already the newest version (1:9.16.27-1~deb11u1).</span><br><span class="line">bind9-dnsutils set to manually installed.</span><br><span class="line">0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">apt list --installed | grep bind9-dnsutils</span></span><br><span class="line"></span><br><span class="line">WARNING: apt does not have a stable CLI interface. Use with caution in scripts.</span><br><span class="line"></span><br><span class="line">bind9-dnsutils/stable,stable-security,now 1:9.16.27-1~deb11u1 amd64 [installed]</span><br></pre></td></tr></table></figure>
+
+<p>现在，删除 inxi 并运行 autoremove 命令。你可以看到 bind9-dnsutils 不在要删除的软件包列表中，并且它仍然在系统上面。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt remove inxi</span></span><br><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree... Done</span><br><span class="line">Reading state information... Done</span><br><span class="line">The following packages were automatically installed and are no longer required:</span><br><span class="line">  dnsutils file hddtemp libdrm-amdgpu1 libdrm-common libdrm-intel1 libdrm-nouveau2 libdrm-radeon1 libdrm2 libfontenc1</span><br><span class="line">  libgl1 libgl1-mesa-dri libglapi-mesa libglew2.1 libglu1-mesa libglvnd0 libglx-mesa0 libglx0 libice6 libllvm11</span><br><span class="line">  libmagic-mgc libmagic1 libpci3 libpciaccess0 libsensors-config libsensors5 libsm6 libusb-1.0-0 libvulkan1</span><br><span class="line">  libwayland-client0 libx11-xcb1 libxaw7 libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-randr0</span><br><span class="line">  libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libxcomposite1 libxcursor1 libxdamage1 libxfixes3 libxft2</span><br><span class="line">  libxi6 libxinerama1 libxkbfile1 libxmu6 libxrandr2 libxrender1 libxshmfence1 libxt6 libxtst6 libxv1 libxxf86dga1</span><br><span class="line">  libxxf86vm1 libz3-4 lm-sensors mesa-utils mesa-vulkan-drivers pci.ids pciutils tree usbutils x11-common x11-utils</span><br><span class="line">  x11-xserver-utils</span><br><span class="line">Use &#x27;sudo apt autoremove&#x27; to remove them.</span><br><span class="line">The following packages will be REMOVED:</span><br><span class="line">  inxi</span><br><span class="line">0 upgraded, 0 newly installed, 1 to remove and 0 not upgraded.</span><br><span class="line">After this operation, 995 kB disk space will be freed.</span><br><span class="line">Do you want to continue? [Y/n] y</span><br><span class="line">(Reading database ... 26557 files and directories currently installed.)</span><br><span class="line">Removing inxi (3.3.01-1-1) ...</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">apt list --installed | grep bind9-dnsutils</span></span><br><span class="line"></span><br><span class="line">WARNING: apt does not have a stable CLI interface. Use with caution in scripts.</span><br><span class="line"></span><br><span class="line">bind9-dnsutils/stable,stable-security,now 1:9.16.27-1~deb11u1 amd64 [installed]</span><br></pre></td></tr></table></figure>
+
+<h2 id="将包设置为自动"><a href="#将包设置为自动" class="headerlink" title="将包设置为自动"></a>将包设置为自动</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt-mark auto bind9-dnsutils</span></span><br><span class="line">bind9-dnsutils set to automatically installed.</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">apt list --installed | grep bind9-dnsutils</span></span><br><span class="line"></span><br><span class="line">WARNING: apt does not have a stable CLI interface. Use with caution in scripts.</span><br><span class="line"></span><br><span class="line">bind9-dnsutils/stable,stable-security,now 1:9.16.27-1~deb11u1 amd64 [installed,automatic]</span><br></pre></td></tr></table></figure>
+
+<p>这不是一个需要注意的错误，也不会中断你任何在系统中的工作。</p>
+<p>但是，了解这些小事会增加你的知识。</p>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2022/06/08/what_mean_about_automatic/" data-id="cl44dob3h00004wfg3i6890uv" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/01/06/use_inxi_to_get_system_info/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用inxi来获取各类系统信息</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/06/use_inxi_to_get_system_info/">使用inxi来获取各类系统信息</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/11/change_from_scp_to_rsync/">该从scp转向rsync了</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/29/nornir_manual/">nornir基本使用教程</a>
+          </li>
+        
+          <li>
+            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+        <div class="outer">
+          <div id="footer-info" class="inner">
+            &copy; 2022
+              Laplacence<br>
+                CC BY-NC-SA 4.0 Powered by
+                  <a href="http://hexo.io/" target="_blank">Hexo</a>
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+                  <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+          </div>
+        </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+<script src="/js/totop.js"></script>
+
+  </div>
+</body>
+</html>
