@@ -92,27 +92,32 @@
       
         <p>条件：你有or准备入手一台能够正常运行openwrt/LEDE等第三方rom的路由器，以及mentohust源码。</p>
 <span id="more"></span>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>类Unix环境必须要有的啦，<a target="_blank" rel="noopener" href="https://wiki.openwrt.org/zh-cn/doc/howto/buildroot.exigence">这里</a>有对大部分类Unix搭建环境的说明。博主用的是Fedora 25，下面都是用root账号实施的命令，如果没有的话可以用sudo以防出错。<br>下载对应你路由器cpu的SDK，比如博主的是Hiwifi 3，型号是HC5861，CPU是ramips的mipsel架构MT7620A（找到的只有MT7620，不过能用），OpenWrt-SDK-ramips-mt7620_gcc-5.3.0_musl-1.1.16.Linux-x86_64.tar.bz2，就是这个，可以在openwrt的wiki上找到tech info来查看。<br>下载libpcap源码。</p>
-<h2 id="配置交叉编译环境"><a href="#配置交叉编译环境" class="headerlink" title="配置交叉编译环境"></a>配置交叉编译环境</h2><p>解压下载的SDK<br>然后配置环境变量</p>
+<h2 id="准备"><a class="markdownIt-Anchor" href="#准备"></a> 准备</h2>
+<p>类Unix环境必须要有的啦，<a target="_blank" rel="noopener" href="https://wiki.openwrt.org/zh-cn/doc/howto/buildroot.exigence">这里</a>有对大部分类Unix搭建环境的说明。博主用的是Fedora 25，下面都是用root账号实施的命令，如果没有的话可以用sudo以防出错。<br />
+下载对应你路由器cpu的SDK，比如博主的是Hiwifi 3，型号是HC5861，CPU是ramips的mipsel架构MT7620A（找到的只有MT7620，不过能用），OpenWrt-SDK-ramips-mt7620_gcc-5.3.0_musl-1.1.16.Linux-x86_64.tar.bz2，就是这个，可以在openwrt的wiki上找到tech info来查看。<br />
+下载libpcap源码。</p>
+<h2 id="配置交叉编译环境"><a class="markdownIt-Anchor" href="#配置交叉编译环境"></a> 配置交叉编译环境</h2>
+<p>解压下载的SDK<br />
+然后配置环境变量</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># export PATH=$PATH:/home/laplacence/LEDE/staging_dir/toolchain-mipsel_24kc_gcc-5.4.0_musl-1.1.16/bin</span></span><br></pre></td></tr></table></figure>
-
 <p>这里不可以<strong>照抄</strong>，看清楚再贴位置，测试<code>$ echo $PATH</code>。</p>
-<h2 id="交叉编译libpcap动态链接库"><a href="#交叉编译libpcap动态链接库" class="headerlink" title="交叉编译libpcap动态链接库"></a>交叉编译libpcap动态链接库</h2><p>解压libpcap-1.8.1.tar.gz</p>
+<h2 id="交叉编译libpcap动态链接库"><a class="markdownIt-Anchor" href="#交叉编译libpcap动态链接库"></a> 交叉编译libpcap动态链接库</h2>
+<p>解压libpcap-1.8.1.tar.gz</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ./configure --host=mipsel-openwrt-linux --prefix=/home/laplacence/Downloads/ --with-pcap=linux</span></span><br><span class="line"><span class="comment"># make</span></span><br></pre></td></tr></table></figure>
-
 <p>如果出错请检查bin里面的东西是否和host一致，得到libpcap.a，之后会用到。</p>
-<h2 id="编译mentohust"><a href="#编译mentohust" class="headerlink" title="编译mentohust"></a>编译mentohust</h2><p>解压mentohust源代码，cd进去，然后修改部分源代码，因为配置文件和日志文件等是面对PC写的，openwrt上面一些路径是只读的，可以自定义喜欢的路径，最后不要忘记在路由器上mkdir和文件夹chmod就好。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//myconfig.c  </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *CFG_FILE = <span class="string">&quot;/mentohust/etc/mentohust.conf&quot;</span>;   <span class="comment">/* 配置文件 */</span>  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *LOG_FILE = <span class="string">&quot;/mentohust/tmp/mentohust.log&quot;</span>;    <span class="comment">/* 日志文件 */</span>  </span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *LOCK_FILE = <span class="string">&quot;/mentohust/tmp/mentohust.pid&quot;</span>;   <span class="comment">/* 锁文件 */</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">//myfunc.c  </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *DATAFILE = <span class="string">&quot;/mentohust/etc/mentohust/&quot;</span>;   <span class="comment">/* 默认数据文件(目录) */</span>  </span><br></pre></td></tr></table></figure>
-
+<h2 id="编译mentohust"><a class="markdownIt-Anchor" href="#编译mentohust"></a> 编译mentohust</h2>
+<p>解压mentohust源代码，cd进去，然后修改部分源代码，因为配置文件和日志文件等是面对PC写的，openwrt上面一些路径是只读的，可以自定义喜欢的路径，最后不要忘记在路由器上mkdir和文件夹chmod就好。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//myconfig.c  </span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> *CFG_FILE = <span class="string">&quot;/mentohust/etc/mentohust.conf&quot;</span>;   <span class="comment">/* 配置文件 */</span>  </span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> *LOG_FILE = <span class="string">&quot;/mentohust/tmp/mentohust.log&quot;</span>;    <span class="comment">/* 日志文件 */</span>  </span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> *LOCK_FILE = <span class="string">&quot;/mentohust/tmp/mentohust.pid&quot;</span>;   <span class="comment">/* 锁文件 */</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">//myfunc.c  </span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> *DATAFILE = <span class="string">&quot;/mentohust/etc/mentohust/&quot;</span>;   <span class="comment">/* 默认数据文件(目录) */</span>  </span><br></pre></td></tr></table></figure>
 <p>保存，输入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ./configure --host=mipsel-openwrt-linux  --disable-encodepass --disable-notify --prefix=/mentohust --with-pcap=~/libpcap.a</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make</span></span><br></pre></td></tr></table></figure>
-
-<p>–with-pcap这里是刚刚libpcap.a的文件路径。<br>接着在src里面应该已经生成了mentohust的可执行文件。<br>上传到路由器的话，大家应该都会用scp命令吧，这里就不再做详细解释了，mentohust用法同理也不再赘述，之后可以-w参数保存后可以把命令<code>$sudo mentohust</code>或者<code>#mentohust</code>放进/etc/rc.local里面开机运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./configure --host=mipsel-openwrt-linux  --disable-encodepass --disable-notify --prefix=/mentohust --with-pcap=~/libpcap.a</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">make</span></span><br></pre></td></tr></table></figure>
+<p>–with-pcap这里是刚刚libpcap.a的文件路径。<br />
+接着在src里面应该已经生成了mentohust的可执行文件。<br />
+上传到路由器的话，大家应该都会用scp命令吧，这里就不再做详细解释了，mentohust用法同理也不再赘述，之后可以-w参数保存后可以把命令<code>$sudo mentohust</code>或者<code>#mentohust</code>放进/etc/rc.local里面开机运行。</p>
 
       
     </div>
      <footer class="article-footer">
-      <a data-url="/2017/03/28/cross_compile_mentohust/" data-id="ckpkxetro002n60352gbrh0pi" class="article-share-link">Share</a>
+      <a data-url="/2017/03/28/cross_compile_mentohust/" data-id="cl5jv6lko002fx4fg4i0x3j7h" class="article-share-link">Share</a>
       
       
       
@@ -140,6 +145,7 @@
   
 </nav>
 
+  
   
 </article>
 </section>
@@ -180,7 +186,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -191,6 +197,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/07/12/congestion_control_intro/">拥塞控制算法机制介绍</a>
+          </li>
         
           <li>
             <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
@@ -206,10 +216,6 @@
         
           <li>
             <a href="/2021/08/29/nornir_manual/">nornir基本使用教程</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
           </li>
         
       </ul>
@@ -292,7 +298,6 @@
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
-<script src="/js/totop.js"></script>
 
   </div>
 </body>

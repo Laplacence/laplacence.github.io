@@ -5,12 +5,12 @@
   
   <title>该从scp转向rsync了 | Trash Can</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="很多用户都是从 scp 命令入手的，所以对 rsync 并不熟悉。此外，rsync 可以做的事情也远不止复制文件，这可能会给菜鸟们留下复杂和难以掌握的印象。尤其是，scp 命令的标志大体上可以直接对应到 cp 命令，而 rsync 命令却很难对应上。">
+  <meta name="description" content="很多用户都是从 scp 命令入手的，所以对 rsync 并不熟悉。 此外，rsync 可以做的事情也远不止复制文件，这可能会给菜鸟们留下复杂和难以掌握的印象。 尤其是，scp 命令的标志大体上可以直接对应到 cp 命令，而 rsync 命令却很难对应上。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="该从scp转向rsync了">
 <meta property="og:url" content="https://laplacence.github.io/2021/12/11/change_from_scp_to_rsync/index.html">
 <meta property="og:site_name" content="Trash Can">
-<meta property="og:description" content="很多用户都是从 scp 命令入手的，所以对 rsync 并不熟悉。此外，rsync 可以做的事情也远不止复制文件，这可能会给菜鸟们留下复杂和难以掌握的印象。尤其是，scp 命令的标志大体上可以直接对应到 cp 命令，而 rsync 命令却很难对应上。">
+<meta property="og:description" content="很多用户都是从 scp 命令入手的，所以对 rsync 并不熟悉。 此外，rsync 可以做的事情也远不止复制文件，这可能会给菜鸟们留下复杂和难以掌握的印象。 尤其是，scp 命令的标志大体上可以直接对应到 cp 命令，而 rsync 命令却很难对应上。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-12-10T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-01-05T14:47:37.712Z">
@@ -90,94 +90,105 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>很多用户都是从 scp 命令入手的，所以对 rsync 并不熟悉。<br>此外，rsync 可以做的事情也远不止复制文件，这可能会给菜鸟们留下复杂和难以掌握的印象。<br>尤其是，scp 命令的标志大体上可以直接对应到 cp 命令，而 rsync 命令却很难对应上。</p>
+        <p>很多用户都是从 scp 命令入手的，所以对 rsync 并不熟悉。<br />
+此外，rsync 可以做的事情也远不止复制文件，这可能会给菜鸟们留下复杂和难以掌握的印象。<br />
+尤其是，scp 命令的标志大体上可以直接对应到 cp 命令，而 rsync 命令却很难对应上。</p>
 <span id="more"></span>
 <p>那么从最常见的场景开始：复制文件和复制目录。</p>
-<h2 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h2><p>对于复制单个文件而言，scp 和 rsync 命令实际上是等价的。比方说，你需要把 foo.txt 传到你在名为 server 的服务器上的主目录下：</p>
+<h2 id="复制文件"><a class="markdownIt-Anchor" href="#复制文件"></a> 复制文件</h2>
+<p>对于复制单个文件而言，scp 和 rsync 命令实际上是等价的。比方说，你需要把 foo.txt 传到你在名为 server 的服务器上的主目录下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp foo.txt me@server:/home/me/</span><br></pre></td></tr></table></figure>
-
 <p>相应的 rsync 命令只需要输入 rsync 取代 scp：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync foo.txt me@server:/home/me/</span><br></pre></td></tr></table></figure>
-
-<h2 id="复制目录"><a href="#复制目录" class="headerlink" title="复制目录"></a>复制目录</h2><p>对于复制目录，就有了很大的分歧，这也解释了为什么 rsync 会被认为比 scp 更复杂。<br>如果你想把 bar 目录复制到 server 服务器上，除了指定 ssh 信息外，相应的 scp 和 cp 一模一样。</p>
+<h2 id="复制目录"><a class="markdownIt-Anchor" href="#复制目录"></a> 复制目录</h2>
+<p>对于复制目录，就有了很大的分歧，这也解释了为什么 rsync 会被认为比 scp 更复杂。<br />
+如果你想把 bar 目录复制到 server 服务器上，除了指定 ssh 信息外，相应的 scp 和 cp 一模一样。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r bar/ me@server:/home/me/</span><br></pre></td></tr></table></figure>
-
 <p>对于 rsync，考虑的因素比较多，因为它是一个比较强大的工具。首先，我们来看一下最简单的形式：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -r bar/ me@server:/home/me/</span><br></pre></td></tr></table></figure>
-
-<p>看起来很简单？对于只包含目录和普通文件的简单情况，这就可以了。<br>然而，rsync 更在意发送与主机系统中一模一样的文件。</p>
+<p>看起来很简单？对于只包含目录和普通文件的简单情况，这就可以了。<br />
+然而，rsync 更在意发送与主机系统中一模一样的文件。</p>
 <p>让我们来创建一个稍微复杂一些，但并不罕见的例子：</p>
 <ul>
 <li>创建多级目录结构</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p bar/baz</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>在其根目录下创建文件</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch bar/foo.txt</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>现在创建一个符号链接指回到该文件</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd bar/baz</span><br><span class="line">ln -s ../foo.txt link.txt</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>返回原位置</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── baz</span><br><span class="line">│   └── link.txt -&gt; ../foo.txt</span><br><span class="line">└── foo.txt</span><br><span class="line"></span><br><span class="line">1 directory, 2 files</span><br></pre></td></tr></table></figure>
-
 <p>如果我们尝试上面的命令来复制 bar，我们会注意到非常不同的（并令人惊讶的）结果。</p>
 <p>首先，我们来试试 scp：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r bar/ me@server:/home/me/</span><br></pre></td></tr></table></figure>
-
 <p>如果你 ssh 进入你的服务器，看看 bar 的目录树，你会发现它有一个微妙的区别：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── baz</span><br><span class="line">│   └── link.txt</span><br><span class="line">└── foo.txt</span><br><span class="line">1 directory, 2 files</span><br></pre></td></tr></table></figure>
-
-<p>link.txt 不再是一个符号链接，它现在是一个 foo.txt 的完整副本。<br>如果你习惯于使用 cp，这可能会是令人惊讶的行为。<br>如果你尝试使用 cp -r 复制 bar 目录，你会得到一个新的目录，里面的符号链接和 bar 的一样。</p>
+<p>link.txt 不再是一个符号链接，它现在是一个 foo.txt 的完整副本。<br />
+如果你习惯于使用 cp，这可能会是令人惊讶的行为。<br />
+如果你尝试使用 cp -r 复制 bar 目录，你会得到一个新的目录，里面的符号链接和 bar 的一样。</p>
 <p>现在如果我们尝试使用之前的 rsync 命令，我们会得到一个警告：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rsync -r bar/ me@server:/home/me/</span><br><span class="line">skipping non-regular file &quot;bar/baz/link.txt&quot;</span><br></pre></td></tr></table></figure>
-
-<p>rsync 警告我们它发现了一个非常规文件，并正在跳过它。<br>因为你没有告诉它可以复制符号链接，所以它忽略了它们。<br>rsync 在手册中有一节“符号链接”，解释了所有可能的行为选项。<br>在我们的例子中，我们需要添加 -links 标志：</p>
+<p>rsync 警告我们它发现了一个非常规文件，并正在跳过它。<br />
+因为你没有告诉它可以复制符号链接，所以它忽略了它们。<br />
+rsync 在手册中有一节“符号链接”，解释了所有可能的行为选项。<br />
+在我们的例子中，我们需要添加 -links 标志：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -r --links bar/ me@server:/home/me/</span><br></pre></td></tr></table></figure>
-
 <p>在远程服务器上，我们看到这个符号链接是作为一个符号链接复制过来的。请注意，这与 scp 复制符号链接的方式不同。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── baz</span><br><span class="line">│   └── link.txt -&gt; ../foo.txt</span><br><span class="line">└── foo.txt</span><br><span class="line">1 directory, 2 files</span><br></pre></td></tr></table></figure>
-
-<p>在复制目录时可以使用归档标志 -archive/-a。<br>该归档标志将做大多数人所期望的事情，因为它可以实现递归复制、符号链接复制和许多其他选项。</p>
+<p>在复制目录时可以使用归档标志 -archive/-a。<br />
+该归档标志将做大多数人所期望的事情，因为它可以实现递归复制、符号链接复制和许多其他选项。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -a bar/ me@server:/home/me/</span><br></pre></td></tr></table></figure>
-
 <p>如果你感兴趣的话，rsync 手册页有关于存档标志的深入解释。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>不过，使用 rsync 有一个注意事项。<br>使用 scp 比使用 rsync 更容易指定一个非标准的 ssh 端口。<br>例如，如果 server 使用 8022 端口的 SSH 连接，那么这些命令就会像这样：</p>
+<h2 id="注意事项"><a class="markdownIt-Anchor" href="#注意事项"></a> 注意事项</h2>
+<p>不过，使用 rsync 有一个注意事项。<br />
+使用 scp 比使用 rsync 更容易指定一个非标准的 ssh 端口。<br />
+例如，如果 server 使用 8022 端口的 SSH 连接，那么这些命令就会像这样：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -P 8022 foo.txt me@server:/home/me/</span><br></pre></td></tr></table></figure>
-
-<p>而在使用 rsync 时，你必须指定要使用的“远程 shell”命令，默认是 ssh。<br>你可以使用 -e 标志来指定。</p>
+<p>而在使用 rsync 时，你必须指定要使用的“远程 shell”命令，默认是 ssh。<br />
+你可以使用 -e 标志来指定。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -e &#x27;ssh -p 8022&#x27; foo.txt me@server:/home/me/</span><br></pre></td></tr></table></figure>
-
-<p>rsync 会使用你的 ssh 配置；但是，如果你经常连接到这个服务器，你可以在你的 ~/.ssh/config 文件中添加以下代码。<br>这样你就不需要再为 rsync 或 ssh 命令指定端口了。</p>
+<p>rsync 会使用你的 ssh 配置；但是，如果你经常连接到这个服务器，你可以在你的 ~/.ssh/config 文件中添加以下代码。<br />
+这样你就不需要再为 rsync 或 ssh 命令指定端口了。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Host server</span><br><span class="line">    Port 8022</span><br></pre></td></tr></table></figure>
-
 <p>另外，如果你连接的每一台服务器都在同一个非标准端口上运行，你还可以配置 RSYNC_RSH 环境变量。</p>
-<h2 id="为什么还是应该切换到-rsync"><a href="#为什么还是应该切换到-rsync" class="headerlink" title="为什么还是应该切换到 rsync"></a>为什么还是应该切换到 rsync</h2><p>现在我们已经介绍了从 scp 切换到 rsync 的日常使用案例和注意事项，让我们花一些时间来探讨一下为什么你可能想要使用 rsync 的优点。<br>很多人在很久以前就已经开始使用 rsync 了，就是因为这些优点。</p>
+<h2 id="为什么还是应该切换到-rsync"><a class="markdownIt-Anchor" href="#为什么还是应该切换到-rsync"></a> 为什么还是应该切换到 rsync</h2>
+<p>现在我们已经介绍了从 scp 切换到 rsync 的日常使用案例和注意事项，让我们花一些时间来探讨一下为什么你可能想要使用 rsync 的优点。<br />
+很多人在很久以前就已经开始使用 rsync 了，就是因为这些优点。</p>
 <ul>
 <li>即时压缩</li>
 </ul>
-<p>如果你和服务器之间的网络连接速度较慢或有限，rsync 可以花费更多的 CPU 处理能力来节省网络带宽。<br>它通过在发送数据之前对数据进行即时压缩来实现。压缩可以用 -z 标志来启用。</p>
+<p>如果你和服务器之间的网络连接速度较慢或有限，rsync 可以花费更多的 CPU 处理能力来节省网络带宽。<br />
+它通过在发送数据之前对数据进行即时压缩来实现。压缩可以用 -z 标志来启用。</p>
 <ul>
 <li>差量传输</li>
 </ul>
-<p>rsync 也只在目标文件与源文件不同的情况下复制文件。这可以在目录中递归地工作。<br>例如，如果你拿我们上面的最后一个 bar 的例子，并多次重新运行那个 rsync 命令，那么在最初的传输之后就不会有任何传输。<br>如果你知道你会重复使用这些命令，例如备份到 U 盘，那么使用 rsync 即使是进行本地复制也是值得的，因为这个功能可以节省处理大型数据集的大量的时间。</p>
+<p>rsync 也只在目标文件与源文件不同的情况下复制文件。这可以在目录中递归地工作。<br />
+例如，如果你拿我们上面的最后一个 bar 的例子，并多次重新运行那个 rsync 命令，那么在最初的传输之后就不会有任何传输。<br />
+如果你知道你会重复使用这些命令，例如备份到 U 盘，那么使用 rsync 即使是进行本地复制也是值得的，因为这个功能可以节省处理大型数据集的大量的时间。</p>
 <ul>
 <li>同步</li>
 </ul>
-<p>顾名思义，rsync 可以做的不仅仅是复制数据。<br>到目前为止，我们只演示了如何使用 rsync 复制文件。<br>如果你想让 rsync 把目标目录变成源目录的样子，你可以在 rsync 中添加删除标志 -delete。<br>这个删除标志使得 rsync 将从源目录中复制不存在于目标目录中的文件，然后它将删除目标目录中不存在于源目录中的文件。结果就是目标目录和源目录完全一样。相比之下，scp 只会在目标目录下添加文件。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>对于简单的使用情况，rsync 并不比老牌的 scp 工具复杂多少。<br>唯一显著的区别是在递归复制目录时使用 -a 而不是 -r。<br>然而，正如我们看到的，rsync 的 -a 比 scp 的 -r 更像 cp 的 -r。</p>
+<p>顾名思义，rsync 可以做的不仅仅是复制数据。<br />
+到目前为止，我们只演示了如何使用 rsync 复制文件。<br />
+如果你想让 rsync 把目标目录变成源目录的样子，你可以在 rsync 中添加删除标志 -delete。<br />
+这个删除标志使得 rsync 将从源目录中复制不存在于目标目录中的文件，然后它将删除目标目录中不存在于源目录中的文件。结果就是目标目录和源目录完全一样。相比之下，scp 只会在目标目录下添加文件。</p>
+<h2 id="结论"><a class="markdownIt-Anchor" href="#结论"></a> 结论</h2>
+<p>对于简单的使用情况，rsync 并不比老牌的 scp 工具复杂多少。<br />
+唯一显著的区别是在递归复制目录时使用 -a 而不是 -r。<br />
+然而，正如我们看到的，rsync 的 -a 比 scp 的 -r 更像 cp 的 -r。</p>
 <p>希望通过这些新命令，可以加快文件传输工作流程。</p>
 
       
     </div>
      <footer class="article-footer">
-      <a data-url="/2021/12/11/change_from_scp_to_rsync/" data-id="ckx1t9p640000tg35g4gnhp61" class="article-share-link">Share</a>
+      <a data-url="/2021/12/11/change_from_scp_to_rsync/" data-id="cl5jv6lkn0029x4fgd5z2ek0z" class="article-share-link">Share</a>
       
       
       
@@ -205,6 +216,7 @@
   
 </nav>
 
+  
   
 </article>
 </section>
@@ -245,7 +257,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -256,6 +268,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/07/12/congestion_control_intro/">拥塞控制算法机制介绍</a>
+          </li>
         
           <li>
             <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
@@ -271,10 +287,6 @@
         
           <li>
             <a href="/2021/08/29/nornir_manual/">nornir基本使用教程</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
           </li>
         
       </ul>
@@ -357,7 +369,6 @@
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
-<script src="/js/totop.js"></script>
 
   </div>
 </body>

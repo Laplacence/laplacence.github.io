@@ -5,12 +5,12 @@
   
   <title>PyCharm中无法调用numpy | Trash Can</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="PyCharm报错:ModuleNotFoundError: No module named ‘numpy’。因为有用到py，所以自己装了个py36，结果后来装了个PyCharm方便学习，发现写相对复杂程序的时候import不了一些库，例如标题的numpy。其实是PyCharm里面自带了一个python和pip，只要在PyCharm里面更改一下路径就ok了。">
+  <meta name="description" content="PyCharm报错:ModuleNotFoundError: No module named ‘numpy’。 因为有用到py，所以自己装了个py36，结果后来装了个PyCharm方便学习，发现写相对复杂程序的时候import不了一些库，例如标题的numpy。其实是PyCharm里面自带了一个python和pip，只要在PyCharm里面更改一下路径就ok了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PyCharm中无法调用numpy">
 <meta property="og:url" content="https://laplacence.github.io/2018/04/03/PyCharm_cannot_call_module/index.html">
 <meta property="og:site_name" content="Trash Can">
-<meta property="og:description" content="PyCharm报错:ModuleNotFoundError: No module named ‘numpy’。因为有用到py，所以自己装了个py36，结果后来装了个PyCharm方便学习，发现写相对复杂程序的时候import不了一些库，例如标题的numpy。其实是PyCharm里面自带了一个python和pip，只要在PyCharm里面更改一下路径就ok了。">
+<meta property="og:description" content="PyCharm报错:ModuleNotFoundError: No module named ‘numpy’。 因为有用到py，所以自己装了个py36，结果后来装了个PyCharm方便学习，发现写相对复杂程序的时候import不了一些库，例如标题的numpy。其实是PyCharm里面自带了一个python和pip，只要在PyCharm里面更改一下路径就ok了。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdn.net/20180403173112520?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIwMjQwOTk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180403173128850?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIwMjQwOTk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -94,14 +94,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>PyCharm报错:ModuleNotFoundError: No module named ‘numpy’。<br>因为有用到py，所以自己装了个py36，结果后来装了个PyCharm方便学习，发现写相对复杂程序的时候import不了一些库，例如标题的numpy。其实是PyCharm里面自带了一个python和pip，只要在PyCharm里面更改一下路径就ok了。</p>
+        <p>PyCharm报错:ModuleNotFoundError: No module named ‘numpy’。<br />
+因为有用到py，所以自己装了个py36，结果后来装了个PyCharm方便学习，发现写相对复杂程序的时候import不了一些库，例如标题的numpy。其实是PyCharm里面自带了一个python和pip，只要在PyCharm里面更改一下路径就ok了。</p>
 <span id="more"></span>
-<p>Ctrl-Alt-s，打开Settings，找到<code>Project:&lt;projectname&gt;</code>，下拉到Project Interpreter，修改Project Interpreter。<br><img src="https://img-blog.csdn.net/20180403173112520?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIwMjQwOTk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>旁边设置Add<br><img src="https://img-blog.csdn.net/20180403173128850?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIwMjQwOTk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>然后里面会有这些，找到之前自己安装的py36，一般在System Interpreter里面，或者自己添加路径。<br><img src="https://img-blog.csdn.net/20180403173203648?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIwMjQwOTk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>结束，之后在命令行里面<code>pip install &lt;module&gt;</code>就会跟PyCharm同步了。</p>
+<p>Ctrl-Alt-s，打开Settings，找到<code>Project:&lt;projectname&gt;</code>，下拉到Project Interpreter，修改Project Interpreter。<br />
+<img src="https://img-blog.csdn.net/20180403173112520?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIwMjQwOTk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /><br />
+旁边设置Add<br />
+<img src="https://img-blog.csdn.net/20180403173128850?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIwMjQwOTk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /><br />
+然后里面会有这些，找到之前自己安装的py36，一般在System Interpreter里面，或者自己添加路径。<br />
+<img src="https://img-blog.csdn.net/20180403173203648?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzIwMjQwOTk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /><br />
+结束，之后在命令行里面<code>pip install &lt;module&gt;</code>就会跟PyCharm同步了。</p>
 
       
     </div>
      <footer class="article-footer">
-      <a data-url="/2018/04/03/PyCharm_cannot_call_module/" data-id="ckpkxetr4001e60357kq59f1q" class="article-share-link">Share</a>
+      <a data-url="/2018/04/03/PyCharm_cannot_call_module/" data-id="cl5jv6lkh001jx4fgam2g4xkd" class="article-share-link">Share</a>
       
       
       
@@ -129,6 +136,7 @@
   
 </nav>
 
+  
   
 </article>
 </section>
@@ -169,7 +177,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -180,6 +188,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/07/12/congestion_control_intro/">拥塞控制算法机制介绍</a>
+          </li>
         
           <li>
             <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
@@ -195,10 +207,6 @@
         
           <li>
             <a href="/2021/08/29/nornir_manual/">nornir基本使用教程</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
           </li>
         
       </ul>
@@ -281,7 +289,6 @@
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
-<script src="/js/totop.js"></script>
 
   </div>
 </body>

@@ -94,14 +94,18 @@
 <span id="more"></span>
 <p>主动模式下，Client发送“PORT”命令到FTP Server，之后执行upload/download等操作。</p>
 <p>被动模式下，Client发送“PASV”命令到FTP Server，之后执行upload/download等操作。</p>
-<p>看起来只是用了不同的连接方式，实际上有很大差别。<br>主动模式下，Client和Server的TCP port 21建立连接，之后如果进行文件操作，则发送PORT命令，命令中包含了使用Client哪个端口接收数据。在传送数据时（例如GET），FTP Server会通过自身的TCP port 20连接到Client指定的端口发送数据。即除了port 21之外，在进行一个新的TCP连接进行传输数据。<br>Server port==20&amp;&amp;Server port==21 ——— Client port&gt;=1024</p>
-<p>被动模式下，建立控制通道的方式和主动类似，但是发送的是PASV命令。Server收到PASV后，会随机打开一个TCP port&gt;=1024，并向客户端发送通知信息，如果port处于空闲状态，则发送ACK；反之则UNACK，然后Client继续发送PASV直至成功。Client连接上这个端口后就可以进行操作了。这样Server就不需要重新建立一个新连接进行传输操作。<br>Server port&gt;=1024 ——— Client port &gt;=1024</p>
-<p>从网络连接方向来说，主动向外，被动向内。这一点对于iptable的配置比较重要，因为对于大多数防火墙来说，是不允许接受外部发起的连接。如果Server在防火墙后面，且不支持被动连接的话，Client连接就会被禁止；相同的对于内网环境的Client来说，也无法使用主动模式连接外部的Server，因为TCP port 20无法和Client建立有效连接。这都会使FTP无法正常工作。<br>顺带一提CMD里面的FTP只有主动模式，即使强制使用被动”QUOTE PASV”也还是主动模式进行操作的。</p>
+<p>看起来只是用了不同的连接方式，实际上有很大差别。<br />
+主动模式下，Client和Server的TCP port 21建立连接，之后如果进行文件操作，则发送PORT命令，命令中包含了使用Client哪个端口接收数据。在传送数据时（例如GET），FTP Server会通过自身的TCP port 20连接到Client指定的端口发送数据。即除了port 21之外，在进行一个新的TCP连接进行传输数据。<br />
+Server port<mark>20&amp;&amp;Server port</mark>21 --------- Client port&gt;=1024</p>
+<p>被动模式下，建立控制通道的方式和主动类似，但是发送的是PASV命令。Server收到PASV后，会随机打开一个TCP port&gt;=1024，并向客户端发送通知信息，如果port处于空闲状态，则发送ACK；反之则UNACK，然后Client继续发送PASV直至成功。Client连接上这个端口后就可以进行操作了。这样Server就不需要重新建立一个新连接进行传输操作。<br />
+Server port&gt;=1024 --------- Client port &gt;=1024</p>
+<p>从网络连接方向来说，主动向外，被动向内。这一点对于iptable的配置比较重要，因为对于大多数防火墙来说，是不允许接受外部发起的连接。如果Server在防火墙后面，且不支持被动连接的话，Client连接就会被禁止；相同的对于内网环境的Client来说，也无法使用主动模式连接外部的Server，因为TCP port 20无法和Client建立有效连接。这都会使FTP无法正常工作。<br />
+顺带一提CMD里面的FTP只有主动模式，即使强制使用被动&quot;QUOTE PASV&quot;也还是主动模式进行操作的。</p>
 
       
     </div>
      <footer class="article-footer">
-      <a data-url="/2017/08/25/FTP_type/" data-id="ckpkxetqr000l60353koqce2z" class="article-share-link">Share</a>
+      <a data-url="/2017/08/25/FTP_type/" data-id="cl5jv6lk8000mx4fg7kltfsji" class="article-share-link">Share</a>
       
       
       
@@ -129,6 +133,7 @@
   
 </nav>
 
+  
   
 </article>
 </section>
@@ -169,7 +174,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -180,6 +185,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/07/12/congestion_control_intro/">拥塞控制算法机制介绍</a>
+          </li>
         
           <li>
             <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
@@ -195,10 +204,6 @@
         
           <li>
             <a href="/2021/08/29/nornir_manual/">nornir基本使用教程</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
           </li>
         
       </ul>
@@ -281,7 +286,6 @@
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
-<script src="/js/totop.js"></script>
 
   </div>
 </body>

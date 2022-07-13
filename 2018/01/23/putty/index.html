@@ -5,12 +5,12 @@
   
   <title>putty配置和使用 | Trash Can</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="配色轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。">
+  <meta name="description" content="配色 轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="putty配置和使用">
 <meta property="og:url" content="https://laplacence.github.io/2018/01/23/putty/index.html">
 <meta property="og:site_name" content="Trash Can">
-<meta property="og:description" content="配色轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。">
+<meta property="og:description" content="配色 轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ0OTIxNDc0?x-oss-process=image/format,png">
 <meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ1MjA1Njc5?x-oss-process=image/format,png">
@@ -94,16 +94,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="配色"><a href="#配色" class="headerlink" title="配色"></a>配色</h2><p>轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。</p>
+        <h2 id="配色"><a class="markdownIt-Anchor" href="#配色"></a> 配色</h2>
+<p>轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。</p>
 <span id="more"></span>
-<p><code>[HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\colour]</code><br>这里可以放入新的配色方案。</p>
-<h2 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h2><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ0OTIxNDc0?x-oss-process=image/format,png" alt="基本配置"><br>Host Name不必多说，IP地址输入后和端口，接着选择方法。最后的最后配置好后一定要save，不然下次重启又是一片空白。（因为博主试过好几次了。</p>
-<h2 id="密钥配置"><a href="#密钥配置" class="headerlink" title="密钥配置"></a>密钥配置</h2><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ1MjA1Njc5?x-oss-process=image/format,png" alt="密钥设置"><br>在Connection-SSH-Auth里面配置使用的private key，要用.ppk，也就是说需要用到puttykeygen。<br><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ1NTMyNDg5?x-oss-process=image/format,png" alt="生成器"><br>putty有自带rsa生成器，当然你用server的sshdkeygen也可以，生成后传输到需要用的电脑上，然后保存，在puttykeygen里面load，如果是生成的话就generate，下面有密钥类型和长度选项，会提示你移动鼠标来生成密钥。最后save private key，另存为ppk文件就可以放入使用了。</p>
+<p><code>[HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\colour]</code><br />
+这里可以放入新的配色方案。</p>
+<h2 id="基本配置"><a class="markdownIt-Anchor" href="#基本配置"></a> 基本配置</h2>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ0OTIxNDc0?x-oss-process=image/format,png" alt="基本配置" /><br />
+Host Name不必多说，IP地址输入后和端口，接着选择方法。最后的最后配置好后一定要save，不然下次重启又是一片空白。（因为博主试过好几次了。</p>
+<h2 id="密钥配置"><a class="markdownIt-Anchor" href="#密钥配置"></a> 密钥配置</h2>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ1MjA1Njc5?x-oss-process=image/format,png" alt="密钥设置" /><br />
+在Connection-SSH-Auth里面配置使用的private key，要用.ppk，也就是说需要用到puttykeygen。<br />
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTIzMTQ1NTMyNDg5?x-oss-process=image/format,png" alt="生成器" /><br />
+putty有自带rsa生成器，当然你用server的sshdkeygen也可以，生成后传输到需要用的电脑上，然后保存，在puttykeygen里面load，如果是生成的话就generate，下面有密钥类型和长度选项，会提示你移动鼠标来生成密钥。最后save private key，另存为ppk文件就可以放入使用了。</p>
 
       
     </div>
      <footer class="article-footer">
-      <a data-url="/2018/01/23/putty/" data-id="ckpkxetrx0035603558is519q" class="article-share-link">Share</a>
+      <a data-url="/2018/01/23/putty/" data-id="cl5jv6lks002zx4fgdxva0wp8" class="article-share-link">Share</a>
       
       
       
@@ -131,6 +139,7 @@
   
 </nav>
 
+  
   
 </article>
 </section>
@@ -171,7 +180,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -182,6 +191,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/07/12/congestion_control_intro/">拥塞控制算法机制介绍</a>
+          </li>
         
           <li>
             <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
@@ -197,10 +210,6 @@
         
           <li>
             <a href="/2021/08/29/nornir_manual/">nornir基本使用教程</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
           </li>
         
       </ul>
@@ -283,7 +292,6 @@
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
-<script src="/js/totop.js"></script>
 
   </div>
 </body>

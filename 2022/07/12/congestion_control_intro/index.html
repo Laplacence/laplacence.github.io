@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>拥塞控制算法机制介绍 | Trash Can</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="拥塞控制原理实际上包含了四个算法：慢启动，拥塞避免，快重传，快恢复">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拥塞控制算法机制介绍">
+<meta property="og:url" content="https://laplacence.github.io/2022/07/12/congestion_control_intro/index.html">
+<meta property="og:site_name" content="Trash Can">
+<meta property="og:description" content="拥塞控制原理实际上包含了四个算法：慢启动，拥塞避免，快重传，快恢复">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-13T17:13:39.397Z">
+<meta property="article:author" content="Laplacence">
+<meta property="article:tag" content="Python C++ Fedora tech">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Trash Can</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://laplacence.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-congestion_control_intro" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/07/12/congestion_control_intro/" class="article-date">
+  <time datetime="2022-07-11T16:00:00.000Z" itemprop="datePublished">2022-07-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/network/">network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      拥塞控制算法机制介绍
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>拥塞控制原理实际上包含了四个算法：慢启动，拥塞避免，快重传，快恢复</p>
+<span id="more"></span>
+<h2 id="慢启动阶段"><a class="markdownIt-Anchor" href="#慢启动阶段"></a> 慢启动阶段</h2>
+<p>当链路初始启动时，将会把 <em>拥塞控制窗口(cwnd)</em> 设置为1~10个 <em>最大报文段(MSS)</em> ，具体则根据当前机器的TCP协议实现而有所变化。</p>
+<p>发送端将根据cwnd的大小来发送数据，在每一个收到有效回复的RTT内，cwnd都会增加1个MSS的大小。考虑到接收端有延迟，大体上是在呈指数级增长。<br />
+如果带宽为W，所耗时间如所示计算方法，经过一定的时间之后就可以占满带宽。</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>i</mi><mi>m</mi><mi>e</mi><mo>=</mo><mi>R</mi><mi>T</mi><mi>T</mi><mo>×</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>W</mi></mrow><annotation encoding="application/x-tex">time=RTT \times log_2W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">m</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span></p>
+<h2 id="拥塞避免阶段"><a class="markdownIt-Anchor" href="#拥塞避免阶段"></a> 拥塞避免阶段</h2>
+<p>拥塞避免的主要思想是 <em>线性增加，乘积减少(AIMD)。</em></p>
+<p>即 <em>Additive Increase, Multiplicative Decrease.</em></p>
+<p>TCP协议中设置了名为 <em>慢启动阈值(ssthresh)</em> 的变量，当cwnd达到ssthresh时，cwnd将会转换为线性增长的拥塞避免阶段。<br />
+当数据包在一定时间内没有收到确认时，将会假设未确认是由于网络发生了拥塞，但事实上有些网络环境只是链路质量过于差。<br />
+这时候将会进行减半的操作，进而避免产生更多的拥塞。<br />
+例如发送了15个包，但只收到了前5个包的确认。后10个包的数据量的一半，设置为新的ssthresh值。<br />
+接着把cwnd的值重新设置为1个MSS的大小，再次回到慢启动阶段。</p>
+<h2 id="快速重传阶段"><a class="markdownIt-Anchor" href="#快速重传阶段"></a> 快速重传阶段</h2>
+<p>有两个事件会导致快速重传的发生，超时重传和重复确认。</p>
+<p>超时重传是TCP协议在发送端每发送一个报文段就会设置一个计时器，如果接收端在发送确认回来的时间超过了计时器的等待时间，将会重新发送该报文段。<br />
+重复确认是接收端收到未按正确顺序的包时，接收端立刻将最后一次确认过的包再次发送ACK给发送端，该重复阈值一般为3。<br />
+即接收端收到同一包的ACK四次之后，便会从ACK中最后一次确认过的包开始继续发包。<br />
+一旦发生这两种情况，ssthresh的值和cwnd的值将会与拥塞避免阶段的设置相同，再次回到拥塞避免阶段。</p>
+<h2 id="快速恢复阶段"><a class="markdownIt-Anchor" href="#快速恢复阶段"></a> 快速恢复阶段</h2>
+<p>在上述的快速重传阶段之后，又添加了后来的快速恢复阶段。</p>
+<p>当发生重复确认时，将进入快速恢复阶段。<br />
+这时候将会先按照快速重传阶段的设置把cwnd和ssthresh设置好，接着把cwnd设置为ssthresh加上三个MSS的大小，添加三个的原因一般是重传三次ACK，随后重传丢失了的数据包。<br />
+当再次收到重复的ACK时，cwnd将会递增1，并尝试发送间下一个报文段。<br />
+这时如果收到新的ACK时，cwnd的值将更改现在的ssthresh的值。<br />
+即表示重传已经结束，可以按照顺序继续发送数据，再次回到拥塞避免阶段。</p>
+<h2 id="经典tcp拥塞控制算法"><a class="markdownIt-Anchor" href="#经典tcp拥塞控制算法"></a> 经典TCP拥塞控制算法</h2>
+<p>TCP/IP协议簇作为当前网络的基本，在保持可靠传输的前提下，承担着流量控制、拥塞控制等任务，以获取高性能数据传输。<br />
+TCP协议基本的拥塞控制算法有四个阶段，分别是慢启动阶段、拥塞避免阶段、快速重传阶段、快速恢复阶段。<br />
+纵观来看，拥塞控制算法的基本运作流程都可以简化为修改最终数据流，而在这一步不可避免地就要修改 <em>拥塞控制窗口(cwnd)</em>。<br />
+一般的拥塞控制算法通过接收端和发送端发包的确认情况和丢失情况，来估计网络是否产生了拥塞，进而避免网络崩溃。<br />
+但在实际应用中，这种预估的方法会比真正的拥塞发生要慢上许多。<br />
+为解决这一问题，计算机科学家们想过很多办法，比如及早将路由器缓存的情况报告给接收端。<br />
+即使用TCP协议的 <em>拓展显式拥塞通知ECN</em> ，当路由器或链路发生拥塞时，把请求发送数据速率降低的信号发给发送端。<br />
+仅当配合 <em>活动队列管理(AQM)</em> 策略的时候，ECN才能有效地使用，它依赖于AQM的精确度，而且在高度拥塞的网络环境中性能急剧降低。<br />
+另一种方法是测量 <em>RTT(数据包往返时延)</em> ，当RTT增大时，就降低发送数据的速率。<br />
+其中的代表是BBR算法，与以往大部分拥塞算法基于丢包来作为拥塞信号不同，BBR算法会主动检测RTT。</p>
+<h2 id="bbr拥塞控制算法"><a class="markdownIt-Anchor" href="#bbr拥塞控制算法"></a> BBR拥塞控制算法</h2>
+<p>普通的拥塞控制算法是由事件驱动的。</p>
+<p>不管是丢包还是RTT的增加，都被视为一种严重的拥塞事件，这些严重的拥塞事件导致TCP拥塞控制系统在寻找当前带宽、避免拥塞发生、探测在当前状态下还能使用的带宽这三种状态之间切换，最终的结果也就是导致促使拥塞算法调整拥塞控制窗口的大小。<br />
+只要拥塞控制状态机检测到拥塞事件的发生，它就可以直接控制这些状态的切换，而不管它是否实际发生，结果都会导致降低拥塞控制窗口的值。<br />
+所以在这点上，Reno算法和Cubic算法的拥塞控制窗口调整是被动的。</p>
+<p>BBR算法具有内置的状态机制，不受TCP拥塞控制状态机的控制。<br />
+它可以完成所有的状态检测和切换，而不会受到外部干扰。<br />
+BBR算法将定期尝试检测是否有更多带宽并尽可能多地使用它，如果没有，它将返回到先前的状态。</p>
+<p>BBR状态机的维持。<br />
+BBR算法的主体由一个状态机构成，共有四个状态，STARTUP，DRAIN，PROBE_BW，PROBE_RTT。<br />
+将 <em>bw(瞬时带宽值)</em> 乘以一个内置的 <em>增益系数(pacing gain)</em> 得到 <em>pacing rate(传输速率)</em> ，以及对RTT值的持续跟踪，BBR算法会根据上述计算的结果在这四个状态之间自由地来回切换。<br />
+其目的也是抛弃原有的丢包反馈，使得充分利用带宽。</p>
+<p>瞬时带宽的计算。<br />
+计算bw(瞬时带宽值)，这是BBR算法中所有计算的基础和规则。<br />
+BBR算法将会根据当前获得地瞬时带宽值以及其所处的状态来计算 <em>pacing rate(传输速率)</em> 以及 <em>cwnd(拥塞控制窗口)</em> ，BBR算法的简单高效正是源于此。<br />
+系统将会自动跟踪迄今为止最大的瞬时带宽。</p>
+<p>实时跟踪RTT。<br />
+BBR算法之所以能够获取很高的带宽利用率，是因为它使用了状态机内的两个状态交替测量最大带宽值和最小RTT，得出吞吐率与 <em>RTT的乘积(BDP)</em> 的结果如公式所示。</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi><mi>D</mi><mi>P</mi><mo>=</mo><mi>B</mi><msub><mi>W</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><mo>×</mo><mi>R</mi><mi>T</mi><msub><mi>T</mi><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">BDP=BW_{max} \times RTT_{min}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">m</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p>能利用到这个最大的带宽容量，是BBR算法的最终目标，也正是这个目标最终驱动了cwnd的计算。系统会自动跟踪当前为止最小RTT。<br />
+BBR算法最主要维持两个核心的控制参数，<em>pacing rate(传输速率)</em> 和 <em>cwnd(拥塞控制窗口)</em>。</p>
+<p>传输速率的计算 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi mathvariant="normal">_</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>e</mi><mo>=</mo><mi>b</mi><mi>w</mi><mo>×</mo><mi>p</mi><mi>a</mi><mi>c</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi mathvariant="normal">_</mi><mi>g</mi><mi>a</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">pacing\_rate=bw \times pacing\_gain</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9695199999999999em;vertical-align:-0.31em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span><span class="mord mathnormal">i</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9695199999999999em;vertical-align:-0.31em;"></span><span class="mord mathnormal">p</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span><span class="mord mathnormal">i</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">a</span><span class="mord mathnormal">i</span><span class="mord mathnormal">n</span></span></span></span></p>
+<p>拥塞窗口的计算 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>w</mi><mi>n</mi><mi>d</mi><mo>=</mo><mi>B</mi><mi>D</mi><mi>P</mi><mo>×</mo><mi>c</mi><mi>w</mi><mi>n</mi><mi>d</mi><mi mathvariant="normal">_</mi><mi>g</mi><mi>a</mi><mi>i</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">cwnd=BDP \times cwnd\_gain</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord mathnormal">c</span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mord mathnormal">n</span><span class="mord mathnormal">d</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">a</span><span class="mord mathnormal">i</span><span class="mord mathnormal">n</span></span></span></span></p>
+<p>当然，事物存在它的两面性，代价是什么？</p>
+<p>BBR自出世以来已经收到了一些批评，首先，因为它倾向于抢占Cubic算法的带宽，在网络公平性上明显存在不足；<br />
+其次BBR的机制会导致高重传率；<br />
+第三点是在Wi-Fi环境下用户的网速明显变慢。<br />
+综合来看，BBR与Cubic相比只能说互有优劣，各有其擅长的领域。</p>
+<h2 id="bbrv2"><a class="markdownIt-Anchor" href="#bbrv2"></a> BBRv2</h2>
+<p>针对BBR的问题，BBRv2的目标就是解决第一版中存在的一些主要缺点，其改进包括了还使用聚合/运行中的参数增强了网络建模，并增加了对 <em>ECN(显式拥塞通知)</em> 的支持等。<br />
+为便于理解，我们可以通过这样一张表来了解这几个拥塞算法的异同。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CUBIC</th>
+<th>BBR v1</th>
+<th>BBR v2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model parameters for the stat machine</td>
+<td>N/A</td>
+<td>Troughput, RTT</td>
+<td>Throughput, RTT, max aggregation, max inflight</td>
+</tr>
+<tr>
+<td>Loss</td>
+<td>Reduce cwnd by 30% on window by any loss</td>
+<td>N/A</td>
+<td>Explicit loss rate target</td>
+</tr>
+<tr>
+<td>ECN</td>
+<td>RFC3168 (Classic ECN)</td>
+<td>N/A</td>
+<td>DCTCP-inspired ECN</td>
+</tr>
+<tr>
+<td>Startup</td>
+<td>Slow-start until RTT rises (Hystart) or any loss</td>
+<td>Slow-start until throughput plateaus</td>
+<td>Slow-start until throughput plateaus or ECN/Loss rate &gt; target</td>
+</tr>
+</tbody>
+</table>
+<p>早在2019年，Dropbox 就已经在自家的数据中心边缘网络进行尝试使用BBR v2算法，并在下面的博客记载了详细的过程。</p>
+<p><a target="_blank" rel="noopener" href="https://dropbox.tech/infrastructure/evaluating-bbrv2-on-the-dropbox-edge-network">Evaluating BBRv2 on the Dropbox Edge Network</a></p>
+<p>“在我们的测试中，BBRv2显示了以下特性:</p>
+<ul>
+<li>对于网速较低的用户来说，带宽可以与CUBIC媲美。</li>
+<li>对于网速较高的用户来说，带宽可以与BBRv1媲美。</li>
+<li>丢包率比BBRv1低4倍；但仍然比CUBIC高2倍。</li>
+<li>传输中的数据比BBRv1低3倍；但略低于CUBIC。</li>
+<li>RTTs较BBRv1低；但仍然比CUBIC高。</li>
+<li>与BBRv1相比，RTT具有更高的公平性。</li>
+</ul>
+<p>总的来说，BBRv2在BBRv1基础上有了很大的改进，而且在需要更高带宽的情况下，它更接近于成为Reno/CUBIC的完全替代品。<br />
+添加实验性的ECN支持，我们甚至可以看到他可以成为 <em>Datacenter TCP (DCTCP)</em> 的完全替代者。”</p>
+
+      
+    </div>
+     <footer class="article-footer">
+      <a data-url="/2022/07/12/congestion_control_intro/" data-id="cl5jv6lko002jx4fg7x0aad2q" class="article-share-link">Share</a>
+      
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/06/08/what_mean_about_automatic/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">什么是自动安装？</div>
+    </a>
+  
+</nav>
+
+  
+  
+    <script>
+      var assetsString = '<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.0/katex.min.css" rel="stylesheet" type="text/css">'
+      var pHead = document.getElementsByTagName('head')[0];
+      pHead.innerHTML = pHead.innerHTML + assetsString;
+    </script>
+  
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Contact</h3>
+  <div class="widget email">
+    <ul>
+      <li>
+        <a href="mailto:laplacence@gmail.com?subject=请联系我&amp;body=我能帮你什么" title="email">laplacence@gmail.com</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://github.com/Laplacence">Github</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CPP/">CPP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Fedora/">Fedora</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/experience/">experience</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/12/congestion_control_intro/">拥塞控制算法机制介绍</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/06/use_inxi_to_get_system_info/">使用inxi来获取各类系统信息</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/11/change_from_scp_to_rsync/">该从scp转向rsync了</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/29/nornir_manual/">nornir基本使用教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title">Friends Links</h3>
+  <div class="widget links">
+    <ul>
+      <li>
+        <a target="_blank" rel="noopener" href="https://wwyqianqian.github.io/">是千千</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.momo173.cc/">MOMO</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://sunnyrx.com/">热心人士</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="http://www.ceplavia.com/">Ceplavia's Gaming Blog</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://feng.moe/">fython烧饼</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://blog.minamigo.moe/">小泉</a>
+      </li>
+      <li>
+        <a target="_blank" rel="noopener" href="https://www.coder17.com/">17</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+        <div class="outer">
+          <div id="footer-info" class="inner">
+            &copy; 2022
+              Laplacence<br>
+                CC BY-NC-SA 4.0 Powered by
+                  <a href="http://hexo.io/" target="_blank">Hexo</a>
+                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+                  <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+          </div>
+        </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+<div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
+<a title="go top"><img src="/css/images/totop.png"/></a>
+</div>
+
+
+  </div>
+</body>
+</html>

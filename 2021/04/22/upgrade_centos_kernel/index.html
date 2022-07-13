@@ -92,35 +92,29 @@
       
         <p>如题，虽然可能很多地方都有类似介绍。</p>
 <span id="more"></span>
-
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>首先到 <a target="_blank" rel="noopener" href="http://elrepo.org/tiki/HomePage">http://elrepo.org/tiki/HomePage</a> ，按照步骤导入公钥和7的yum源。</p>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<p>首先到 <a target="_blank" rel="noopener" href="http://elrepo.org/tiki/HomePage">http://elrepo.org/tiki/HomePage</a> ，按照步骤导入公钥和7的yum源。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</span><br><span class="line">dnf install -y https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm</span><br></pre></td></tr></table></figure>
-
 <p>换一波tuna源。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/elrepo.repo</span><br><span class="line">:%s/mirrorlist=/#mirrorlist=/g</span><br><span class="line">:%s/elrepo.org\/linux/mirrors.tuna.tsinghua.edu.cn\/elrepo/g</span><br></pre></td></tr></table></figure>
-
 <p>其次，确认自己需要mainline还是longtime的内核。前者更新快，后者支持时间更久更稳定。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dnf --enablerepo=elrepo-kernel install --allowerasing kernel-lt kernel-lt-headers kernel-lt-tools kernel-lt-devel -y</span><br></pre></td></tr></table></figure>
-
-<h2 id="更换"><a href="#更换" class="headerlink" title="更换"></a>更换</h2><p>首先需要修改一下grub的默认配置。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> cat /etc/default/grub</span></span><br><span class="line">GRUB_DEFAULT=saved</span><br></pre></td></tr></table></figure>
-
+<h2 id="更换"><a class="markdownIt-Anchor" href="#更换"></a> 更换</h2>
+<p>首先需要修改一下grub的默认配置。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">cat</span> /etc/default/grub</span></span><br><span class="line">GRUB_DEFAULT=saved</span><br></pre></td></tr></table></figure>
 <p>然后查看自己的grub2启动表。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> awk -F\<span class="string">&#x27; &#x27;</span><span class="variable">$1</span>==<span class="string">&quot;menuentry &quot;</span> &#123;<span class="built_in">print</span> i++ <span class="string">&quot; : &quot;</span> <span class="variable">$2</span>&#125;<span class="string">&#x27; /etc/grub2.cfg</span></span></span><br><span class="line">0 : CentOS Linux (5.16.12-1.el7.elrepo.x86_64) 7 (Core)</span><br><span class="line">1 : CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br><span class="line">2 : CentOS Linux (3.10.0-1127.13.1.el7.x86_64) 7 (Core)</span><br><span class="line">3 : CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)</span><br><span class="line">4 : CentOS Linux (0-rescue-2af5b98ee1d740ee9ef8e747f5da2b49) 7 (Core)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">awk -F\<span class="string">&#x27; &#x27;</span><span class="variable">$1</span>==<span class="string">&quot;menuentry &quot;</span> &#123;<span class="built_in">print</span> i++ <span class="string">&quot; : &quot;</span> <span class="variable">$2</span>&#125;<span class="string">&#x27; /etc/grub2.cfg</span></span></span><br><span class="line">0 : CentOS Linux (5.16.12-1.el7.elrepo.x86_64) 7 (Core)</span><br><span class="line">1 : CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br><span class="line">2 : CentOS Linux (3.10.0-1127.13.1.el7.x86_64) 7 (Core)</span><br><span class="line">3 : CentOS Linux (3.10.0-693.el7.x86_64) 7 (Core)</span><br><span class="line">4 : CentOS Linux (0-rescue-2af5b98ee1d740ee9ef8e747f5da2b49) 7 (Core)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>接着查看当前启动项。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> grub2-editenv list</span></span><br><span class="line">saved_entry=CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">grub2-editenv list</span></span><br><span class="line">saved_entry=CentOS Linux (3.10.0-1160.24.1.el7.x86_64) 7 (Core)</span><br></pre></td></tr></table></figure>
 <p>更改为第一个,再看一下当前启动项。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> grub2-set-default 0</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> grub2-editenv list</span></span><br><span class="line">saved_entry=0</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">grub2-set-default 0</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">grub2-editenv list</span></span><br><span class="line">saved_entry=0</span><br></pre></td></tr></table></figure>
 <p>更改成功后reboot，uname看一下内核。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> uname -r</span></span><br><span class="line">5.16.12-1.el7.elrepo.x86_64</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">uname</span> -r</span></span><br><span class="line">5.16.12-1.el7.elrepo.x86_64</span><br></pre></td></tr></table></figure>
 
       
     </div>
      <footer class="article-footer">
-      <a data-url="/2021/04/22/upgrade_centos_kernel/" data-id="ckpkxets6003h6035fzt5eu2t" class="article-share-link">Share</a>
+      <a data-url="/2021/04/22/upgrade_centos_kernel/" data-id="cl5jv6lku0039x4fg7xwd7jkf" class="article-share-link">Share</a>
       
       
       
@@ -148,6 +142,7 @@
   
 </nav>
 
+  
   
 </article>
 </section>
@@ -188,7 +183,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -199,6 +194,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/07/12/congestion_control_intro/">拥塞控制算法机制介绍</a>
+          </li>
         
           <li>
             <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
@@ -214,10 +213,6 @@
         
           <li>
             <a href="/2021/08/29/nornir_manual/">nornir基本使用教程</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
           </li>
         
       </ul>
@@ -300,7 +295,6 @@
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
-<script src="/js/totop.js"></script>
 
   </div>
 </body>

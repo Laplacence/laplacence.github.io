@@ -5,12 +5,12 @@
   
   <title>pip安装scrapy失败 | Trash Can</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="因为迁移服务器，突然发现项目的爬虫是用的scrapy，但安装环境的时候发现总是失败。查阅了相关文档后发现是需要Python3的版本才能安装。 下面这个问题主要是因为使用了Python2的pip安装导致的失败。Command &quot;python setup.py egg_info&quot; failed with error code 1">
+  <meta name="description" content="因为迁移服务器，突然发现项目的爬虫是用的scrapy，但安装环境的时候发现总是失败。查阅了相关文档后发现是需要Python3的版本才能安装。 下面这个问题主要是因为使用了Python2的pip安装导致的失败。 Command &quot;python setup.py egg_info&quot; failed with error code 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pip安装scrapy失败">
 <meta property="og:url" content="https://laplacence.github.io/2018/11/20/pip_install_scrapy_failed/index.html">
 <meta property="og:site_name" content="Trash Can">
-<meta property="og:description" content="因为迁移服务器，突然发现项目的爬虫是用的scrapy，但安装环境的时候发现总是失败。查阅了相关文档后发现是需要Python3的版本才能安装。 下面这个问题主要是因为使用了Python2的pip安装导致的失败。Command &quot;python setup.py egg_info&quot; failed with error code 1">
+<meta property="og:description" content="因为迁移服务器，突然发现项目的爬虫是用的scrapy，但安装环境的时候发现总是失败。查阅了相关文档后发现是需要Python3的版本才能安装。 下面这个问题主要是因为使用了Python2的pip安装导致的失败。 Command &quot;python setup.py egg_info&quot; failed with error code 1">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2018-11-19T16:00:00.000Z">
 <meta property="article:modified_time" content="2020-04-11T07:09:12.776Z">
@@ -91,16 +91,17 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>因为迁移服务器，突然发现项目的爬虫是用的scrapy，但安装环境的时候发现总是失败。查阅了相关文档后发现是需要Python3的版本才能安装。</p>
-<p>下面这个问题主要是因为使用了Python2的pip安装导致的失败。<br><code>Command &quot;python setup.py egg_info&quot; failed with error code 1</code></p>
+<p>下面这个问题主要是因为使用了Python2的pip安装导致的失败。<br />
+<code>Command &quot;python setup.py egg_info&quot; failed with error code 1</code></p>
 <span id="more"></span>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">首先安装Python3，博主的环境是centos7，所以使用的是yum。</span><br><span class="line"><span class="comment"># yum install gcc python34 python34-devel</span></span><br><span class="line"></span><br><span class="line">安装Python3后可以通过指定的pip进行安装</span><br><span class="line">第一步先升级pip版本。</span><br><span class="line"><span class="comment"># python3 -m pip install --upgrade pip</span></span><br><span class="line"></span><br><span class="line">接着安装scrapy</span><br><span class="line"><span class="comment"># python3 -m pip install scrapy</span></span><br></pre></td></tr></table></figure>
-
-<p>完成。<br>如果有其他例子无法解决的朋友可以通过邮件联系我，以方便修改。</p>
+<p>完成。<br />
+如果有其他例子无法解决的朋友可以通过邮件联系我，以方便修改。</p>
 
       
     </div>
      <footer class="article-footer">
-      <a data-url="/2018/11/20/pip_install_scrapy_failed/" data-id="ckpkxetry00376035dhu3drgy" class="article-share-link">Share</a>
+      <a data-url="/2018/11/20/pip_install_scrapy_failed/" data-id="cl5jv6lkt0033x4fg0tmjce32" class="article-share-link">Share</a>
       
       
       
@@ -128,6 +129,7 @@
   
 </nav>
 
+  
   
 </article>
 </section>
@@ -168,7 +170,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -179,6 +181,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/07/12/congestion_control_intro/">拥塞控制算法机制介绍</a>
+          </li>
         
           <li>
             <a href="/2022/06/08/what_mean_about_automatic/">什么是自动安装？</a>
@@ -194,10 +200,6 @@
         
           <li>
             <a href="/2021/08/29/nornir_manual/">nornir基本使用教程</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/29/how_to_use_strace/">如何使用strace来解决问题？</a>
           </li>
         
       </ul>
@@ -280,7 +282,6 @@
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
-<script src="/js/totop.js"></script>
 
   </div>
 </body>
