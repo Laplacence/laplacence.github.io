@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   
+  
   <title>Android Fastboot mode 连接电脑无反应 | Trash Can</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="博主之前刷Sony Z3的时候也碰到过，忘了当时怎么解决的了（。今天刷Sony Z5又碰到同样问题，大概是明白了。 Fastboot要基于Google Winusb Android和ADB等几个驱动才能实现交互，然而这个文件十分老旧，即使从它官网下也是2014年或者更老的版本。 ADB发行版本的android_winusb.inf，文件内容校验值与cat文件里的记录不相同， 因此Windows安装">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Fastboot mode 连接电脑无反应">
@@ -24,14 +25,25 @@
     <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
   
   
-    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+    <link rel="shortcut icon" href="/favicon.ico">
   
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
   
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="/fork-awesome/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.2"></head>
 
 <body>
   <div id="container">
@@ -44,10 +56,14 @@
         <a href="/" id="logo">Trash Can</a>
       </h1>
       
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Recycle Bin</a>
+        </h2>
+      
     </div>
     <div id="header-inner" class="inner">
       <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
           <a class="main-nav-link" href="/">Home</a>
         
@@ -56,9 +72,10 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://laplacence.github.io"></form>
@@ -66,11 +83,12 @@
     </div>
   </div>
 </header>
+
       <div class="outer">
-        <section id="main"><article id="post-ADB_install_in_Windows" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-ADB_install_in_Windows" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2017/10/17/ADB_install_in_Windows/" class="article-date">
-  <time datetime="2017-10-16T16:00:00.000Z" itemprop="datePublished">2017-10-17</time>
+  <time class="dt-published" datetime="2017-10-16T16:00:00.000Z" itemprop="datePublished">2017-10-17</time>
 </a>
     
   <div class="article-category">
@@ -84,36 +102,35 @@
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
+    <h1 class="p-name article-title" itemprop="headline name">
       Android Fastboot mode 连接电脑无反应
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>博主之前刷Sony Z3的时候也碰到过，忘了当时怎么解决的了（。今天刷Sony Z5又碰到同样问题，大概是明白了。<br />
-Fastboot要基于Google Winusb Android和ADB等几个驱动才能实现交互，然而这个文件十分老旧，即使从它官网下也是2014年或者更老的版本。<br />
-ADB发行版本的android_winusb.inf，文件内容校验值与cat文件里的记录不相同，<br />
-因此Windows安装提示了HASH校验相关的错误。（甚至不会提示，直接输出安装失败的结果）<br />
-Windows的32位系统下没有强制要求驱动签名，安装时只会弹出提示<br />
-Windows无法验证此驱动程序的发布者，但可选择安装此驱动。（红色的警告框）<br />
+        <p>博主之前刷Sony Z3的时候也碰到过，忘了当时怎么解决的了（。今天刷Sony Z5又碰到同样问题，大概是明白了。<br>
+Fastboot要基于Google Winusb Android和ADB等几个驱动才能实现交互，然而这个文件十分老旧，即使从它官网下也是2014年或者更老的版本。<br>
+ADB发行版本的android_winusb.inf，文件内容校验值与cat文件里的记录不相同，<br>
+因此Windows安装提示了HASH校验相关的错误。（甚至不会提示，直接输出安装失败的结果）<br>
+Windows的32位系统下没有强制要求驱动签名，安装时只会弹出提示<br>
+Windows无法验证此驱动程序的发布者，但可选择安装此驱动。（红色的警告框）<br>
 但是64位系统是会强制要求驱动签名的，所以安装失败。</p>
 <span id="more"></span>
-<h2 id="如何解决"><a class="markdownIt-Anchor" href="#如何解决"></a> 如何解决</h2>
-<p>以博主15063版本为例，打开设置的Update，接着找到Recovery<br />
-<img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMDE3MjA1NjUyOTA4?x-oss-process=image/format,png" alt="这里写图片描述" /><br />
-点击restart后，进入troubleshoot，然后进入Advanced options，Startup Settings，最后重启。<br />
-重启后会遇到这里，点击F7 Disable driver signature enforcement<br />
-<img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMDE3MjA1OTQ3NzU0?x-oss-process=image/format,png" alt="这里写图片描述" /><br />
+<h2 id="如何解决">如何解决</h2>
+<p>以博主15063版本为例，打开设置的Update，接着找到Recovery<br>
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMDE3MjA1NjUyOTA4?x-oss-process=image/format,png" alt="这里写图片描述"><br>
+点击restart后，进入troubleshoot，然后进入Advanced options，Startup Settings，最后重启。<br>
+重启后会遇到这里，点击F7 Disable driver signature enforcement<br>
+<img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTcxMDE3MjA1OTQ3NzU0?x-oss-process=image/format,png" alt="这里写图片描述"><br>
 最后再进行安装，会弹出红色警告窗口，继续安装即可解决</p>
 
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2017/10/17/ADB_install_in_Windows/" data-id="cl5jv6lk10004x4fge2n261d0" class="article-share-link">Share</a>
-      
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2017/10/17/ADB_install_in_Windows/" data-id="cuidRZURG2mFVVnUjO83HrCn1" data-title="Android Fastboot mode 连接电脑无反应" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -143,6 +160,8 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
   
   
 </article>
+
+
 </section>
         
           <aside id="sidebar">
@@ -181,7 +200,7 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/11/">November 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -192,6 +211,10 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2026/11/04/AI_impact/">来自AI的冲击</a>
+          </li>
         
           <li>
             <a href="/2024/03/07/congrate_for_2024/">恭喜2024年</a>
@@ -207,10 +230,6 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
         
           <li>
             <a href="/2022/01/06/use_inxi_to_get_system_info/">使用inxi来获取各类系统信息</a>
-          </li>
-        
-          <li>
-            <a href="/2021/12/11/change_from_scp_to_rsync/">该从scp转向rsync了</a>
           </li>
         
       </ul>
@@ -253,18 +272,17 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
       </div>
       <footer id="footer">
   
-        <div class="outer">
-          <div id="footer-info" class="inner">
-            &copy; 2024
-              Laplacence<br>
-                CC BY-NC-SA 4.0 Powered by
-                  <a href="http://hexo.io/" target="_blank">Hexo</a>
-                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-                  <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
-          </div>
-        </div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Laplacence<br>
+      CC BY-NC-SA 4.0 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
 </footer>
+
     </div>
     <nav id="mobile-nav">
   
@@ -273,14 +291,15 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
     <a href="/archives" class="mobile-nav-link">Archives</a>
   
 </nav>
-    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
 
 
   
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
@@ -289,10 +308,15 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
 
 
 
+
+
+
 <div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
+
+<script src="/js/totop.js"></script>
 
   </div>
 </body>

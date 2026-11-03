@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   
+  
   <title>Trash Can</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="就是博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Trash Can">
@@ -19,14 +20,25 @@
     <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
   
   
-    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+    <link rel="shortcut icon" href="/favicon.ico">
   
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
   
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="/fork-awesome/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.2"></head>
 
 <body>
   <div id="container">
@@ -39,10 +51,14 @@
         <a href="/" id="logo">Trash Can</a>
       </h1>
       
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Recycle Bin</a>
+        </h2>
+      
     </div>
     <div id="header-inner" class="inner">
       <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
           <a class="main-nav-link" href="/">Home</a>
         
@@ -51,9 +67,10 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://laplacence.github.io"></form>
@@ -61,13 +78,63 @@
     </div>
   </div>
 </header>
+
       <div class="outer">
         <section id="main">
   
-    <article id="post-MySQL_ERROR_1045" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Android_SDK_install_error" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2018/03/12/Android_SDK_install_error/" class="article-date">
+  <time class="dt-published" datetime="2018-03-11T16:00:00.000Z" itemprop="datePublished">2018-03-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/experience/">experience</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2018/03/12/Android_SDK_install_error/">Android Studio SDK报错解决方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Android Studio的SDK是从dl.google.com上面下载的，所以有些地区会无法访问。解决方法是挂梯子，先确保能连通。<br>
+一开始安装会提示你要不要安装SDK和AVD，这两个都是从上述网站下载解压的，如果一开始没有下载到，会在之后启动AS提示你“无法连通网站 请设置代理”。这时候你设置SDK文件夹会提示你installed（其实并没有安装），找到一个空的文件夹，确认能正常连接到dl.google.com的话，就可以正常下载解压安装了。</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/03/12/Android_SDK_install_error/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2018/03/12/Android_SDK_install_error/" data-id="cuidYN16VKdrnkiE9yHmRQW_q" data-title="Android Studio SDK报错解决方法" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+  
+</article>
+
+
+
+  
+    <article id="post-MySQL_ERROR_1045" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2018/01/31/MySQL_ERROR_1045/" class="article-date">
-  <time datetime="2018-01-30T16:00:00.000Z" itemprop="datePublished">2018-01-31</time>
+  <time class="dt-published" datetime="2018-01-30T16:00:00.000Z" itemprop="datePublished">2018-01-31</time>
 </a>
     
   <div class="article-category">
@@ -82,13 +149,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/31/MySQL_ERROR_1045/">MySQL 1045 1044等综合问题解决方法</a>
+      <a class="p-name article-title" href="/2018/01/31/MySQL_ERROR_1045/">MySQL 1045 1044等综合问题解决方法</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
         <p>如果某天发现自己登陆不上MySQL，又恰巧记不得密码，那只能通过本地重新修改mysql.user里面的密码。</p>
         
@@ -98,8 +165,8 @@
         
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2018/01/31/MySQL_ERROR_1045/" data-id="cl5jv6lkg001dx4fg0hdffcsw" class="article-share-link">Share</a>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2018/01/31/MySQL_ERROR_1045/" data-id="cuidVVInda0_VJGRz4Qnb2xJ4" data-title="MySQL 1045 1044等综合问题解决方法" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -109,11 +176,13 @@
   
 </article>
 
+
+
   
-    <article id="post-MySQL_ERROR_22" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-MySQL_ERROR_22" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2018/01/30/MySQL_ERROR_22/" class="article-date">
-  <time datetime="2018-01-29T16:00:00.000Z" itemprop="datePublished">2018-01-30</time>
+  <time class="dt-published" datetime="2018-01-29T16:00:00.000Z" itemprop="datePublished">2018-01-30</time>
 </a>
     
   <div class="article-category">
@@ -128,13 +197,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/30/MySQL_ERROR_22/">MySQL启动失败 错误提示ERROR 2002</a>
+      <a class="p-name article-title" href="/2018/01/30/MySQL_ERROR_22/">MySQL启动失败 错误提示ERROR 2002</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
         <p>这大概是一个常见的问题，不过解决起来比较容易。首先你要查看自己有没有安装mysql-server，之后再尝试启动mysql daemon。</p>
         
@@ -144,8 +213,8 @@
         
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2018/01/30/MySQL_ERROR_22/" data-id="cl5jv6lkf0018x4fgh9dj18fz" class="article-share-link">Share</a>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2018/01/30/MySQL_ERROR_22/" data-id="cuidmACtdSjzpLqX_RuZgmgv6" data-title="MySQL启动失败 错误提示ERROR 2002" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -155,11 +224,13 @@
   
 </article>
 
+
+
   
-    <article id="post-Apache_ban_ip_access" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Apache_ban_ip_access" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2018/01/26/Apache_ban_ip_access/" class="article-date">
-  <time datetime="2018-01-25T16:00:00.000Z" itemprop="datePublished">2018-01-26</time>
+  <time class="dt-published" datetime="2018-01-25T16:00:00.000Z" itemprop="datePublished">2018-01-26</time>
 </a>
     
   <div class="article-category">
@@ -174,13 +245,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/Apache_ban_ip_access/">Apache禁止ip访问只允许域名访问</a>
+      <a class="p-name article-title" href="/2018/01/26/Apache_ban_ip_access/">Apache禁止ip访问只允许域名访问</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
         <p>为实现用户只能通过域名来访问网站，禁止使用IP访问，可在httpd.conf配置文件里加入以下代码：</p>
         
@@ -190,8 +261,8 @@
         
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2018/01/26/Apache_ban_ip_access/" data-id="cl5jv6lk20007x4fgaeq3aon5" class="article-share-link">Share</a>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2018/01/26/Apache_ban_ip_access/" data-id="cuidReb-9bbLejiG2MAuuJk3I" data-title="Apache禁止ip访问只允许域名访问" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -201,11 +272,13 @@
   
 </article>
 
+
+
   
-    <article id="post-Linux_signal" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Linux_signal" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2018/01/26/Linux_signal/" class="article-date">
-  <time datetime="2018-01-25T16:00:00.000Z" itemprop="datePublished">2018-01-26</time>
+  <time class="dt-published" datetime="2018-01-25T16:00:00.000Z" itemprop="datePublished">2018-01-26</time>
 </a>
     
   <div class="article-category">
@@ -220,13 +293,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/Linux_signal/">Linux signal</a>
+      <a class="p-name article-title" href="/2018/01/26/Linux_signal/">Linux signal</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
         <p>信号是Linux编程中非常重要的部分，本文将详细介绍信号机制的基本概念、Linux对信号机制的大致实现方法、如何使用信号，以及有关信号的几个系统调用。</p>
 <p>信号机制是进程之间相互传递消息的一种方法，信号全称为软中断信号，也有人称作软中断。从它的命名可以看出，它的实质和使用很象中断。所以，信号可以说是进程控制的一部分。</p>
@@ -237,8 +310,8 @@
         
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2018/01/26/Linux_signal/" data-id="cl5jv6lkd0016x4fg2rmdbo17" class="article-share-link">Share</a>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2018/01/26/Linux_signal/" data-id="cuidirKF9cH6W38Go-hStLC_S" data-title="Linux signal" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -248,11 +321,13 @@
   
 </article>
 
+
+
   
-    <article id="post-Python_simple_http_server" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Python_simple_http_server" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2018/01/26/Python_simple_http_server/" class="article-date">
-  <time datetime="2018-01-25T16:00:00.000Z" itemprop="datePublished">2018-01-26</time>
+  <time class="dt-published" datetime="2018-01-25T16:00:00.000Z" itemprop="datePublished">2018-01-26</time>
 </a>
     
   <div class="article-category">
@@ -267,15 +342,15 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/Python_simple_http_server/">使用Python3在局域网传输文件</a>
+      <a class="p-name article-title" href="/2018/01/26/Python_simple_http_server/">使用Python3在局域网传输文件</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>如果不能用u盘传输确实是一个比较头疼的问题，这里推荐用一种简单的方法。<br />
+        <p>如果不能用u盘传输确实是一个比较头疼的问题，这里推荐用一种简单的方法。<br>
 直接简单架设一个http服务器，host机需要安装Python3，接着命令行cd到需要下载的目录内（因为架设好后其他文件夹都无权访问）</p>
         
           <p class="article-more-link">
@@ -284,8 +359,8 @@
         
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2018/01/26/Python_simple_http_server/" data-id="cl5jv6lkm0023x4fg8pz4742s" class="article-share-link">Share</a>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2018/01/26/Python_simple_http_server/" data-id="cuidcumsgSC7q0t0YBoGRYBmb" data-title="使用Python3在局域网传输文件" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -295,11 +370,13 @@
   
 </article>
 
+
+
   
-    <article id="post-putty" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-putty" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2018/01/23/putty/" class="article-date">
-  <time datetime="2018-01-22T16:00:00.000Z" itemprop="datePublished">2018-01-23</time>
+  <time class="dt-published" datetime="2018-01-22T16:00:00.000Z" itemprop="datePublished">2018-01-23</time>
 </a>
     
   <div class="article-category">
@@ -314,15 +391,15 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/23/putty/">putty配置和使用</a>
+      <a class="p-name article-title" href="/2018/01/23/putty/">putty配置和使用</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="配色"><a class="markdownIt-Anchor" href="#配色"></a> 配色</h2>
+        <h2 id="配色">配色</h2>
 <p>轻量级ssh经常用的工具之一，但是putty的配色十分不友好（，于是只好自己手动配色了。或者用reg文件放入注册表也可以修改。</p>
         
           <p class="article-more-link">
@@ -331,8 +408,8 @@
         
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2018/01/23/putty/" data-id="cl5jv6lks002zx4fgdxva0wp8" class="article-share-link">Share</a>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2018/01/23/putty/" data-id="cuidEmgdUgST0c7sm8OrME0vG" data-title="putty配置和使用" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -342,11 +419,13 @@
   
 </article>
 
+
+
   
-    <article id="post-Cannot_connect_to_local_MySQL_server_through_socket" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Cannot_connect_to_local_MySQL_server_through_socket" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2017/11/04/Cannot_connect_to_local_MySQL_server_through_socket/" class="article-date">
-  <time datetime="2017-11-03T16:00:00.000Z" itemprop="datePublished">2017-11-04</time>
+  <time class="dt-published" datetime="2017-11-03T16:00:00.000Z" itemprop="datePublished">2017-11-04</time>
 </a>
     
   <div class="article-category">
@@ -361,13 +440,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/04/Cannot_connect_to_local_MySQL_server_through_socket/">CentOS通过yum安装Mariadb(MySQL)无法启动服务或者找不到mysql.sock(2)</a>
+      <a class="p-name article-title" href="/2017/11/04/Cannot_connect_to_local_MySQL_server_through_socket/">CentOS通过yum安装Mariadb(MySQL)无法启动服务或者找不到mysql.sock(2)</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
         <p>今天在Linux主机(CentOS 7)安装(yum install方式)Mariadb(即开源MySQL)后，无法启动mariadb，其实是安装不完整，当然启动不了，更不用说输入。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mysql -u root</span></span><br><span class="line">Can&#x27;t connect to local MySQL server through socket &#x27;/tmp/mysql.sock&#x27; (2)</span><br></pre></td></tr></table></figure>
@@ -378,8 +457,8 @@
         
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2017/11/04/Cannot_connect_to_local_MySQL_server_through_socket/" data-id="cl5jv6lk7000hx4fge2i48srs" class="article-share-link">Share</a>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2017/11/04/Cannot_connect_to_local_MySQL_server_through_socket/" data-id="cuidM2BA7xSh5wM8eK2jeQ67-" data-title="CentOS通过yum安装Mariadb(MySQL)无法启动服务或者找不到mysql.sock(2)" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -389,11 +468,13 @@
   
 </article>
 
+
+
   
-    <article id="post-ADB_install_in_Windows" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ADB_install_in_Windows" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2017/10/17/ADB_install_in_Windows/" class="article-date">
-  <time datetime="2017-10-16T16:00:00.000Z" itemprop="datePublished">2017-10-17</time>
+  <time class="dt-published" datetime="2017-10-16T16:00:00.000Z" itemprop="datePublished">2017-10-17</time>
 </a>
     
   <div class="article-category">
@@ -408,20 +489,20 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/17/ADB_install_in_Windows/">Android Fastboot mode 连接电脑无反应</a>
+      <a class="p-name article-title" href="/2017/10/17/ADB_install_in_Windows/">Android Fastboot mode 连接电脑无反应</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>博主之前刷Sony Z3的时候也碰到过，忘了当时怎么解决的了（。今天刷Sony Z5又碰到同样问题，大概是明白了。<br />
-Fastboot要基于Google Winusb Android和ADB等几个驱动才能实现交互，然而这个文件十分老旧，即使从它官网下也是2014年或者更老的版本。<br />
-ADB发行版本的android_winusb.inf，文件内容校验值与cat文件里的记录不相同，<br />
-因此Windows安装提示了HASH校验相关的错误。（甚至不会提示，直接输出安装失败的结果）<br />
-Windows的32位系统下没有强制要求驱动签名，安装时只会弹出提示<br />
-Windows无法验证此驱动程序的发布者，但可选择安装此驱动。（红色的警告框）<br />
+        <p>博主之前刷Sony Z3的时候也碰到过，忘了当时怎么解决的了（。今天刷Sony Z5又碰到同样问题，大概是明白了。<br>
+Fastboot要基于Google Winusb Android和ADB等几个驱动才能实现交互，然而这个文件十分老旧，即使从它官网下也是2014年或者更老的版本。<br>
+ADB发行版本的android_winusb.inf，文件内容校验值与cat文件里的记录不相同，<br>
+因此Windows安装提示了HASH校验相关的错误。（甚至不会提示，直接输出安装失败的结果）<br>
+Windows的32位系统下没有强制要求驱动签名，安装时只会弹出提示<br>
+Windows无法验证此驱动程序的发布者，但可选择安装此驱动。（红色的警告框）<br>
 但是64位系统是会强制要求驱动签名的，所以安装失败。</p>
         
           <p class="article-more-link">
@@ -430,8 +511,8 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
         
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2017/10/17/ADB_install_in_Windows/" data-id="cl5jv6lk10004x4fge2n261d0" class="article-share-link">Share</a>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2017/10/17/ADB_install_in_Windows/" data-id="cuidRZURG2mFVVnUjO83HrCn1" data-title="Android Fastboot mode 连接电脑无反应" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -441,11 +522,13 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
   
 </article>
 
+
+
   
-    <article id="post-Python_IndentationError" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Python_IndentationError" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2017/10/13/Python_IndentationError/" class="article-date">
-  <time datetime="2017-10-12T16:00:00.000Z" itemprop="datePublished">2017-10-13</time>
+  <time class="dt-published" datetime="2017-10-12T16:00:00.000Z" itemprop="datePublished">2017-10-13</time>
 </a>
     
   <div class="article-category">
@@ -460,16 +543,16 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/13/Python_IndentationError/">IndentationError:expected an indented block错误解决</a>
+      <a class="p-name article-title" href="/2017/10/13/Python_IndentationError/">IndentationError:expected an indented block错误解决</a>
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>这个问题是来自Python里面的缩进问题，毕竟是函数式，对于tab和space十分敏感<br />
-所以出现这个问题要思考自己是不是混用了tab和space<br />
+        <p>这个问题是来自Python里面的缩进问题，毕竟是函数式，对于tab和space十分敏感<br>
+所以出现这个问题要思考自己是不是混用了tab和space<br>
 其次是一个基本问题，就是def，if，for的时候，这种时候一定要缩进。</p>
         
           <p class="article-more-link">
@@ -478,8 +561,8 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
         
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2017/10/13/Python_IndentationError/" data-id="cl5jv6lki001nx4fg1jk8c9e3" class="article-share-link">Share</a>
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2017/10/13/Python_IndentationError/" data-id="cuidQObY_IfjjolTRMUS1YCzb" data-title="IndentationError:expected an indented block错误解决" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -489,58 +572,14 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
   
 </article>
 
-  
-    <article id="post-Fedora_dnf_problem" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/30/Fedora_dnf_problem/" class="article-date">
-  <time datetime="2017-09-29T16:00:00.000Z" itemprop="datePublished">2017-09-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Fedora/">Fedora</a>►<a class="article-category-link" href="/categories/experience/">experience</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/30/Fedora_dnf_problem/">Fedora里面的dnf故障</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>dnf其实是yum的升级版，yum也会有这个故障，就是当你使用dnf/yum命令的时候，运行到一半却按下了C-c，结果再输入dnf/yum命令时候却发现报错</p>
-        
-          <p class="article-more-link">
-            <a href="/2017/09/30/Fedora_dnf_problem/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-     <footer class="article-footer">
-      <a data-url="/2017/09/30/Fedora_dnf_problem/" data-id="cl5jv6lkb000yx4fg0eb7c6uw" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-  
-</article>
 
   
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/4/">&lt;&lt; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &gt;&gt;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -581,7 +620,7 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/11/">November 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -592,6 +631,10 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2026/11/04/AI_impact/">来自AI的冲击</a>
+          </li>
         
           <li>
             <a href="/2024/03/07/congrate_for_2024/">恭喜2024年</a>
@@ -607,10 +650,6 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
         
           <li>
             <a href="/2022/01/06/use_inxi_to_get_system_info/">使用inxi来获取各类系统信息</a>
-          </li>
-        
-          <li>
-            <a href="/2021/12/11/change_from_scp_to_rsync/">该从scp转向rsync了</a>
           </li>
         
       </ul>
@@ -653,18 +692,17 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
       </div>
       <footer id="footer">
   
-        <div class="outer">
-          <div id="footer-info" class="inner">
-            &copy; 2024
-              Laplacence<br>
-                CC BY-NC-SA 4.0 Powered by
-                  <a href="http://hexo.io/" target="_blank">Hexo</a>
-                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-                  <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
-          </div>
-        </div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Laplacence<br>
+      CC BY-NC-SA 4.0 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
 </footer>
+
     </div>
     <nav id="mobile-nav">
   
@@ -673,14 +711,15 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
     <a href="/archives" class="mobile-nav-link">Archives</a>
   
 </nav>
-    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
 
 
   
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
@@ -689,10 +728,15 @@ Windows无法验证此驱动程序的发布者，但可选择安装此驱动。�
 
 
 
+
+
+
 <div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
+
+<script src="/js/totop.js"></script>
 
   </div>
 </body>

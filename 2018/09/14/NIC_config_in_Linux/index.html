@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   
+  
   <title>Linux下修改网卡设定 | Trash Can</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="虽然大部分发行版都有GUI，点点点就可以解决，但是在ssh情况下如果不会操作shell的话就会十分麻烦。 博主的发行版是Fedora 26，可能会跟其他发行版的配置有出入，请谅解。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux下修改网卡设定">
@@ -21,14 +22,25 @@
     <link rel="alternate" href="/atom.xml" title="Trash Can" type="application/atom+xml">
   
   
-    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+    <link rel="shortcut icon" href="/favicon.ico">
   
   
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
   
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 6.2.0"></head>
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="/fork-awesome/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.2"></head>
 
 <body>
   <div id="container">
@@ -41,10 +53,14 @@
         <a href="/" id="logo">Trash Can</a>
       </h1>
       
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Recycle Bin</a>
+        </h2>
+      
     </div>
     <div id="header-inner" class="inner">
       <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
           <a class="main-nav-link" href="/">Home</a>
         
@@ -53,9 +69,10 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://laplacence.github.io"></form>
@@ -63,11 +80,12 @@
     </div>
   </div>
 </header>
+
       <div class="outer">
-        <section id="main"><article id="post-NIC_config_in_Linux" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-NIC_config_in_Linux" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2018/09/14/NIC_config_in_Linux/" class="article-date">
-  <time datetime="2018-09-13T16:00:00.000Z" itemprop="datePublished">2018-09-14</time>
+  <time class="dt-published" datetime="2018-09-13T16:00:00.000Z" itemprop="datePublished">2018-09-14</time>
 </a>
     
   <div class="article-category">
@@ -81,30 +99,29 @@
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
+    <h1 class="p-name article-title" itemprop="headline name">
       Linux下修改网卡设定
     </h1>
   
 
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+    <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>虽然大部分发行版都有GUI，点点点就可以解决，但是在ssh情况下如果不会操作shell的话就会十分麻烦。<br />
+        <p>虽然大部分发行版都有GUI，点点点就可以解决，但是在ssh情况下如果不会操作shell的话就会十分麻烦。<br>
 博主的发行版是Fedora 26，可能会跟其他发行版的配置有出入，请谅解。</p>
 <span id="more"></span>
 <p>先su进入root，然后操作<strong>ifconfig</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@Laplacence network-scripts]<span class="comment"># ifconfig</span></span><br><span class="line">enp3s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 192.168.199.100  netmask 255.255.255.0  broadcast 192.168.199.255</span><br><span class="line">        ether 44:8a:5b:f0:ac:e3  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 787819  bytes 966771592 (921.9 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 461662  bytes 63148096 (60.2 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line">        device interrupt 19  </span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 38  bytes 2492 (2.4 KiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 38  bytes 2492 (2.4 KiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
-<p>enp3s0是当前运行的有线网卡，记住一下MAC和网卡名字后<br />
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@Laplacence network-scripts]# ifconfig</span><br><span class="line">enp3s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 192.168.199.100  netmask 255.255.255.0  broadcast 192.168.199.255</span><br><span class="line">        ether 44:8a:5b:f0:ac:e3  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 787819  bytes 966771592 (921.9 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 461662  bytes 63148096 (60.2 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line">        device interrupt 19  </span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 38  bytes 2492 (2.4 KiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 38  bytes 2492 (2.4 KiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+<p>enp3s0是当前运行的有线网卡，记住一下MAC和网卡名字后<br>
 接着操作<strong>vi /etc/sysconfig/network-scripts/ifcfg-enp3s0</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">HWADDR=44:8A:5B:F0:AC:E3 //刚刚知道的MAC 和下面的MACADDR 只需设置其中一个 同时设置时不能相互冲突</span><br><span class="line">TYPE=Ethernet  /*配置文件接口类型 在/etc/sysconfig/network-scripts/目录有多种网络配置文件</span><br><span class="line">有Ethernet 、IPsec等类型，网络接口类型为Ethernet*/</span><br><span class="line">BOOTPROTO=dhcp  //系统启动地址协议 有none bootp dhcp static 这四个键值</span><br><span class="line">DEFROUTE=<span class="built_in">yes</span> //设定当前网卡为默认路径</span><br><span class="line">IPV4_FAILURE_FATAL=<span class="built_in">yes</span> //如果ipv4无法获得地址 是否自动使用ipv6搜寻</span><br><span class="line">IPV6INIT=<span class="built_in">yes</span> //是否支持ipv6</span><br><span class="line">IPV6_AUTOCONF=<span class="built_in">yes</span></span><br><span class="line">IPV6_DEFROUTE=<span class="built_in">yes</span></span><br><span class="line">IPV6_FAILURE_FATAL=<span class="built_in">yes</span></span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=enp3s0  //网卡名字</span><br><span class="line">UUID=12909798-9afc-3447-9a65-a182f6c97b8e //识别码 最好不要更改</span><br><span class="line">ONBOOT=<span class="built_in">yes</span>  //开机是否启动</span><br><span class="line">AUTOCONNECT_PRIORITY=-999</span><br><span class="line">MACADDR=44:8A:5B:F0:AC:E3  //依旧是MAC 只需设置其中一个 同时设置时不能相互冲突</span><br><span class="line">PEERDNS=<span class="built_in">yes</span>  //当PEERDNS为<span class="built_in">yes</span>时 DNS地址会被写入/etc/resolv.conf中</span><br><span class="line">PEERROUTES=<span class="built_in">yes</span> //是否从DHCP服务器获取定义接口默认网关的路由表项的信息</span><br><span class="line">IPV6_PEERDNS=<span class="built_in">yes</span></span><br><span class="line">IPV6_PEERROUTES=<span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
 <p>修改完毕后执行<code># systemctl restart network</code>命令，重启网络服务。</p>
 
       
     </div>
-     <footer class="article-footer">
-      <a data-url="/2018/09/14/NIC_config_in_Linux/" data-id="cl5jv6lkf001bx4fg54y09bsb" class="article-share-link">Share</a>
-      
+    <footer class="article-footer">
+      <a data-url="https://laplacence.github.io/2018/09/14/NIC_config_in_Linux/" data-id="cuidp7mUT3e4UfQK3ZLwnLv8j" data-title="Linux下修改网卡设定" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -134,6 +151,8 @@
   
   
 </article>
+
+
 </section>
         
           <aside id="sidebar">
@@ -172,7 +191,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/11/">November 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
   </div>
 
@@ -183,6 +202,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2026/11/04/AI_impact/">来自AI的冲击</a>
+          </li>
         
           <li>
             <a href="/2024/03/07/congrate_for_2024/">恭喜2024年</a>
@@ -198,10 +221,6 @@
         
           <li>
             <a href="/2022/01/06/use_inxi_to_get_system_info/">使用inxi来获取各类系统信息</a>
-          </li>
-        
-          <li>
-            <a href="/2021/12/11/change_from_scp_to_rsync/">该从scp转向rsync了</a>
           </li>
         
       </ul>
@@ -244,18 +263,17 @@
       </div>
       <footer id="footer">
   
-        <div class="outer">
-          <div id="footer-info" class="inner">
-            &copy; 2024
-              Laplacence<br>
-                CC BY-NC-SA 4.0 Powered by
-                  <a href="http://hexo.io/" target="_blank">Hexo</a>
-                  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-                  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-                  <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
-          </div>
-        </div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Laplacence<br>
+      CC BY-NC-SA 4.0 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span id="busuanzi_container_site_uv">本站总访问人数<span id="busuanzi_value_site_uv"></span>人</span>
+    </div>
+  </div>
 </footer>
+
     </div>
     <nav id="mobile-nav">
   
@@ -264,14 +282,15 @@
     <a href="/archives" class="mobile-nav-link">Archives</a>
   
 </nav>
-    <script src="https://ajax.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
 
 
   
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
@@ -280,10 +299,15 @@
 
 
 
+
+
+
 <div id="totop" style="position:fixed;bottom:50px;right:30px;cursor: pointer;">
 <a title="go top"><img src="/css/images/totop.png"/></a>
 </div>
 
+
+<script src="/js/totop.js"></script>
 
   </div>
 </body>
