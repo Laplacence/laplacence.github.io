@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, Laplacence</rights>
   <subtitle>Recycle Bin</subtitle>
   <title>Trash Can</title>
-  <updated>2026-11-03T16:15:36.478Z</updated>
+  <updated>2026-11-03T16:17:11.602Z</updated>
   <entry>
     <author>
       <name>Laplacence</name>
@@ -18,7 +18,7 @@
     <category term="experience" scheme="https://laplacence.github.io/categories/experience/"/>
     <category term="AI" scheme="https://laplacence.github.io/categories/AI/"/>
     <content>
-      <![CDATA[<p>开头刚想说2026是AI元年，但转念一想好像年年都是元年。<br>不过对于我自己来说，AI的使用在工作、生活、学习已经高度参与进来了。</p><span id="more"></span><p>曾经还有一个梗图，介绍了AI守旧派、维新派，一开始我在维新派但没那么维新，亲力亲为还是居多。<br>Agent介入也比较少，还是手动工作，不会的问问AI配合搜索引擎。</p><p>但是从今年年初开始使用了一下opencode，一切都不一样了。<br>我只需要详细讲清楚处理边界和命令，Agent的执行效率高到可怕。</p><p>在2025年我也曾本地部署过ollama，那时候的deepseek真的是巨婴一个。<br>然而现在不一样了，三十年河东三十年河西。<br>正好也多亏了AI，释放了一部分精力出来更新博客（笑）。</p>]]>
+      <![CDATA[<p>开头刚想说2026是AI元年，但转念一想好像年年都是元年。<br>不过对于我自己来说，AI的使用在工作、生活、学习已经高度参与进来了。</p><span id="more"></span><p>曾经还有一个梗图，介绍了AI守旧派、维新派，一开始我在维新派但没那么维新，亲力亲为还是居多。<br>Agent介入也比较少，还是手动工作，不会的问问AI配合搜索引擎。</p><p>但是从今年年初开始使用了一下opencode，一切都不一样了。<br>我只需要详细讲清楚处理边界和命令，Agent的执行效率高到可怕。</p><p>在2025年我也曾本地部署过ollama，那时候的deepseek真的是巨婴一个。<br>然而现在不一样了，三十年河东三十年河西。<br>正好也多亏了AI，释放了一部分精力出来更新博客（笑）。</p><p>编写本文的同时，opencode还在帮我升级hexo到最新的版本。<br>以往的AI完全做不到这点，现在只需要一个命令。</p>]]>
     </content>
     <id>https://laplacence.github.io/2026/11/04/AI_impact/</id>
     <link href="https://laplacence.github.io/2026/11/04/AI_impact/"/>
@@ -28,7 +28,7 @@
 不过对于我自己来说，AI的使用在工作、生活、学习已经高度参与进来了。</p>]]>
     </summary>
     <title>来自AI的冲击</title>
-    <updated>2026-11-03T16:15:36.478Z</updated>
+    <updated>2026-11-03T16:17:11.602Z</updated>
   </entry>
   <entry>
     <author>
